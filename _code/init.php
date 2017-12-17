@@ -1,0 +1,2 @@
+<?php
+// initialize site 
