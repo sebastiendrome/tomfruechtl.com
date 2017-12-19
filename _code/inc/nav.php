@@ -14,7 +14,7 @@ function make_nav($menu_array){
 				$name = $split[1];
 			}
 			$dir = filename($split[0], 'encode');
-	        $link = '/'.$dir;
+	        $link = '/'.$dir.'/';
 	        if($dir == SECTION || strstr(CONTEXT_PATH, $dir) ){
 	            $class = ' class="selected"';
 	        }
@@ -39,4 +39,5 @@ echo $nav;
      <li>&nbsp;</li>
      <li><a href="?lang=en"<?php if(LANG == 'en'){echo ' class="selected"';} ?> style="padding-right:0;">english</a> | <a href="?lang=de"<?php if(LANG == 'de'){echo ' class="selected"';} ?> style="padding-left:0;">deutsch</a></li>
     </ul>
+	<div id="mobileMenu"><a href="javascript:;" id="showNav"><img src="/_code/images/mobile-menu.svg" style="width:23px;" onerror="this.onerror=null; this.src='/_code/images/mob-nav.png'"></a></div>
 </div><!-- end nav -->

@@ -58,7 +58,7 @@ require(ROOT.'_code/inc/doctype.php');
 <div id="adminContainer">
 	
 	<span class="title"><a href="<?php echo $back_link; ?>">&larr; back</a> | <?php echo $description; ?></span> 
-	<a href="javascript:;" class="button showModal" rel="uploadFile?path=<?php echo urlencode(ROOT.$item); ?>&n=<?php echo ($n+1); ?>">[+]upload new file</a> (max upload size: <?php echo $max_upload_size; ?>) <a href="?logout" class="button" style="float:right;">-> logout</a>
+	<a href="javascript:;" class="button showModal" rel="uploadFile?path=<?php echo urlencode(ROOT.$item); ?>">[+]upload new file</a> <a href="?logout" class="button" style="float:right;">-> logout</a>
 	<br>
 	<br><span id="message">
 		<?php if( isset($message) ){

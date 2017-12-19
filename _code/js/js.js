@@ -36,6 +36,25 @@ $('div.divItem').on('mouseleave', 'a.imgMore', function(){
 	$(this).closest('.divItem').children('.title').children('.aMore').css('text-decoration', '');
 });
 
+// show/hide navigation for small screens
+$('#nav').on('click', function(){
+	var navH = $(this).css('height');
+	if(navH == '43px'){
+		$(this).css('height', 'auto');
+	}else{
+		$(this).css('height', '43px');
+	}
+});
 
+// keep navigation visible if user changes language
+var query = window.location.search;
+if( query.match("lang=") ){
+	$('#nav').css('height', 'auto');
+}
+
+// avoid propagation of nav click if click on site title (#nav h1 a)
+$('#nav h1 a').click(function(event){
+  event.stopPropagation();
+}); 
 
 

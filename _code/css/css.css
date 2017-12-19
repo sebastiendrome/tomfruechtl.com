@@ -3,7 +3,6 @@
 /* temporary */
 /*#nav, #content, #container{border:1px solid red;}*/
 
-
 /* GENERIC */
 body, td, th, select, input, button, textarea {
 	font:14px "Courier New", Courier, monospace;
@@ -16,19 +15,18 @@ body {
 }
 ul{list-style-type: none;}
 ul, li{padding:0; margin:0;}
-img{background: #fff url(../images/progress.gif) 50% 50% no-repeat;}
 
 
 /* LAYOUT */
 
 /* Relative to each other */
-/*#nav{width:200px;}*/
-#nav, #content{margin:20px; padding:20px;}
-.backTitle{margin:30px 20px 30px 20px; padding:10px 20px 10px 20px;}
+#nav, #content{margin:20px;}
+#nav ul, #content{padding:20px;}
+.backTitle{margin:30px 20px 30px 20px; padding:10px 20px 10px 20px; z-index:1;}
 #container{padding-left:240px;}
-#nav{max-width:220px;}
+#nav{max-width:220px; z-index:2;}
 
-#nav, .backTitle{position:fixed; top:0; left:0; z-index:1; 
+#nav, .backTitle{position:fixed; top:0; left:0; 
 	/*background-color:rgba(255, 255, 255, .8);*/
 	background-color:#fff;
 }
@@ -38,13 +36,15 @@ img{background: #fff url(../images/progress.gif) 50% 50% no-repeat;}
 #nav ul li a, .backTitle a{display:inline-block; padding:5px 10px;}
 #nav ul li h1 a{padding:0; margin:0;}
 
-
 #content p.description, #content p.title{margin:6px 0 14px 0; color:#666;}
 #content p:first-child{margin-top:5px;}
+#content img{width:100%;}
+#content img.icon{width:auto;}
 .divItem{margin-bottom:55px;}
 
-
 #footer{padding-left:50px; font-size:smaller;}
+
+div#mobileMenu{position:absolute; top:9px; right:18px; visibility:hidden;}
 
 
 /* STYLE */
@@ -53,6 +53,7 @@ a:hover, a.selected{text-decoration: underline;}
 u{color:#000;}
 
 #content img{border:1px solid #777;}
+#content img, img#inOut, #contentContainer img{background:#fff url(../images/progress.gif) 50% 50% no-repeat;}
 
 .zoom{cursor: zoom-in;}
 

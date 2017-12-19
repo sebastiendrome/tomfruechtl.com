@@ -22,11 +22,16 @@ if( isset($_POST['login']) ){
 }
 
 // successful login
-if(sha1($_SESSION['kftgrnpoiu']) == '909cf00831cd2986b9758dd25faf468f9feb8dfd' && sha1($_SESSION['userName']) == '2b0be9473cc9a5842ceb7f4fd2e50e35d9342c3c'){
+if( 
+	isset($_SESSION['kftgrnpoiu']) 
+	&& isset($_SESSION['userName']) 
+	&& sha1($_SESSION['kftgrnpoiu']) == '909cf00831cd2986b9758dd25faf468f9feb8dfd' 
+	&& sha1($_SESSION['userName']) == '2b0be9473cc9a5842ceb7f4fd2e50e35d9342c3c'
+){
 	$logged_in = TRUE; // this will grant us access
 
 // wrong login
-}elseif( !isset($_GET['logout']) ){
+}elseif( isset($_SESSION['kftgrnpoiu']) ){
 	$message .= '<p style="color:red;">Wrong Login! Please try again.</p>';
 }
 

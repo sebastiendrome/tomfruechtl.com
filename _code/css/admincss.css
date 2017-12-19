@@ -5,7 +5,7 @@
 /*  */
 ul.structure{margin-left:-50px;}
 ul.structure li{padding:5px; margin-left:50px; color:#fff; background-color:#fff; /*cursor:move;*/}
-ul.structure li a{color:#fff; margin-left:25px;}
+ul.structure li a{color:#fff; margin-left:25px; display:inline-block; padding:3px 0; white-space: nowrap;}
 ul.structure li:hover{background-color:rgba(122, 122, 122, .1);}
 ul.structure li:hover a{color:#333;}
 ul.structure li ul li.sub::before{
@@ -42,10 +42,10 @@ ul.content li textarea{width:100%; height:80px; margin:5px 0;}
 
 input.position{width:20px; text-align:right;}
 a.down, a.up{margin-left:10px !important; font-style: normal !important;}
-a.hide:hover{font-style: italic; color:#999 !important;}
+a.hide:hover{font-style:italic; color:#999 !important;}
 a.show:hover{font-style:normal !important;}
 a.newSub:hover{color:green !important;}
-a.delete:hover{color: red !important;}
+a.delete:hover{color:red !important;}
 
 a.button.disabled, button:disabled, input:disabled{opacity:.3;}
 /*
@@ -55,14 +55,11 @@ textarea{white-space: pre-wrap;}
 
 
 
-
-
-
 #working{display:none; position:absolute; background:#fee url('../images/progress.gif') 10px center no-repeat; height:20px; padding:10px; padding-left:65px; border:1px solid red; border-radius: 3px; top:-4px; left:46%;}
 
 .title{font-size:20px; font-weight:bold;}
 
-button, a.button{display:inline-block; padding:3px 10px; border:1px solid #888; border-radius:3px; margin:0 10px;background-color:#eee; color:#000;
+button, a.button{display:inline-block; padding:3px 10px; border:1px solid #888; border-radius:3px; margin:2px 10px;background-color:#eee; color:#000;
 cursor: pointer;}
 button[type=submit], a.button.submit{background-color:green; color:#fff;}
 button.cancel, a.button.cancel{background-color:red; color:#fff;}
@@ -115,10 +112,29 @@ z-index:10;
 
 .error{color:red;}
 .success{color:green;}
-#message .error{background-color:#f22; color:#fff;}
-#message .success{background-color:green; color:#fff;}
-#message .note{background-color:#fdf79a; color:#444;}
-#message .error, #message .success, #message .note{padding:2px 10px; border-radius:3px;}
+.error{background-color:#f22; color:#fff;}
+.success{background-color:green; color:#fff;}
+.note{background-color:#fdf79a; color:#444;}
+.error, .success, .note{padding:2px 10px; border-radius:3px;}
 
 img.buttonProcess{visibility:hidden; vertical-align:middle; padding:5px; background-color:#fff; border:1px solid #ccc; border-radius:15px;}
 img.buttonProcess.visible{visibility:visible; z-index:1; margin-left:-60px;}
+
+div.tip{
+	margin-bottom:20px; padding:3px 10px; 
+	border-radius:3px;
+	border:1px solid #ccc; 
+	background-color:#fff;
+	font-size:.9em;
+}
+div.tip a.tipTitle{display:block;}
+a.tipTitle::before{
+	content: '► ';
+	color:#000;
+}
+a.tipTitle.open::before{
+	content: '▼ ';
+	color:#000;
+}
+div.tip ol{display:none;}
+

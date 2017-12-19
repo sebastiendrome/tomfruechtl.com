@@ -29,13 +29,16 @@ if( isset($social_image) && !empty($social_image) ){ ?>
 <title><?php echo $title; ?></title>
 
 
-<link href="/_code/css/css.css?v=5" rel="stylesheet" type="text/css">
+<link href="/_code/css/css.css?v=7" rel="stylesheet" type="text/css">
 
 <style type="text/css">
 /* limit container width depending on screen size and resulting SIZE var defined in first_include. */
 #content{max-width:<?php echo $_POST['sizes'][substr(SIZE,1)]['width']; ?>px;}
 
 </style>
+
+<link rel="stylesheet" media="(max-width: 980px)" href="/_code/css/max-980px.css">
+<link rel="stylesheet" media="(max-width: 720px)" href="/_code/css/max-720px.css">
 
 </head>
 

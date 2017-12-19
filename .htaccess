@@ -1,7 +1,7 @@
 Options -indexes
 Options +FollowSymLinks
 <IfModule mod_rewrite.c>
-    # Tell PHP that the mod_rewrite module is ENABLED. check using: array_key_exists('HTTP_MOD_REWRITE', $_SERVER)
+    # Tell PHP that the mod_rewrite module is ENABLED. Then check, using: array_key_exists('HTTP_MOD_REWRITE', $_SERVER)
     SetEnv HTTP_MOD_REWRITE On
     RewriteEngine on
 	RewriteCond %{REQUEST_URI} !^(/content/.+?|/_code/.+?|/404.php|/_zoom.php|/index.php)
@@ -9,21 +9,3 @@ Options +FollowSymLinks
 	ErrorDocument 404 /404.php
 </IfModule>
 
-<IfModule mod_expires.c>
-	# Enable expirations
-	ExpiresActive On
-	# Default directive
-	ExpiresDefault "access plus 1 week"
-	# My favicon
-	ExpiresByType image/x-icon "access plus 1 year"
-	# Images
-	ExpiresByType image/gif "access plus 1 month"
-	ExpiresByType image/png "access plus 1 month"
-	ExpiresByType image/jpg "access plus 1 month"
-	ExpiresByType image/jpeg "access plus 1 month"
-	# CSS
-	ExpiresByType text/css "access 1 week"
-	#ExpiresByType text/css "access 1 hour"
-	# Javascript
-	ExpiresByType application/javascript "access plus 1 week"
-</IfModule>

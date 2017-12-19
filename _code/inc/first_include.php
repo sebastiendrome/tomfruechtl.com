@@ -7,9 +7,11 @@ if(strstr($_SERVER['HTTP_HOST'],'.local')){ // local server
 	define("SITE", 'tomfruechtl.com/');
     define("ROOT", '/Users/seb/Sites/'.SITE);
 	ini_set( 'error_reporting', E_ALL );
+	ini_set('display_errors', 1);
 }else{ // remote server
 	define("SITE", 'tomfruechtl.com/');
     define("ROOT", '/home/public/');
+	ini_set('display_errors', 0);
 }
 
 // reference paths
@@ -24,6 +26,11 @@ define("URL_LINK", str_replace('?'.$_SERVER['QUERY_STRING'], '', $_SERVER['REQUE
 define("CONTENT", 'content/');
 // menu file
 define("MENU_FILE", ROOT.CONTENT.'menu.txt');
+if(!file_exists(MENU_FILE)){
+	if( !$fp = fopen(MENU_FILE, 'w') ){
+		echo 'could not create menu file!';
+	}
+}
 
 
 // language (en/de) - set by GET query, stored as cookie
@@ -47,7 +54,7 @@ $size = "_M";
 if(isset($_COOKIE['wW'])){
     if($_COOKIE['wW'] > 1370 ){
         $size = "_L";
-    }elseif($_COOKIE['wW'] < 400){
+    }elseif($_COOKIE['wW'] < 340){
 		$size = "_S";
 	}
 }
@@ -73,11 +80,14 @@ $_POST['types'] = $types;
 
 // FILE SIZES:
 $sizes = array();
-$sizes['L'] = array("width"=>800, "height"=>650);
-$sizes['M'] = array("width"=>650, "height"=>500);
-$sizes['S'] = array("width"=>300, "height"=>200);
+$sizes['L'] = array("width"=>800, "height"=>667);
+$sizes['M'] = array("width"=>650, "height"=>542);
+$sizes['S'] = array("width"=>300, "height"=>250);
 // register $sizes as a $_POST var, so it is accessible within all functions...
 $_POST['sizes'] = $sizes;
+
+// set allowed tags for strip_tags function, used for validating user txt input
+define("ALLOWED_TAGS", '<b><strong><br><u><i><a>');
 
 // require common functions
 require(ROOT.'_code/inc/functions.php');

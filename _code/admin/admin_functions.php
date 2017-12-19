@@ -48,6 +48,57 @@ function human_filesize($bytes, $decimals = 2) {
   return sprintf("%.{$decimals}f", $bytes / pow(1024, $factor)) . @$sz[$factor];
 }
 
+// validate new section name (format: "english, Deutsch")
+function validate_section_name($newName){
+	//$newName = str_replace("\\", '', $newName);
+	if(!strstr($newName, ',')){
+		$newName .= ', '.$newName;
+	}else{
+		$split = explode(',', $newName);
+		$en = trim($split[0]);
+		$de = trim($split[1]);
+		if(empty($de)){
+			$newName = $en.', '.$en;
+		}elseif(empty($en)){
+			$newName = $de.', '.$de;
+		}
+	}
+	$newName = strip_tags($newName);
+	// remove dangerous caracters
+	$newName = str_replace(array("\\", "\t", "\n", "\r", "(", ")", "/"), '', $newName);
+	return $newName;
+}
+
+// sanitize user input
+function sanitize_text($input){
+	$input = 
+	preg_replace('/on(load|unload|click|dblclick|mouseover|mouseenter|mouseout|mouseleave|mousemove|mouseup|keydown|pageshow|pagehide|resize|scroll)[^"]*/i', '', $input);
+	$input = addslashes( strip_tags($input, ALLOWED_TAGS) );
+	//$input = preg_replace('/(#|?/i', '', $input);
+	return $input;
+}
+
+// generate menu file output from 3D array
+function array_to_menu_file($menu_array){
+	$menu_file = '';
+	foreach($menu_array as $key => $val){
+		if(!empty($key)){ // don't generate empty lines
+			$menu_file .= $key."\n";
+			if(!empty($val)){ // don't generate empty lines
+				foreach($val as $k => $v){
+					$menu_file .= "\t".$k."\n";
+					if(!empty($v)){
+						foreach($v as $vk => $vv){
+							$menu_file .= "\t\t".$vk."\n";
+						}
+					}
+				}
+			}
+		}
+	} 
+	return $menu_file;
+}
+
 // insert item in associative array at specific position
 function insert_at($array = [], $item = [], $position = 0) {
 	$previous_items = array_slice($array, 0, $position, true);
@@ -72,49 +123,6 @@ function array_keys_deep($deep_array, $path_array, $n = 0, $length){
 	}
 	return $return_array;
 }
-
-// validate new section name (format: "english, Deutsch")
-function validate_section_name($newName){
-	//$newName = str_replace("\\", '', $newName);
-	if(!strstr($newName, ',')){
-		$newName .= ', '.$newName;
-	}else{
-		$split = explode(',', $newName);
-		$en = trim($split[0]);
-		$de = trim($split[1]);
-		if(empty($de)){
-			$newName = $en.', '.$en;
-		}elseif(empty($en)){
-			$newName = $de.', '.$de;
-		}
-	}
-	$newName = strip_tags($newName);
-	// remove dangerous caracters
-	$newName = str_replace(array("\\", "\t", "\n", "\r", "(", ")", "/"), '', $newName);
-	return $newName;
-}
-
-// generate menu file output from 3D array
-function array_to_menu_file($menu_array){
-	$menu_file = '';
-	foreach($menu_array as $key => $val){
-		if(!empty($key)){ // don't generate empty lines
-			$menu_file .= $key."\n";
-			if(!empty($val)){ // don't generate empty lines
-				foreach($val as $k => $v){
-					$menu_file .= "\t".$k."\n";
-					if(!empty($v)){
-						foreach($v as $vk => $vv){
-							$menu_file .= "\t\t".$vk."\n";
-						}
-					}
-				}
-			}
-		}
-	} 
-	return $menu_file;
-}
-
 
 
 
@@ -205,7 +213,7 @@ function site_structure($menu_array = '', $currentItem = ''){
 						// files
 						}else{
 							
-							// get file text description (including dot: ".jpg")
+							// get file extension (including dot: ".jpg")
 							$ext = file_extension($k);
 							// various ways to display file depending on extension
 							if( preg_match($_POST['types']['resizable_types'], $ext) ){
@@ -218,13 +226,13 @@ function site_structure($menu_array = '', $currentItem = ''){
 								$display_file = '_code/images/'.substr($ext,1).'.png';
 							}
 							
-							$txt_file_name = str_replace($ext, '.txt', $k);
+							$txt_file_name = preg_replace('/'.preg_quote($ext).'/', '.txt', $k);
 							$txt_file = ROOT.CONTENT.filename($en, 'encode').'/en/'.$txt_file_name;
-							$description = file_get_contents($txt_file);
+							$description = strip_tags( file_get_contents($txt_file) );
 							if(empty($description)){
 								$description = filename($k, 'decode');
 							}else{
-								$description = str_replace(array('<br>',"\'", '\"'), array(' ','&#39;','&quot;'), $description);
+								$description = str_replace(array("\'", '\"'), array('&#39;','&quot;'), $description);
 								$description = substr($description, 0, 35);
 							}
 							$site_structure .= '<li data-name="'.$k.'" data-position="'.$s.'"><span  class="imgInput" style="background-image:url(/'.$display_file.');">'.$description.'</span>
@@ -328,7 +336,7 @@ function display_content_admin($path = '', $menu_array = ''){
 					
 					
 					// get text description english and deutsch versions
-					$txt_filename = str_replace($ext, '.txt', $file_name);
+					$txt_filename = preg_replace('/'.preg_quote($ext).'/', '.txt', $file_name);
 					$en_file = $path.'/en/'.$txt_filename;
 					$de_file = $path.'/de/'.$txt_filename;
 					
@@ -348,7 +356,7 @@ function display_content_admin($path = '', $menu_array = ''){
 					$de = stripslashes( my_br2nl( file_get_contents($de_file) ) );
 					
 					// html output for a file
-					$display .= '<div class="imgContainer" data-file_path="'.$item.'">image:<br>';
+					$display .= '<div class="imgContainer" data-file_path="'.$item.'">file: <span style="color:#aaa;">'.filename($file_name, 'decode').'</span><br>';
 					$display .= '<a href="/'.str_replace('/_S/', '/_XL/', $file_link).'" title="open in new window" target="_blank">'.$display_file.'</a>
 					<p style="clear:both;">position: <input type="text" class="position" name="order'.$item.'" value="'.$n.'" data-oldposition="'.$n.'" data-parent="'.$parent.'" data-item="'.$key.'">
 					<a href="javascript:;" class="up" title="move up">∧</a><a href="javascript:;" class="down" title="move down">∨</a></p>
@@ -361,7 +369,7 @@ function display_content_admin($path = '', $menu_array = ''){
 					// texts
 					$display .= '<div class="actions">
 					<input type="hidden" class="file" value="'.$item.'">
-					description:<br><br>';
+					description: <span style="color:#aaa; display:inline-block; float:right;">allowed tags: '.str_replace(array('<','>'), array('&lt;', '&gt;'), ALLOWED_TAGS).'</span><br><br>';
 					
 					$display .= '↓english<br>
 					<textarea class="en" name="en_txt">'.$en.'</textarea>
@@ -820,14 +828,15 @@ function save_text_description($file, $en_txt, $de_txt){
 	
 	$error = $result = '';
 	
-	$en_txt = addslashes( strip_tags($en_txt) );
-	$de_txt = addslashes( strip_tags($de_txt) );
+	// sanitize user input
+	$en_txt = sanitize_text($en_txt);
+	$de_txt = sanitize_text($de_txt);
 	$en_txt = my_nl2br($en_txt);
 	$de_txt = my_nl2br($de_txt);
 	
 	$file_name = basename($file);
 	$ext = file_extension($file_name);
-	$text_file_name = str_replace($ext, '.txt', $file_name);
+	$text_file_name = preg_replace('/'.preg_quote($ext).'/', '.txt', $file_name);
 	
 	// need both S and XL for non-images files saved in XL dir
 	$txt_dir = str_replace(array('/_S','/_XL'), '', dirname($file));
@@ -877,14 +886,25 @@ function upload_file($path, $replace){
 	if(isset($file_type) && !empty($file_type)){ // get it from file metadata
 		$split = explode('/', $file_type);
 		$ext = '.'.strtolower($split[1]);
-		$ext = str_replace(array('jpeg', 'jpe'), 'jpg', $ext);
+		$ext = str_replace('jpeg', 'jpg', $ext);
 		// Mac .txt files use the "plain" file type (for plain text)!...
-		if($ext == '.plain'){
+		if($ext == '.plain' || $ext == '.text'){
 			$ext = '.txt';
 		}
 	}else{ // if no metadata, take file extension
 		$ext = file_extension($file_name);
 		$ext = strtolower($ext);
+		$ext = str_replace('jpeg', 'jpg', $ext);
+	}
+	
+	if($ext == '.jpg'){ 
+		$jpg = true; 
+	}elseif($ext == '.gif'){ 
+		$gif = true; 
+	}elseif($ext == '.png'){
+		$png = true; 
+	}else{
+		$jpg = $gif = $png = false; 
 	}
 	
 	// check against extension if file type is supported
@@ -932,7 +952,80 @@ function upload_file($path, $replace){
 			
 			// RESIZE, if file is resizable (image)
 			if($resize){
-				$resize_result .= resize_all($upload_dest);
+				
+				// width and height ($w & $h) may be used for image rotation, and will be passed to resize_all function
+				list($w, $h) = getimagesize($upload_dest);
+				
+				// read exif data and fix image orientation now if necessary! (concerns only jpgs)
+				if($jpg){
+					$exif = exif_read_data($upload_dest);
+					$rotate = false;
+					if ( !empty($exif['IFD0']['Orientation']) ) {
+						$orientation = $exif['IFD0']['Orientation'];
+						$rotate = true;
+					}elseif( !empty($exif['Orientation']) ){
+						$orientation = $exif['Orientation'];
+						$rotate = true;
+					}else{
+						$upload_message .= '<p class="note">Note: could not read image orientation for '.$upload_dest.'</p>';
+					}
+					
+					// image orientation needs to be fixed! 
+					if($rotate){
+						
+						$new = imagecreatetruecolor($w, $h);
+						
+						if(!$new){
+							$upload_message .= '<p class="error">could not imagecreatetruecolor</p>';
+						
+						}else{
+							// we can resize jpg, gif and png files.
+							if($jpg){ 
+								$from = imagecreatefromjpeg($upload_dest);
+							}elseif($gif){ 
+								$from = imagecreatefromgif($upload_dest); 
+							}elseif($png){
+								$from = imagecreatefrompng($upload_dest);
+							}
+							
+							if(!$from){
+								$upload_message .= '<p class="error">could not imagecreatefromjpeg: '.$upload_dest.'</p>';
+							
+							}else{
+								if( !imagecopyresampled($new, $from, 0, 0, 0, 0, $w, $h, $w, $h) ){
+									$upload_message .= '<p class="error">could not imagecopyresampled</p>';
+								}else{
+									
+									switch($orientation) {
+										case 3:
+											$new = imagerotate($new, 180, 0);
+											break;
+										case 6:
+											$new = imagerotate($new, -90, 0);
+											break;
+										case 8:
+											$new = imagerotate($new, 90, 0);
+											break;
+									}
+									
+									if($jpg){
+										imagejpeg($new, $upload_dest, 90);
+									}elseif($gif){ 
+										imagegif($new, $upload_dest); 
+									}elseif($png){
+										imagepng($new, $upload_dest);
+									}
+									
+									// update width and height now! Or else resizing will be off...
+									list($w, $h) = getimagesize($upload_dest);
+								}
+							}
+						}
+						imagedestroy($new);
+					}
+				}
+				
+				$resize_result .= resize_all($upload_dest, $w, $h);
 				if(substr($resize_result, 0, 1) == '0'){
 					$upload_message .= '<p class="error">'.$resize_result.'</p>';
 				}
@@ -992,11 +1085,9 @@ function upload_file($path, $replace){
 
 
 // resize image to various sizes
-function resize_all($upload_dest){
+function resize_all($upload_dest, $w, $h){
 	
 	$resize_result = '';
-	
-	list($w, $h) = getimagesize($upload_dest);
 	
 	// resize image to various sizes as specified by $_POST['sizes'] array
 	foreach($_POST['sizes'] as $key => $val){
@@ -1006,11 +1097,10 @@ function resize_all($upload_dest){
 		$resize_dest = str_replace('/_XL', '/_'.$key, $upload_dest);
 		
 		if($w > $width || $h > $height){
-			//$resize_result .= $upload_dest.' -> '.$resize_dest.'<br>';
-			$resize_result .= resize($upload_dest, $resize_dest, $width, $height);
+			$resize_result .= resize($upload_dest, $resize_dest, $w, $h, $width, $height);
 				
 		}else{
-			if(!copy($upload_dest, $resize_dest)){
+			if( !copy($upload_dest, $resize_dest) ){
 				$resize_result .= '0|could not copy '.$upload_dest.' to '.$resize_dest.'<br>';
 			}
 		}
@@ -1021,7 +1111,7 @@ function resize_all($upload_dest){
 
 
 // resize image
-function resize($src, $dest, $width, $height){
+function resize($src, $dest, $width_orig, $height_orig, $width, $height){
 
 	$types = $_POST['types'];
 	$result = '';
@@ -1040,8 +1130,6 @@ function resize($src, $dest, $width, $height){
 	
 	// make sure file is resizable (match against file extension)
 	if ( preg_match($types['resizable_types'], $ext) ){
-		
-		list($width_orig, $height_orig) = getimagesize($src);
 		
 
 		// if image is bigger than the target width or height, calculate new sizes and resize
@@ -1084,7 +1172,7 @@ function resize($src, $dest, $width, $height){
 						}
 						imagedestroy($new);
 						
-						$result .= '1|'.$src.'<br>';
+						//$result .= '1|'.$src.'<br>';
 					}
 				}
 			}
@@ -1101,26 +1189,4 @@ function resize($src, $dest, $width, $height){
 	
 	return $result;
 }
-
-
-// rotate image depending on exif data
-function imagecreatefromjpegexif($filename){
-	$img = imagecreatefromjpeg($filename);
-	$exif = exif_read_data($filename);
-	if ($img && $exif && isset($exif['Orientation'])){
-		$ort = $exif['Orientation'];
-
-		if ($ort == 6 || $ort == 5)
-			$img = imagerotate($img, 270, null);
-		if ($ort == 3 || $ort == 4)
-			$img = imagerotate($img, 180, null);
-		if ($ort == 8 || $ort == 7)
-			$img = imagerotate($img, 90, null);
-
-		if ($ort == 5 || $ort == 4 || $ort == 7)
-			imageflip($img, IMG_FLIP_HORIZONTAL);
-	}
-	return $img;
-}
-
 

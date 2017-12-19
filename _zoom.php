@@ -28,14 +28,14 @@ img.in{width:auto; cursor:zoom-out;}
 </style>
 
 <!-- start nav -->
-<div class="backTitle" style="left:0; background-color:rgba(255, 255, 255, .8);">
+<div class="backTitle zoomPage" style="left:0; background-color:rgba(255, 255, 255, .8);">
     <ul>
         <li><a href="javascript:history.go(-1);">&larr; <?php echo $back; ?></a></li>
     </ul>
 </div><!-- end nav -->
     
     
-<div>
+<div id="bigImgContainer">
 <img src="<?php echo $img; ?>" id="inOut" class="out">
 </div>
 

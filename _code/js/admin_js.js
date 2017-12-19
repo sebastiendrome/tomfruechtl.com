@@ -82,13 +82,20 @@ $('#contentContainer').on('click', 'a.saveText', function() {
 	saveTextDescription(file, enText, deText);
 });
 
-$('#contentContainer').on('click', 'a.rotate', function() {
-	var image = $(this).data('image');
-	rotateImg(image);
+// show tip
+$('body').on('click', 'div.tip a.tipTitle', function(e){
+	var olDisplay = $(this).closest('div.tip').children('ol').css('display');
+	//alert(olDisplay);
+	if(olDisplay == 'none'){
+		$(this).addClass("open");
+		$(this).closest('div.tip').children('ol').css('display', 'block');
+	}else{
+		$(this).removeClass("open");
+		$(this).closest('div.tip').children('ol').css('display', 'none');
+	}
+	
+	e.preventDefault();
 });
-
-
-
 
 
 

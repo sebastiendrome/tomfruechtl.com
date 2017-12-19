@@ -133,43 +133,45 @@ function display_content_array($path, $menu_array = ''){
 				$ext = file_extension($file_name);
 				
 				// get text description english and deutsch versions
-				$txt_filename = str_replace($ext, '.txt', $file_name);
+				$txt_filename = preg_replace('/'.preg_quote($ext).'/', '.txt', $file_name);
 				$text_file = $path.'/'.LANG.'/'.$txt_filename;
 				
 				//echo $text_file.'<br>';
 				$description = '';
 				if( file_exists($text_file) ){
-					$description = file_get_contents($text_file);
+					$description = stripslashes( file_get_contents($text_file) );
 				}
 				
 				// various ways to display file depending on extension
 				if( preg_match($_POST['types']['resizable_types'], $ext) ){ // image
 					$item = $path.'/'.SIZE.'/'.$file_name;
+					list($w, $h) = getimagesize($item);
+					$alt = substr( str_replace(array('\"', "\'"), array('&#34;', '&#39;'), strip_tags($description) ), 0, 30);
 					// url link to file
 					$file_link = str_replace(ROOT, '' , $item);
-					$display_file = '<a href="/_zoom.php?img='.urlencode($file_link).'"><img src="/'.$file_link.'" alt="'.str_replace(array('\"', "\'"), array('&#34;', '&#39;'), $description).'" class="zoom"></a>';
+					$display_file = '<a href="/_zoom.php?img='.urlencode($file_link).'"><img src="/'.$file_link.'" alt="'.$alt.'" class="zoom" style="max-width:'.$w.'px"></a>';
 				
 				}else{
 					$item = $path.'/_XL/'.$file_name;
 					// url link to file
 					$file_link = str_replace(ROOT, '' , $item);
 					if($ext == '.txt'){
-						$display_file = '<div style="border:1px solid #ccc; padding:20px;">'.my_nl2br( file_get_contents($item) ).'</div>';
-					}/*elseif($ext == '.pdf'){
+						$display_file = '<div style="border:1px solid #ccc; padding:20px;">'.my_nl2br( sanitize_text( file_get_contents($item) ) ).'</div>';
+					}/*elseif($ext == '.html'){
 						$display_file = '<iframe src="/'.$file_link.'" style="width:100%; height:'.$_POST['sizes'][substr(SIZE,1)]['height'].'px; border:1px solid #ccc;">
 						This browser does not support PDFs. Please download the PDF to view it: <a href="'.$file_link.'">Download PDF</a>
 						</iframe>';
 					
 					}*/else{
 						$display_file = '<a href="/'.$file_link.'" target="_blank">
-						<img src="/_code/images/'.substr($ext,1).'.png" id="'.$file_name.'">
+						<img src="/_code/images/'.substr($ext,1).'.png" class="icon" id="'.$file_name.'">
 						</a>';
 					}
 				}
 				
 				// display file and description
 				$display .= $display_file;
-				$display .= '<p class="description">'.stripslashes($description).'</p>';
+				$display .= '<p class="description">'.$description.'</p>';
 
 				
 			}else{ // folder = sub-section. show sub-section name and its first file.
@@ -195,7 +197,7 @@ function display_content_array($path, $menu_array = ''){
 				}
 				// display sub-section name and file only if a first file has been found
 				if( isset($first_file) ){
-					$display .= '<p class="title">'.$sec_name.' | <a href="'.URL_LINK.'/'.$sec_dir.'/" class="aMore">&rarr; '.$more.'</a></p>';
+					$display .= '<p class="title">'.$sec_name.' | <a href="'.URL_LINK.$sec_dir.'/" class="aMore">&rarr; '.$more.'</a></p>';
 					$first_file_link = str_replace(ROOT, '/', $first_file);
 					$ext = file_extension($first_file_link);
 					// various ways to display file depending on extension
@@ -205,7 +207,7 @@ function display_content_array($path, $menu_array = ''){
 						$display_file = basename($first_file_link);
 					}
 					
-					$display .= '<a href="'.URL_LINK.'/'.$sec_dir.'/" class="imgMore">'.$display_file.'</a>';
+					$display .= '<a href="'.URL_LINK.$sec_dir.'/" class="imgMore">'.$display_file.'</a>';
 				}
 			}
 			
@@ -214,7 +216,6 @@ function display_content_array($path, $menu_array = ''){
 	}
 	return $display;
 }
-
 
 
 // CUSTOM nl2br
