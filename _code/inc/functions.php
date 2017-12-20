@@ -172,13 +172,12 @@ function display_content_array($path, $menu_array = ''){
 						</audio>';
 						
 					}elseif($ext == '.txt'){ // txt
-						$display_file = '<div style="border:1px solid #ccc; padding:20px;">'.my_nl2br( sanitize_text( file_get_contents($item) ) ).'</div>';
+						$display_file = '<div class="txt">'.my_nl2br( sanitize_text( file_get_contents($item) ) ).'</div>';
 					
-					/*}elseif($ext == '.html'){ // html
+					}elseif($ext == '.html'){ // html
 						$display_file = '<iframe src="/'.$file_link.'" style="width:100%; height:'.$_POST['sizes'][substr(SIZE,1)]['height'].'px; border:1px solid #ccc;">
-						This browser does not support PDFs. Please download the PDF to view it: <a href="'.$file_link.'">Download PDF</a>
 						</iframe>';
-					*/
+					
 					}else{ // other
 						$display_file = '<a href="/'.$file_link.'" target="_blank">
 						<img src="/_code/images/'.substr($ext,1).'.png" class="icon" id="'.$file_name.'">

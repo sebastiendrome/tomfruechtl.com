@@ -77,11 +77,18 @@ function sanitize_text($input){
 	//$input = preg_replace('/(#|?/i', '', $input);
 	return $input;
 }
-
+/*
 // sanitize html content
 function sanitize_html($input){
 	
 }
+*/
+/*
+function display_file(){
+	$display_file = '';
+	
+}
+*/
 
 // generate menu file output from 3D array
 function array_to_menu_file($menu_array){
@@ -333,9 +340,10 @@ function display_content_admin($path = '', $menu_array = ''){
 						$item = $path.'/_S/'.$key;
 						// url link to file
 						$file_link = str_replace(ROOT, '' , $item);
-						$display_file = '<img src="/'.$file_link.'?rand='.rand(111,999).'" id="'.$file_name.'">';
+						$display_file = '<a href="/'.str_replace('/_S/', '/_XL/', $file_link).'" title="open in new window" target="_blank"><img src="/'.$file_link.'?rand='.rand(111,999).'" id="'.$file_name.'"></a>';
 						
 					}else{
+						// if not an image, the file is in the _XL directory (no various sizes)
 						$item = $path.'/_XL/'.$key;
 						// url link to file
 						$file_link = str_replace(ROOT, '' , $item);
@@ -351,11 +359,11 @@ function display_content_admin($path = '', $menu_array = ''){
 							}
 							$display_file = '<audio controls>
 							<source src="/'.$file_link.'" type="audio/'.$media_type.'">
-							<img src="/_code/images/'.substr($ext,1).'.png" id="'.$file_name.'">
+							<a href="/'.str_replace('/_S/', '/_XL/', $file_link).'" title="open in new window" target="_blank"><img src="/_code/images/'.substr($ext,1).'.png" id="'.$file_name.'"></a>
 							</audio>';
 						
 						}else{
-							$display_file = '<img src="/_code/images/'.substr($ext,1).'.png" id="'.$file_name.'">';
+							$display_file = '<a href="/'.str_replace('/_S/', '/_XL/', $file_link).'" title="open in new window" target="_blank"><img src="/_code/images/'.substr($ext,1).'.png" id="'.$file_name.'"></a>';
 						}
 					}
 					
@@ -382,8 +390,8 @@ function display_content_admin($path = '', $menu_array = ''){
 					
 					// html output for a file
 					$display .= '<div class="imgContainer" data-file_path="'.$item.'">file: <span style="color:#aaa;">'.filename($file_name, 'decode').'</span><br>';
-					$display .= '<a href="/'.str_replace('/_S/', '/_XL/', $file_link).'" title="open in new window" target="_blank">'.$display_file.'</a>
-					<p style="clear:both;">position: <input type="text" class="position" name="order'.$item.'" value="'.$n.'" data-oldposition="'.$n.'" data-parent="'.$parent.'" data-item="'.$key.'">
+					$display .= $display_file;
+					$display .= '<p style="clear:both;">position: <input type="text" class="position" name="order'.$item.'" value="'.$n.'" data-oldposition="'.$n.'" data-parent="'.$parent.'" data-item="'.$key.'">
 					<a href="javascript:;" class="up" title="move up">∧</a><a href="javascript:;" class="down" title="move down">∨</a></p>
 					<p>
 					<!--<a href="/_code/admin/rotate_image.php?image='.$item.'" class="button rotate" data-image="'.$item.'" style="margin-left:0;"><img src="images/img-rotate.png" style="border:none; background:none; display:inline;"> rotate</a>-->

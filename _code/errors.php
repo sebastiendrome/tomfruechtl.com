@@ -58,7 +58,7 @@ function log_custom_error($error, $errlvl){
 
 	$headers  = 'MIME-Version: 1.0'."\r\n";
 	$headers .= 'Content-type: text/html; charset=iso-8859-1'."\r\n";
-	$headers .= 'From: '.$user.' <'.$user.'@'.$_SERVER['HTTP_HOST'].'>'."\r\n";
+	$headers .= 'From: Tom_Site <admin@'.$_SERVER['HTTP_HOST'].'>'."\r\n";
 
 	if( defined('SITE') ){
 		$message = '<p>An error has occurred on '.SITE.':</p>';

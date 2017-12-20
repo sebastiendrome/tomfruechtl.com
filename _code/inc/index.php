@@ -6,7 +6,7 @@ if( !empty(SECTION) ){
 }
 if( !empty(CONTEXT_PATH) ){
 	if(CONTEXT_PATH !== SECTION){
-		$description = filename(str_replace('/', ' ', CONTEXT_PATH), 'decode');
+		$description = filename(str_replace(array('content/', '/'), array('', ' '), CONTEXT_PATH), 'decode');
 	}else{
 		$description = filename(SECTION, 'decode');
 	}

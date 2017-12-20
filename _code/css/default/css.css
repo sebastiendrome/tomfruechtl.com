@@ -59,3 +59,5 @@ u{color:#000;}
 
 .clearBoth{clear:both;}
 
+div.txt, div.html{border:1px solid #ccc; padding:20px;}
+
