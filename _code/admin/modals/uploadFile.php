@@ -1,8 +1,7 @@
 <?php
 // upload file modal
-session_start();
-require('../not_logged_in.php');
 require($_SERVER['DOCUMENT_ROOT'].'/_code/inc/first_include.php');
+require(ROOT.'_code/admin/not_logged_in.php');
 
 $max_upload_size = ini_get('upload_max_filesize');
 
@@ -30,9 +29,10 @@ $split_types = explode('|', $supported_types);
 <div class="modal" id="uploadFileContainer">
 	<a href="javascript:;" class="closeBut">&times;</a>
 	<h3>Upload File:</h3>
-	<p>Supported File Types: <?php echo implode(', ', $split_types); ?><br>
+	<p>Supported File Types:<br>
+		<?php echo implode(',', $split_types); ?><br>
 	Maximum Upload Size: <?php echo $max_upload_size; ?><br>
-	Recommended image size: 1500 &times; 1500px, or 2MB.</p>
+	Recommended image size: 2000 &times; 2000px, or ± 2MB.</p>
 	<div class="tip">
 		<a href="javascript:;" class="tipTitle">How to best optimize images for the web, using Photoshop</a>
 		<ol>

@@ -1,7 +1,8 @@
 <?php
 // delete file form POST process (from deleteFile.php, modal window)
-session_start();
-require('not_logged_in.php');
+require($_SERVER['DOCUMENT_ROOT'].'/_code/inc/first_include.php');
+require(ROOT.'_code/admin/not_logged_in.php');
+require(ROOT.'_code/admin/admin_functions.php');
 
 $referer = preg_replace('/\?.*$/', '', $_SERVER['HTTP_REFERER'] );
 $page = basename($referer);
@@ -13,9 +14,6 @@ if($page !== 'manage_contents.php' && $page !== 'manage_structure.php'){
 
 // DELETE FILE form process
 if(isset($_POST['deleteFile']) && !empty($_POST['deleteFile'])){
-	require($_SERVER['DOCUMENT_ROOT'].'/_code/inc/first_include.php');
-	require(ROOT.'_code/admin/admin_functions.php');
-	
 	$message = delete_file( urldecode($_POST['deleteFile']) );
 	header('location: '.$referer.'?message='.urlencode($message));
 	exit;

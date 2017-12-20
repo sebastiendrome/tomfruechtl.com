@@ -1,7 +1,7 @@
 <?php
 // delete section modal
-session_start();
-require('../not_logged_in.php');
+require($_SERVER['DOCUMENT_ROOT'].'/_code/inc/first_include.php');
+require(ROOT.'_code/admin/not_logged_in.php');
 
 // for creating sub-sections, we need the parent section:
 if(isset($_GET['parent']) && !empty($_GET['parent']) && $_GET['parent'] != 'undefined' ){

@@ -78,6 +78,11 @@ function sanitize_text($input){
 	return $input;
 }
 
+// sanitize html content
+function sanitize_html($input){
+	
+}
+
 // generate menu file output from 3D array
 function array_to_menu_file($menu_array){
 	$menu_file = '';
@@ -123,6 +128,8 @@ function array_keys_deep($deep_array, $path_array, $n = 0, $length){
 	}
 	return $return_array;
 }
+
+
 
 
 
@@ -327,11 +334,29 @@ function display_content_admin($path = '', $menu_array = ''){
 						// url link to file
 						$file_link = str_replace(ROOT, '' , $item);
 						$display_file = '<img src="/'.$file_link.'?rand='.rand(111,999).'" id="'.$file_name.'">';
+						
 					}else{
 						$item = $path.'/_XL/'.$key;
 						// url link to file
 						$file_link = str_replace(ROOT, '' , $item);
-						$display_file = '<img src="/_code/images/'.substr($ext,1).'.png" id="'.$file_name.'">';
+						
+						if( preg_match($_POST['types']['audio_types'], $ext) ){ // audio
+							$item = $path.'/_S/'.$key;
+							if($ext == '.mp3' || $ext == '.mpeg'){
+								$media_type = 'mpeg';
+							}elseif($ext == 'ogg'){
+								$media_type = 'ogg';
+							}elseif($ext == 'wav'){
+								$media_type = 'wav';
+							}
+							$display_file = '<audio controls>
+							<source src="/'.$file_link.'" type="audio/'.$media_type.'">
+							<img src="/_code/images/'.substr($ext,1).'.png" id="'.$file_name.'">
+							</audio>';
+						
+						}else{
+							$display_file = '<img src="/_code/images/'.substr($ext,1).'.png" id="'.$file_name.'">';
+						}
 					}
 					
 					
@@ -436,11 +461,6 @@ function display_content_admin($path = '', $menu_array = ''){
 	
 	return $display;
 }
-
-
-
-
-
 
 
 

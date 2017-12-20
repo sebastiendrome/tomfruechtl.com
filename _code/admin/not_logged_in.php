@@ -2,7 +2,6 @@
 if( !isset($_SESSION) ){
 	session_start();
 }
-
 // initialize vars.
 $message = '';
 $logged_in = FALSE; // let's assume we're not logged in yet...
@@ -25,8 +24,8 @@ if( isset($_POST['login']) ){
 if( 
 	isset($_SESSION['kftgrnpoiu']) 
 	&& isset($_SESSION['userName']) 
-	&& sha1($_SESSION['kftgrnpoiu']) == '909cf00831cd2986b9758dd25faf468f9feb8dfd' 
-	&& sha1($_SESSION['userName']) == '2b0be9473cc9a5842ceb7f4fd2e50e35d9342c3c'
+	&& sha1($_SESSION['kftgrnpoiu']) == $admin_password 
+	&& sha1($_SESSION['userName']) == $admin_username
 ){
 	$logged_in = TRUE; // this will grant us access
 
@@ -44,7 +43,7 @@ $login_form = '
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link href="/_code/css/css.css" rel="stylesheet" type="text/css">
+<link href="/_code/css/default/css.css" rel="stylesheet" type="text/css">
 </head>
 <body style="background-color:#ccc;">
 

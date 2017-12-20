@@ -1,8 +1,7 @@
 <?php
-session_start();
-require('not_logged_in.php');
-require('../inc/first_include.php');
-require('admin_functions.php');
+require($_SERVER['DOCUMENT_ROOT'].'/_code/inc/first_include.php');
+require(ROOT.'_code/admin/not_logged_in.php');
+require(ROOT.'_code/admin/admin_functions.php');
 
 $title = 'ADMIN : Site Structure :';
 $description = '';
@@ -59,13 +58,12 @@ require(ROOT.'_code/inc/doctype.php');
 <div id="adminContainer">
 	
 	<span class="title">ADMIN - Site Structure</span> <a href="javascript:;" class="button showModal" rel="createSection">[+]create new section</a> <a href="?logout" class="button" style="float:right;">-> logout</a>
-	<br><span id="message">
+	<div class="clearBoth" id="message" style="margin:20px 0;">
 		<?php if( isset($message) ){
 			echo $message;
 		}
 		?>
-	</span>
-	<br>
+	</div>
 	&nbsp;(english, Deustch)
 	
 	<div id="structureContainer">

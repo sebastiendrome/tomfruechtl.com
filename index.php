@@ -1,8 +1,8 @@
 <?php
 require('_code/inc/first_include.php');
 
-$title = USER_NAME.' Artist Portfolio';
-$description = USER_NAME;
+$title = $user.' Artist Portfolio';
+$description = $user;
 $page = 'home';
 
 // social image (for meta property="og:image") is the background image in home page...

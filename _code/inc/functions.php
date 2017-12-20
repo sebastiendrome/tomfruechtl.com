@@ -151,18 +151,35 @@ function display_content_array($path, $menu_array = ''){
 					$file_link = str_replace(ROOT, '' , $item);
 					$display_file = '<a href="/_zoom.php?img='.urlencode($file_link).'"><img src="/'.$file_link.'" alt="'.$alt.'" class="zoom" style="max-width:'.$w.'px"></a>';
 				
-				}else{
+				}else{ // non-images: 
+					
+					// the file is located in _XL directory (no various sizes)
 					$item = $path.'/_XL/'.$file_name;
 					// url link to file
 					$file_link = str_replace(ROOT, '' , $item);
-					if($ext == '.txt'){
+					
+					if( preg_match($_POST['types']['audio_types'], $ext) ){ // audio
+						if($ext == '.mp3' || $ext == '.mpeg'){
+							$media_type = 'mpeg';
+						}elseif($ext == 'ogg'){
+							$media_type = 'ogg';
+						}elseif($ext == 'wav'){
+							$media_type = 'wav';
+						}
+						$display_file = '<audio controls>
+						<source src="/'.$file_link.'" type="audio/'.$media_type.'">
+						Your browser does not support the audio element.
+						</audio>';
+						
+					}elseif($ext == '.txt'){ // txt
 						$display_file = '<div style="border:1px solid #ccc; padding:20px;">'.my_nl2br( sanitize_text( file_get_contents($item) ) ).'</div>';
-					}/*elseif($ext == '.html'){
+					
+					/*}elseif($ext == '.html'){ // html
 						$display_file = '<iframe src="/'.$file_link.'" style="width:100%; height:'.$_POST['sizes'][substr(SIZE,1)]['height'].'px; border:1px solid #ccc;">
 						This browser does not support PDFs. Please download the PDF to view it: <a href="'.$file_link.'">Download PDF</a>
 						</iframe>';
-					
-					}*/else{
+					*/
+					}else{ // other
 						$display_file = '<a href="/'.$file_link.'" target="_blank">
 						<img src="/_code/images/'.substr($ext,1).'.png" class="icon" id="'.$file_name.'">
 						</a>';

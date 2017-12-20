@@ -1,18 +1,25 @@
 <?php
-// site and user name
-define("USER_NAME", 'Tom Früchtl');
+session_start();
+// initialize site 
+define("SITE", $_SERVER['HTTP_HOST'].'/');
 
-// php root, local vs. remote
-if(strstr($_SERVER['HTTP_HOST'],'.local')){ // local server
-	define("SITE", 'tomfruechtl.com/');
+// php root and error reporting, local vs. remote
+if( strstr($_SERVER['HTTP_HOST'],'.local') ){ 	// local server
     define("ROOT", '/Users/seb/Sites/'.SITE);
-	ini_set( 'error_reporting', E_ALL );
+	ini_set('error_reporting', E_ALL);
 	ini_set('display_errors', 1);
-}else{ // remote server
-	define("SITE", 'tomfruechtl.com/');
+	define( 'DISPLAY_DEBUG', TRUE );
+	define( 'LOG_ERRORS', TRUE );
+}else{ 											// remote server
     define("ROOT", '/home/public/');
 	ini_set('display_errors', 0);
+	define("SEND_ERRORS_TO", 'sebdedie@gmail.com');
+	define( 'DISPLAY_DEBUG', FALSE );
+	define( 'LOG_ERRORS', TRUE );
 }
+
+// site style sheet
+define("CSS", 'default');
 
 // reference paths
 define("FULL_PATH", getcwd());
@@ -64,13 +71,15 @@ define("SIZE", $size);
 // FILE TYPES
 $types = array();
 // ALL
-$types['supported_types'] = '/^\.(s?html?|txt|rtf|jpe?g?|png|gif|pdf)$/i';
+$types['supported_types'] = '/^\.(s?html?|txt|rtf|jpe?g?|png|gif|pdf|docx?|odt|mp3|mpe?g|ogg|wav)$/i';
 // TEXT
 $types['text_types'] = '/^\.(s?html?|txt|rtf)$/i';
 // html mode
 $types['html_mode_types'] = '/^\.(s?html?)$/i';
 // text mode
 $types['text_mode_types'] = '/^\.(txt|rtf)$/i';
+// audio
+$types['audio_types'] = '/^\.(mp3|mpe?g|ogg|wav)$/i';
 // images
 $types['image_types'] = '/^\.(jpe?g?|png|gif|pdf)$/i';
 // re-sizable
@@ -89,6 +98,10 @@ $_POST['sizes'] = $sizes;
 // set allowed tags for strip_tags function, used for validating user txt input
 define("ALLOWED_TAGS", '<b><strong><br><u><i><a>');
 
+// error handler
+require(ROOT.'_code/errors.php');
+// require custom parameters set by user (username, css style, admin creds...)
+require(ROOT.CONTENT.'user_custom.php');
 // require common functions
 require(ROOT.'_code/inc/functions.php');
-?>
+

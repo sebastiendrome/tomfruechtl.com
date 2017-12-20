@@ -1,9 +1,7 @@
 <?php
-session_start();
-require('not_logged_in.php');
-
-require('../inc/first_include.php');
-require('admin_functions.php');
+require($_SERVER['DOCUMENT_ROOT'].'/_code/inc/first_include.php');
+require(ROOT.'_code/admin/not_logged_in.php');
+require(ROOT.'_code/admin/admin_functions.php');
 
 ini_set('upload_max_filesize', '20M');
 ini_set('post_max_size', '21M');
@@ -35,6 +33,14 @@ if(isset($_GET['item'])){
 }elseif(isset($_SESSION['item'])){
 	$item = $_SESSION['item'];
 }
+
+// security check, or if user deleted a section that is still in memory session
+if( !is_dir(ROOT.$item) ){
+	unset($_SESSION['item']);
+	header("location: manage_structure.php");
+	exit;
+}
+
 if(!isset($item)){
 	header("location: manage_structure.php");
 	exit;
@@ -59,14 +65,12 @@ require(ROOT.'_code/inc/doctype.php');
 	
 	<span class="title"><a href="<?php echo $back_link; ?>">&larr; back</a> | <?php echo $description; ?></span> 
 	<a href="javascript:;" class="button showModal" rel="uploadFile?path=<?php echo urlencode(ROOT.$item); ?>">[+]upload new file</a> <a href="?logout" class="button" style="float:right;">-> logout</a>
-	<br>
-	<br><span id="message">
+	<div class="clearBoth" id="message" style="margin:20px 0;">
 		<?php if( isset($message) ){
 			echo $message;
 		}
 		?>
-	</span>
-	<br>
+	</div>
 	
 	<div id="contentContainer">
 		<div id="ajaxTarget">

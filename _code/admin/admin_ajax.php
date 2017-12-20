@@ -1,8 +1,6 @@
 <?php
-session_start();
-require('not_logged_in.php');
-
-require('../inc/first_include.php');
+require($_SERVER['DOCUMENT_ROOT'].'/_code/inc/first_include.php');
+require(ROOT.'_code/admin/not_logged_in.php');
 require(ROOT.'_code/admin/admin_functions.php');
 
 /*********************** manage STRUCTURE ajax calls ***************************************/

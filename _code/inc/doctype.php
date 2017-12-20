@@ -29,7 +29,7 @@ if( isset($social_image) && !empty($social_image) ){ ?>
 <title><?php echo $title; ?></title>
 
 
-<link href="/_code/css/css.css?v=7" rel="stylesheet" type="text/css">
+<link href="/_code/css/<?php echo $css; ?>/css.css?v=8" rel="stylesheet" type="text/css">
 
 <style type="text/css">
 /* limit container width depending on screen size and resulting SIZE var defined in first_include. */
@@ -37,8 +37,9 @@ if( isset($social_image) && !empty($social_image) ){ ?>
 
 </style>
 
-<link rel="stylesheet" media="(max-width: 980px)" href="/_code/css/max-980px.css">
-<link rel="stylesheet" media="(max-width: 720px)" href="/_code/css/max-720px.css">
+<!-- load responsive design style sheets -->
+<link rel="stylesheet" media="(max-width: 980px)" href="/_code/css/<?php echo $css; ?>/max-980px.css">
+<link rel="stylesheet" media="(max-width: 720px)" href="/_code/css/<?php echo $css; ?>/max-720px.css">
 
 </head>
 

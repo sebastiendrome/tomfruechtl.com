@@ -1,8 +1,8 @@
 <?php
 if( !empty(SECTION) ){
-	$title = USER_NAME.' '.filename(SECTION, 'decode').'.';
+	$title = $user.' '.filename(SECTION, 'decode').'.';
 }else{
-	$title = USER_NAME.' Artist Portfolio.';
+	$title = $user.' Artist Portfolio.';
 }
 if( !empty(CONTEXT_PATH) ){
 	if(CONTEXT_PATH !== SECTION){
