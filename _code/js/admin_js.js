@@ -3,7 +3,7 @@
 // change input NAME
 $('#structureContainer').on('change', 'input.nameInput', function() {
 	var oldName = $(this).parent().data("name");
-	var newName = $(this).attr("value");
+	var newName = $(this).val();
 	var parent = $(this).parents('ul').parents('li').data("name"); // get parent name in case this is a sub-section
 	//alert(parent+' > '+oldName);
 	// add underscore to newName if necessary
@@ -28,7 +28,7 @@ $('#structureContainer, #contentContainer').on('change', 'input.position', funct
 	var item = $(this).data("item");
 	var oldPosition = $(this).data("oldposition");
 	//alert(parent+' > '+item+' -> '+oldPosition);
-	var newPosition = $(this).attr("value");
+	var newPosition = $(this).val();
 	updatePosition(item, oldPosition, newPosition, parent, adminPage);
 });
 
@@ -147,7 +147,7 @@ function showHide(item, parent){
 	});
 }
 
-// show / hide item
+// rotate image /****** NOT WORKING *******/
 function rotateImg(image){
 	var image = encodeURIComponent(image);
 	$.ajax({

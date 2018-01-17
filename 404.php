@@ -33,8 +33,8 @@ require(ROOT.'_code/inc/nav.php');
 
 <!-- start content -->
 <div id="content">
-<div style="padding:100px; color:#fff; text-shadow:2px 2px 5px #777; text-align:center; font-size:70px;">404:<br>
-page not found...</div>
+<div style="padding:30px; color:#fff; text-shadow:1px 1px 1px #444; text-align:center; font-size:100px;">404:<br>
+page not found</div>
 </div><!-- end content -->
 
 <div class="clearBoth"></div>

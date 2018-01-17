@@ -84,7 +84,7 @@ function log_custom_error($error, $errlvl){
 
 	if(LOG_ERRORS){
 
-		$logfile = ROOT.'content/hGtDjkpPWSXk.php';
+		$logfile = ROOT.CONTENT.'hGtDjkpPWSXk.php';
 		$message = strip_tags( $message, '<p><br>' );
 		$message = str_replace( array( '<p>', '</p>', '<br />', '<br>' ), PHP_EOL, $message );
 		// add HTTP_REF (added aug 4 2014)

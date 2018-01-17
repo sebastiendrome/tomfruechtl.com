@@ -71,13 +71,13 @@ define("SIZE", $size);
 // FILE TYPES
 $types = array();
 // ALL
-$types['supported_types'] = '/^\.(s?html?|txt|rtf|jpe?g?|png|gif|pdf|docx?|odt|mp3|mpe?g|ogg|wav)$/i';
+$types['supported_types'] = '/^\.(s?html?|txt|jpe?g?|png|gif|pdf|docx?|msword|odt|mp3|mpe?g|ogg|wav)$/i';
 // TEXT
-$types['text_types'] = '/^\.(s?html?|txt|rtf)$/i';
+$types['text_types'] = '/^\.(s?html?|txt)$/i';
 // html mode
 $types['html_mode_types'] = '/^\.(s?html?)$/i';
 // text mode
-$types['text_mode_types'] = '/^\.(txt|rtf)$/i';
+$types['text_mode_types'] = '/^\.txt$/i';
 // audio
 $types['audio_types'] = '/^\.(mp3|mpe?g|ogg|wav)$/i';
 // images
@@ -96,12 +96,14 @@ $sizes['S'] = array("width"=>300, "height"=>250);
 $_POST['sizes'] = $sizes;
 
 // set allowed tags for strip_tags function, used for validating user txt input
-define("ALLOWED_TAGS", '<b><strong><br><u><i><a>');
+define("ALLOWED_TAGS", '<b><strong><br><u><i><a><h1><h2><h3><span><div>');
 
 // error handler
 require(ROOT.'_code/errors.php');
 // require custom parameters set by user (username, css style, admin creds...)
 require(ROOT.CONTENT.'user_custom.php');
+define("FIRST_LANG", $first_lang);
+define("SECOND_LANG", $second_lang);
 // require common functions
 require(ROOT.'_code/inc/functions.php');
 

@@ -28,13 +28,12 @@ if( isset($social_image) && !empty($social_image) ){ ?>
 ?>
 <title><?php echo $title; ?></title>
 
-
-<link href="/_code/css/<?php echo $css; ?>/css.css?v=8" rel="stylesheet" type="text/css">
+<link href="/content/custom.css?v=2" rel="stylesheet" type="text/css">
+<link href="/_code/css/<?php echo $css; ?>/css.css?v=12" rel="stylesheet" type="text/css">
 
 <style type="text/css">
 /* limit container width depending on screen size and resulting SIZE var defined in first_include. */
 #content{max-width:<?php echo $_POST['sizes'][substr(SIZE,1)]['width']; ?>px;}
-
 </style>
 
 <!-- load responsive design style sheets -->
@@ -43,4 +42,4 @@ if( isset($social_image) && !empty($social_image) ){ ?>
 
 </head>
 
-<body<?php if(isset($page) && $page == 'home'){echo ' style="background: url(/_code/images/home/'.$home_image.') no-repeat; background-size:100%;"';}?>>
+<body<?php if(isset($page) && $page == 'home'){echo ' style="background-image: url(/content/'.$home_image.'); background-repeat:no-repeat; background-size:100%;"';}?>>

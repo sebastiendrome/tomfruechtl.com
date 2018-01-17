@@ -10,7 +10,7 @@
 #nav, .backTitle{background-color:rgba(255, 255, 255, .9);}
 .backTitle{left:0; margin:44px 0 0 10px;}
 .backTitle.zoomPage{margin:0;}
-div#mobileMenu{visibility:visible;}
+#mobileMenu{visibility:visible;}
 #container{padding-left:0; padding-top:44px;}
 #footer{padding-left:10px;}
 #bigImgContainer{margin-top:47px;}

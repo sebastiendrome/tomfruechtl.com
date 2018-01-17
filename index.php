@@ -6,15 +6,15 @@ $description = $user;
 $page = 'home';
 
 // social image (for meta property="og:image") is the background image in home page...
-if( file_exists( ROOT.'_code/images/home/bg.jpg') ){
+if( file_exists( ROOT.CONTENT.'bg.jpg') ){
 	$home_image = 'bg.jpg';
-}elseif( file_exists( ROOT.'_code/images/home/bg.gif') ){
+}elseif( file_exists( ROOT.CONTENT.'bg.gif') ){
 	$home_image = 'bg.gif';
-}elseif( file_exists( ROOT.'_code/images/home/bg.png') ){
+}elseif( file_exists( ROOT.CONTENT.'bg.png') ){
 	$home_image = 'bg.png';
 }
 if( isset($home_image) ){
-	$social_image = 'http://'.SITE.'_code/images/home/'.$home_image;
+	$social_image = ROOT.CONTENT.$home_image;
 }
 
 

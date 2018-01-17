@@ -83,12 +83,54 @@ function sanitize_html($input){
 	
 }
 */
-/*
-function display_file(){
-	$display_file = '';
+
+// display file
+function display_file_admin($path, $file_name){
+	$ext = file_extension($file_name);
 	
+	// various ways to display file depending on extension
+	if( preg_match($_POST['types']['resizable_types'], $ext) ){
+		$item = $path.'/_S/'.$file_name;
+		// url link to file
+		$file_link = str_replace(ROOT, '' , $item);
+		$display_file = '<a href="/'.str_replace('/_S/', '/_XL/', $file_link).'" title="open in new window" target="_blank"><img src="/'.$file_link.'?rand='.rand(111,999).'" id="'.$file_name.'"></a>';
+		
+	}else{
+		// if not an image, the file is in the _XL directory (no various sizes)
+		$item = $path.'/_XL/'.$file_name;
+		// url link to file
+		$file_link = str_replace(ROOT, '' , $item);
+		
+		if( preg_match($_POST['types']['audio_types'], $ext) ){ // audio, show <audio>
+			
+			if($ext == '.mp3' || $ext == '.mpeg'){
+				$media_type = 'mpeg';
+			}elseif($ext == 'ogg'){
+				$media_type = 'ogg';
+			}elseif($ext == 'wav'){
+				$media_type = 'wav';
+			}
+			$display_file = '<audio controls>
+			<source src="/'.$file_link.'" type="audio/'.$media_type.'">
+			<a href="/'.$file_link.'" title="open in new window" target="_blank"><img src="/_code/images/'.substr($ext, 1).'.png" id="'.$file_name.'"></a>
+			</audio>';
+		
+		}elseif($ext == '.txt'){ // txt
+			$display_file = '<div class="txt admin">'.my_nl2br( strip_tags( file_get_contents($item) , ALLOWED_TAGS ) ).'</div>';
+		
+		}elseif($ext == '.html'){ // html
+			$display_file = '<div class="html admin">'.strip_tags( file_get_contents($item) , ALLOWED_TAGS ).'</div>';
+		
+		}else{
+			$display_file = '<a href="/'.str_replace('/_S/', '/_XL/', $file_link).'" title="open in new window" target="_blank"><img src="/_code/images/'.substr($ext,1).'.png" id="'.$file_name.'"></a>';
+		}
+	}
+	if( !isset($display_file) || empty($display_file) ){
+		$display_file = '<p class="error">Cannot display '.$path.$file_name.'</p>';
+	}
+	return $display_file;
 }
-*/
+
 
 // generate menu file output from 3D array
 function array_to_menu_file($menu_array){
@@ -185,15 +227,15 @@ function site_structure($menu_array = '', $currentItem = ''){
 			<input type="text" class="nameInput" name="'.$key.'" value="'.$name.'"> <input type="text" class="position" name="order'.$key.'" value="'.$n.'" data-parent="undefined" data-item="'.$key.'" data-oldposition="'.$n.'">
 			<a href="javascript:;" class="up" title="move up">∧</a>
 			<a href="javascript:;" class="down" title="move down">∨</a> 
-			<a href="manage_contents.php?item='.$path.'" class="view">edit content</a> <a href="javascript:;" class="newSub showModal" rel="createSection?parent='.urlencode($key).'">↓create sub-section</a>
+			<a href="manage_contents.php?item='.$path.'">edit content</a> <a href="javascript:;" class="newSub showModal" rel="createSection?parent='.urlencode($key).'">↓create sub-section</a>
 			<a href="javascript:;" class="'.$sh_class.'" title="'.$sh_title.'">'.$show_hide.'</a> 
 			<a href="javascript:;" class="delete showModal" rel="deleteSection?deleteSection='.urlencode($key).'">[x]delete</a>'.PHP_EOL;
 			
-			if(!empty($var)){ // section contents
+			if(!empty($var)){ // section contains something
 				
 				$site_structure .= '<ul>'.PHP_EOL;
 				
-				// sub-sections: class="sub"
+				// section contents
 				foreach($var as $k => $v){
 					
 					// ignore empty items
@@ -222,7 +264,7 @@ function site_structure($menu_array = '', $currentItem = ''){
 							
 							// html output for a sub-section
 							$site_structure .= '<li class="sub'.$status.'" data-name="'.$k.'" data-position="'.$s.'"><input type="text" class="nameInput" name="'.$k.'" value="'.$name.'"> <input type="text" class="position" name="order'.$k.'" value="'.$s.'" data-parent="'.$key.'" data-item="'.$k.'" data-oldposition="'.$s.'"><a href="javascript:;" class="up" title="move up">∧</a><a href="javascript:;" class="down" title="move down">∨</a> 
-							<a href="manage_contents.php?item='.$path.$subpath.'" class="view">edit content</a> <a href="javascript:;" class="'.$sh_class.'" title="hide this from the public, without deleting it.">'.$show_hide.'</a> <a href="javascript:;" class="delete showModal" rel="deleteSection?parent='.urlencode($key).'&deleteSection='.urlencode($k).'">[x]delete</a></li>'.PHP_EOL;
+							<a href="manage_contents.php?item='.$path.$subpath.'">edit content</a> <a href="javascript:;" class="'.$sh_class.'" title="hide this from the public, without deleting it.">'.$show_hide.'</a> <a href="javascript:;" class="delete showModal" rel="deleteSection?parent='.urlencode($key).'&deleteSection='.urlencode($k).'">[x]delete</a></li>'.PHP_EOL;
 						
 						// files
 						}else{
@@ -242,15 +284,21 @@ function site_structure($menu_array = '', $currentItem = ''){
 							
 							$txt_file_name = preg_replace('/'.preg_quote($ext).'/', '.txt', $k);
 							$txt_file = ROOT.CONTENT.filename($en, 'encode').'/en/'.$txt_file_name;
-							$description = strip_tags( file_get_contents($txt_file) );
+							if( file_exists($txt_file) ){
+								$description = strip_tags( file_get_contents($txt_file) );
+							}else{
+								$description = '';
+							}
+							
 							if(empty($description)){
 								$description = filename($k, 'decode');
 							}else{
 								$description = str_replace(array("\'", '\"'), array('&#39;','&quot;'), $description);
 								$description = substr($description, 0, 35);
 							}
-							$site_structure .= '<li data-name="'.$k.'" data-position="'.$s.'"><span  class="imgInput" style="background-image:url(/'.$display_file.');">'.$description.'</span>
+							$site_structure .= '<li data-name="'.$k.'" data-position="'.$s.'"><span class="imgInput" style="background-image:url(/'.$display_file.');">'.$description.'</span>
 							<input type="text" class="position" name="order'.$k.'" value="'.$s.'" data-parent="'.$key.'" data-item="'.$k.'" data-oldposition="'.$s.'"><a href="javascript:;" class="up" title="move up">∧</a><a href="javascript:;" class="down" title="move down">∨</a> 
+							<a href="manage_contents.php?item='.$path.'#'.preg_replace('/[^A-Za-z0-9]/', '', $k).'">edit</a> 
 							<a href="javascript:;" class="delete showModal" rel="deleteFile?parent='.urlencode($key).'&file='.urlencode(ROOT.$file).'">[x]delete</a></li>'.PHP_EOL;
 						}
 						
@@ -293,7 +341,7 @@ function display_content_admin($path = '', $menu_array = ''){
 		// and generate sub-array of items accordingly
 		foreach($menu_array as $k => $v){
 			//$display .=  $k.'<br>';
-			if( strstr($k, filename($depth, 'decode').',') ){
+			if( preg_match('/^'.preg_quote(filename($depth, 'decode')).',/', $k) ){
 				$parent = $k;
 				$depth_array = $menu_array[$k];
 				$split = explode(',', $k); // split two sides of the sub-section name, to get english and german versions
@@ -302,7 +350,7 @@ function display_content_admin($path = '', $menu_array = ''){
 				// else, attempt to match current directory to second level of menu_array(=menu_array[key][val])
 				// and generate sub-sub array of items accordingly
 				foreach($v as $vk => $vv){
-					if( strstr($vk, filename($depth, 'decode').',') ){
+					if( preg_match('/^'.preg_quote(filename($depth, 'decode')).',/', $vk) ){
 						$parent = $k.'/'.$vk;
 						$depth_array = $menu_array[$k][$vk];
 						$split = explode(',', $vk); // split two sides of the sub-section name, to get english and german versions
@@ -323,53 +371,27 @@ function display_content_admin($path = '', $menu_array = ''){
 		foreach($depth_array as $key => $val){
 			
 			// ignore empty array keys (empty line in menu.txt file)
-			if(!empty($key)){
+			if( !empty($key) ){
 				
 				$n++;
-				$display .= '<li>'.PHP_EOL;
+				$display .= '<li><a name="'.preg_replace('/[^A-Za-z0-9]/', '', $key).'"></a>'.PHP_EOL;
 				
-				// files
-				if(!strstr($key, ',')){
+				// FILES
+				if( !strstr($key, ',') ){
 					
-					// file name
-					$file_name = $key;
-					$ext = file_extension($file_name);
+					$ext = file_extension($key);
+					$item = $path.'/_S/'.$key;
+					
+					$display_file = display_file_admin($path, $key);
 					
 					// various ways to display file depending on extension
-					if( preg_match($_POST['types']['resizable_types'], $ext) ){
-						$item = $path.'/_S/'.$key;
-						// url link to file
-						$file_link = str_replace(ROOT, '' , $item);
-						$display_file = '<a href="/'.str_replace('/_S/', '/_XL/', $file_link).'" title="open in new window" target="_blank"><img src="/'.$file_link.'?rand='.rand(111,999).'" id="'.$file_name.'"></a>';
-						
-					}else{
-						// if not an image, the file is in the _XL directory (no various sizes)
+					if( !preg_match($_POST['types']['resizable_types'], $ext) ){
 						$item = $path.'/_XL/'.$key;
-						// url link to file
-						$file_link = str_replace(ROOT, '' , $item);
-						
-						if( preg_match($_POST['types']['audio_types'], $ext) ){ // audio
-							$item = $path.'/_S/'.$key;
-							if($ext == '.mp3' || $ext == '.mpeg'){
-								$media_type = 'mpeg';
-							}elseif($ext == 'ogg'){
-								$media_type = 'ogg';
-							}elseif($ext == 'wav'){
-								$media_type = 'wav';
-							}
-							$display_file = '<audio controls>
-							<source src="/'.$file_link.'" type="audio/'.$media_type.'">
-							<a href="/'.str_replace('/_S/', '/_XL/', $file_link).'" title="open in new window" target="_blank"><img src="/_code/images/'.substr($ext,1).'.png" id="'.$file_name.'"></a>
-							</audio>';
-						
-						}else{
-							$display_file = '<a href="/'.str_replace('/_S/', '/_XL/', $file_link).'" title="open in new window" target="_blank"><img src="/_code/images/'.substr($ext,1).'.png" id="'.$file_name.'"></a>';
-						}
 					}
-					
+					$file_link = str_replace(ROOT, '' , $item);
 					
 					// get text description english and deutsch versions
-					$txt_filename = preg_replace('/'.preg_quote($ext).'/', '.txt', $file_name);
+					$txt_filename = preg_replace('/'.preg_quote($ext).'/', '.txt', $key);
 					$en_file = $path.'/en/'.$txt_filename;
 					$de_file = $path.'/de/'.$txt_filename;
 					
@@ -389,25 +411,29 @@ function display_content_admin($path = '', $menu_array = ''){
 					$de = stripslashes( my_br2nl( file_get_contents($de_file) ) );
 					
 					// html output for a file
-					$display .= '<div class="imgContainer" data-file_path="'.$item.'">file: <span style="color:#aaa;">'.filename($file_name, 'decode').'</span><br>';
+					$display .= '<div class="imgContainer" data-file_path="'.$item.'">file:<br><span style="color:#aaa;">'.filename($key, 'decode').'</span><br>';
 					$display .= $display_file;
 					$display .= '<p style="clear:both;">position: <input type="text" class="position" name="order'.$item.'" value="'.$n.'" data-oldposition="'.$n.'" data-parent="'.$parent.'" data-item="'.$key.'">
 					<a href="javascript:;" class="up" title="move up">∧</a><a href="javascript:;" class="down" title="move down">∨</a></p>
 					<p>
 					<!--<a href="/_code/admin/rotate_image.php?image='.$item.'" class="button rotate" data-image="'.$item.'" style="margin-left:0;"><img src="images/img-rotate.png" style="border:none; background:none; display:inline;"> rotate</a>-->
-					<a href="javascript:;" class="button replace showModal" rel="uploadFile?path='.urlencode(ROOT.$_SESSION['item']).'&replace='.urlencode($item).'">replace</a> 
-					<a href="javascript:;" class="button cancel delete showModal" rel="deleteFile?file='.urlencode($item).'" style="margin-right:0;">delete</a>
-					</p>
+					<a href="javascript:;" class="button replace showModal" style="margin-left:0;"  rel="uploadFile?path='.urlencode(ROOT.$_SESSION['item']).'&replace='.urlencode($item).'">replace</a> 
+					<a href="javascript:;" class="button cancel delete showModal" rel="deleteFile?file='.urlencode($item).'" style="margin-right:0;">delete</a>';
+					if( preg_match($_POST['types']['text_types'], $ext) ){ // txt
+						$display .= '<a class="button submit" href="/_code/admin/editText.php?item='.urlencode($item).'" style="float:right;">Edit Text</a>';
+					}
+					
+					$display .= '</p>
 					</div>';
 					// texts
 					$display .= '<div class="actions">
 					<input type="hidden" class="file" value="'.$item.'">
-					description: <span style="color:#aaa; display:inline-block; float:right;">allowed tags: '.str_replace(array('<','>'), array('&lt;', '&gt;'), ALLOWED_TAGS).'</span><br><br>';
+					description: <span style="color:#bbb; display:inline-block; float:right;">allowed tags: &lt;b>&lt;u>&lt;i>&lt;a></span><br><br>';
 					
-					$display .= '↓english<br>
-					<textarea class="en" name="en_txt">'.$en.'</textarea>
+					$display .= '↓'.FIRST_LANG.'<br>
+					<textarea class="en" name="en_txt" maxlength="300">'.$en.'</textarea>
 					↓Deutsch<br>
-					<textarea class="de" name="de_txt">'.$de.'</textarea>
+					<textarea class="de" name="de_txt" maxlength="300">'.$de.'</textarea>
 					<a href="javascript:;" class="button saveText disabled" style="float:right; margin-top:10px; margin-right:0;">Save changes</a>';
 					$display .= '</div>
 					<div style="clear:both;">&nbsp;</div>';
@@ -796,26 +822,45 @@ function delete_section($parent, $deleteSection){
 function delete_file($delete_file){
 	$message = '';
 	$file_name = basename($delete_file);
+	$ext = file_extension($file_name);
 	
 	// 1. delete files
 	if( file_exists($delete_file) ){
-		$xl_file = str_replace('/_S/', '/_XL/', $delete_file);
-		$m_file = str_replace('/_S/', '/_M/', $delete_file);
-		$l_file = str_replace('/_S/', '/_L/', $delete_file);
-		$txt_file = preg_replace('/\.(jpg|png|gif)$/', '.txt', $file_name );
-		$en_txt = preg_replace('/\/_S\/.*/', '/en/'.$txt_file, $delete_file );
-		$de_txt = preg_replace('/\/_S\/.*/', '/de/'.$txt_file, $delete_file );
-		//echo $en_txt.'<br>';
-		if( unlink($delete_file) ){
-			$message .= '<p class="success">The file has been deleted.</p>';
-			unlink($xl_file);
-			unlink($m_file);
-			unlink($l_file);
-		}else{
-			$message .= '<p class="error">ERROR: The file could not be deleted.</p>';
+		$txt_file = preg_replace('/'.preg_quote($ext).'$/', '.txt', $file_name );
+		if( preg_match($_POST['types']['resizable_types'], $ext) ){ // resizable (images) files
+			// get description files for deletion
+			$en_txt = preg_replace('/\/_S\/.*/', '/en/'.$txt_file, $delete_file );
+			$de_txt = preg_replace('/\/_S\/.*/', '/de/'.$txt_file, $delete_file );
+			// get all sizes for deletion
+			$xl_file = str_replace('/_S/', '/_XL/', $delete_file);
+			$m_file = str_replace('/_S/', '/_M/', $delete_file);
+			$l_file = str_replace('/_S/', '/_L/', $delete_file);
+			
+			if( unlink($delete_file) ){
+				$message .= '<p class="success">The file has been deleted.</p>';
+				// delete all sizes
+				unlink($xl_file);
+				unlink($m_file);
+				unlink($l_file);
+			}else{
+				$message .= '<p class="error">ERROR: The file could not be deleted.</p>';
+			}
+			
+		}else{ // not images... no sizes.
+			// get description files for deletion
+			$en_txt = preg_replace('/\/_XL\/.*/', '/en/'.$txt_file, $delete_file );
+			$de_txt = preg_replace('/\/_XL\/.*/', '/de/'.$txt_file, $delete_file );
+			
+			if( unlink($delete_file) ){
+				$message .= '<p class="success">The file has been deleted.</p>';
+			}else{
+				$message .= '<p class="error">ERROR: The file could not be deleted.</p>';
+			}
 		}
+		
+		// delete description files
 		if(!unlink($en_txt) || !unlink($de_txt)){
-			$message .= '<p class="note">Note: the text description corresponding to the image could not be deleted... </p>';
+			$message .= '<p class="note">Note: the text description corresponding to the file could not be deleted... </p>';
 		}
 	}else{
 		$message .= '<p class="error">ERROR: File does not exist: '.$delete_file.'</p>';
@@ -893,7 +938,77 @@ function save_text_description($file, $en_txt, $de_txt){
 }
 
 
-
+// save text content from text editor
+function save_text_editor($file, $content){
+	$error = $result = '';
+	
+	// check if we're editing a pre-existing txt file, or creating a new one in this section
+	$ext = file_extension(basename($file));
+	if(!$ext){ // no file extension, we'll create a new txt file
+		// add the _XL directory to file path
+		$path = $file.'/_XL/';
+		
+		if( preg_match('/<h\d.*<\/h\d>/is', $content, $matches) ){
+			$clean = preg_replace( '/(\s|<br>)+/', ' ', $matches[0]);	
+		}else{
+			$clean = preg_replace( '/(\s|<br>)+/', ' ', $content);
+		}
+		
+		$new_file_name = filename( substr( strip_tags( trim($clean) ), 0, 22), 'encode' );
+		if( !empty($new_file_name) ){
+			$new_file_name .= '-'.rand(100,999).'.html';
+			$new_file = $path.$new_file_name;
+		}
+	}else{
+		$new_file = $file;
+		$new_file_name = basename($new_file);
+		$path = preg_replace('/'.$new_file_name.'$/', '', $new_file);
+	}
+	
+	
+	
+	// write new content into new file (create it if it does not exist)
+	if($fp = fopen($new_file, 'w')){
+		fwrite($fp, $content);
+		fclose($fp);
+		
+		// update menu
+		$menu = file_get_contents(MENU_FILE);
+		
+		// match $path with menu sections and sub-sections
+		$split = explode('/', $path);
+		$tabs = '';
+		// for each match from path against menu title line, set $match and add a tab 
+		foreach($split as $s){
+			if( !empty($s) ){ // avoid empty lines/matches...
+				if( strstr($menu, filename($s, 'decode').',' ) ){
+					$match = filename($s, 'decode');
+					$tabs .= "\t";
+				}
+			}
+		}
+		
+		$new_content = preg_replace('/('.preg_quote($match).',.*)/', "$1"."\n".$tabs.$new_file_name, $menu);
+		
+		
+		if($fp = fopen(MENU_FILE, 'w') ){
+			fwrite($fp, $new_content);
+			fclose($fp);
+		}else{
+			$error .= 'Could not open menu file';
+		}
+		
+	}else{
+		$error .= 'Could not open '.$file;
+	}
+	
+	if(!empty($error)){
+		$result .= '0|'.$error;
+	}else{
+		$result .= '1|'.$new_file;
+	}
+	return $result;
+}
 
 
 
@@ -915,9 +1030,13 @@ function upload_file($path, $replace){
 		$split = explode('/', $file_type);
 		$ext = '.'.strtolower($split[1]);
 		$ext = str_replace('jpeg', 'jpg', $ext);
-		// Mac .txt files use the "plain" file type (for plain text)!...
+		// Mac .txt files can use the "plain" file type (for plain text)!...
 		if($ext == '.plain' || $ext == '.text'){
 			$ext = '.txt';
+		}
+		// msword file type (can be generated by open office)... and docx can be .doc, to use the doc.png icon...
+		if($ext == '.msword' || $ext == '.docx'){
+			$ext = '.doc';
 		}
 	}else{ // if no metadata, take file extension
 		$ext = file_extension($file_name);

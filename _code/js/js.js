@@ -81,8 +81,5 @@ if (document.documentElement.clientWidth < 720) {
 			$('#nav ul').css('padding-right', 0);
 		}
 	}
-	
 }
- 
-
 

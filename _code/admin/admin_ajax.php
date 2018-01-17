@@ -44,6 +44,14 @@ if(isset($_GET['saveTextDescription'])){
 	$de_txt = urldecode($_GET['deText']);
 	$result = save_text_description($file, $en_txt, $de_txt);
 }
+/*
+// save text description (of files in manage content)
+if(isset($_POST['saveTextEditor'])){
+	$file = urldecode($_POST['item']); // full path to file
+	$content = urldecode($_POST['content']);
+	$result = save_text_editor($file, $content);
+}
+*/
 
 if( isset($result) ){
 	echo $result;

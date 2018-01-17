@@ -1,0 +1,14 @@
+
+
+#textEditorForm textarea{border-color:#fff; width:100%; margin:0; padding:0;}
+#toolbar{position:relative;}
+#toolbar a{display:inline-block; padding:4px; border:1px solid #ccc; background-color:#fff; border-radius:3px;}
+ 
+.textareaContainer{clear:both; margin-top:10px; border:1px solid #ccc; padding:20px; background-color:#fff;}
+
+#toolbar a.wysihtml5-command-active{background-color:#000; color:#fff;}
+
+#workflow{position:absolute; top:-11px; right:-11px;}
+#workflow a{margin-left:-1px; border-radius:0;}
+
+#content{padding:10px;}

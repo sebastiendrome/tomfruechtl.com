@@ -2,19 +2,17 @@
 // delete file modal
 require($_SERVER['DOCUMENT_ROOT'].'/_code/inc/first_include.php');
 require(ROOT.'_code/admin/not_logged_in.php');
+require(ROOT.'_code/admin/admin_functions.php');
 
 // for creating sub-sections, we need the parent section:
 if(isset($_GET['file']) && !empty($_GET['file']) ){
 	$file = urldecode($_GET['file']);
 	$ext = file_extension($file);
 	$file_url = str_replace(ROOT, '', $file);
-	
-	// various ways to display file depending on extension
-	if( preg_match($_POST['types']['resizable_types'], $ext) ){
-		$display_file = '<img src="/'.$file_url.'?rand='.rand(111,999).'" style="border:1px solid #000;">';
-	}else{
-		$display_file = '<img src="/_code/images/'.substr($ext,1).'.png" style="border:1px solid #000;">';
-	}
+	// get file_name and path ready for function display_file_admin
+	$file_name = basename($file_url);
+	$path = preg_replace('/\/(_XL|_S|_M|_L)\/'.preg_quote($file_name).'$/', '', $file);
+	$display_file = display_file_admin($path, $file_name);
 	
 }else{
 	exit;

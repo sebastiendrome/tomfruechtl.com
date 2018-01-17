@@ -8,7 +8,13 @@ require(ROOT.'_code/inc/doctype.php');
 
 if(isset($_GET['img'])){
     $get_img = urldecode($_GET['img']);
-    $img = preg_replace('/\/_(S|M|L)\//', '/_XL/', $get_img);
+	// load different size depending on screen width
+	if(isset($_COOKIE['wW']) && $_COOKIE['wW'] < 800){
+		$dir_size = '_L';
+	}else{
+		$dir_size = '_XL';
+	}
+    $img = preg_replace('/\/_(S|M|L)\//', '/'.$dir_size.'/', $get_img);
 	list($w, $h) = getimagesize(ROOT.$img);
 }
 
@@ -22,6 +28,7 @@ if(LANG == 'en'){
 ?>
 
 <style>
+body, html{height:100%;}
 img#inOut{display:block; margin:auto; max-width:<?php echo $w; ?>px;}
 img.out{width:100%; cursor:zoom-in;}
 img.in{width:auto; cursor:zoom-out;}
@@ -41,21 +48,51 @@ img.in{width:auto; cursor:zoom-out;}
 
 
 
-<?php require(ROOT.'_code/inc/footer.php'); ?>
+<!-- jQuery -->
+<script type="text/javascript" src="/_code/js/jquery-3.2.1.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="/_code/js/js.js?v=4" charset="utf-8"></script>
 
 <script type="text/javascript">
 
-$(document).ready(function(){
+function mousePosImage(mouseX, mouseY, ratio){
+	
+	var newPosX = Math.round(mouseX*ratio);
+	var newPosY = Math.round(mouseY*ratio);
+	
+	//alert(mouseX+' x '+ratio);
+	
+	$('html,body').animate({ scrollLeft:newPosX, scrollTop:newPosY }, 0);
+}
 
-    $('body').on('click', 'img#inOut', function(){
+$(document).ready(function(){
+	
+	var imgW = <?php echo $w; ?>;
+	var imgH = <?php echo $h; ?>;
+	var relImgW = $('#inOut').outerWidth(true);
+	var relImgH = $('#inOut').outerHeight(true);
+	var ratio = imgW/relImgW;
+	
+	$('html,body').animate({ scrollTop: -( wH - relImgH ) / 2  }, 200);
+
+    $('body').on('click', 'img#inOut', function(e){
+		
+		var mouseX = Math.round(e.pageX);
+		//and from the top
+		var mouseY = Math.round(e.pageY);
+		
         if( $(this).hasClass("in") ){ // zoom out
             $(this).removeClass("in").addClass("out");
+			//$('html,body').animate({ scrollTop: $(this).offset().top - ( wH - relImgH ) / 2  }, 200);
+			//mousePosImage(mouseX, mouseY, ratio);
         }else{
             $(this).removeClass("out").addClass("in");// zoom in
+			//mousePosImage(mouseX, mouseY, ratio);
         }
-        //alert($(this).attr("style"));
     });
 });
 
+
 </script>
 
+</body>
+</html>

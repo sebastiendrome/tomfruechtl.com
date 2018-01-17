@@ -16,16 +16,16 @@ if( isset($_GET['logout']) ){
 if( isset($_POST['login']) ){
 	$usr = trim( strip_tags( urldecode($_POST['userName']) ) );
 	$pwd = trim( strip_tags( urldecode($_POST['password']) ) );
-	$_SESSION['userName'] = $usr;
-	$_SESSION['kftgrnpoiu'] = $pwd;
+	$_SESSION['userName'] = sha1($usr);
+	$_SESSION['kftgrnpoiu'] = sha1($pwd);
 }
 
 // successful login
 if( 
-	isset($_SESSION['kftgrnpoiu']) 
-	&& isset($_SESSION['userName']) 
-	&& sha1($_SESSION['kftgrnpoiu']) == $admin_password 
-	&& sha1($_SESSION['userName']) == $admin_username
+isset($_SESSION['kftgrnpoiu']) 
+&& isset($_SESSION['userName']) 
+&& $_SESSION['kftgrnpoiu'] == $admin_password 
+&& $_SESSION['userName'] == $admin_username
 ){
 	$logged_in = TRUE; // this will grant us access
 
@@ -43,6 +43,7 @@ $login_form = '
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link href="/content/custom.css" rel="stylesheet" type="text/css">
 <link href="/_code/css/default/css.css" rel="stylesheet" type="text/css">
 </head>
 <body style="background-color:#ccc;">

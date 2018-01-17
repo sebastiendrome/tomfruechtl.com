@@ -57,14 +57,14 @@ require(ROOT.'_code/inc/doctype.php');
 <!-- start container -->
 <div id="adminContainer">
 	
-	<span class="title">ADMIN - Site Structure</span> <a href="javascript:;" class="button showModal" rel="createSection">[+]create new section</a> <a href="?logout" class="button" style="float:right;">-> logout</a>
+	<span class="title">ADMIN - Site Structure</span> <a href="javascript:;" class="button showModal" rel="createSection">[+]create new section</a> <a href="?logout" class="button" style="float:right;">-> logout</a><!-- <a href="preferences.php" title="preferences" class="button" style="float:right; background:#eee url(/_code/admin/images/preferences.gif) no-repeat 50% 50%;">&nbsp;&nbsp;</a>-->
 	<div class="clearBoth" id="message" style="margin:20px 0;">
 		<?php if( isset($message) ){
 			echo $message;
 		}
 		?>
 	</div>
-	&nbsp;(english, Deustch)
+	&nbsp;(<?php echo FIRST_LANG.', '.SECOND_LANG; ?>)
 	
 	<div id="structureContainer">
 		<div id="ajaxTarget">

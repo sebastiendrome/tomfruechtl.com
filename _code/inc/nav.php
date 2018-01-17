@@ -15,7 +15,7 @@ function make_nav($menu_array){
 			}
 			$dir = filename($split[0], 'encode');
 	        $link = '/'.$dir.'/';
-	        if($dir == SECTION || strstr(CONTEXT_PATH, $dir) ){
+	        if($dir == SECTION || strstr(CONTEXT_PATH, '/'.$dir) ){
 	            $class = ' class="selected"';
 	        }
 	        $nav .= '<li><a href="'.$link.'"'.$class.'>'.$name.'</a></li>'.PHP_EOL;
@@ -37,7 +37,7 @@ $nav = make_nav($menu_array);
 echo $nav;
  ?>
      <li>&nbsp;</li>
-     <li><a href="?lang=en"<?php if(LANG == 'en'){echo ' class="selected"';} ?> style="padding-right:0;">english</a> | <a href="?lang=de"<?php if(LANG == 'de'){echo ' class="selected"';} ?> style="padding-left:0;">deutsch</a></li>
+     <li><a href="?lang=en"<?php if(LANG == 'en'){echo ' class="selected"';} ?> style="padding-right:0;"><?php echo FIRST_LANG; ?></a> | <a href="?lang=de"<?php if(LANG == 'de'){echo ' class="selected"';} ?> style="padding-left:0;"><?php echo SECOND_LANG; ?></a></li>
     </ul>
-	<div id="mobileMenu"><a href="javascript:;" id="showNav"><img src="/_code/images/mobile-menu.svg" style="width:23px;" onerror="this.onerror=null; this.src='/_code/images/mob-nav.png'"></a></div>
+	<a id="mobileMenu" href="javascript:;"><img src="/_code/images/mobile-menu.svg" style="width:23px;" onerror="this.onerror=null; this.src='/_code/images/mob-nav.png'"></a>
 </div><!-- end nav -->

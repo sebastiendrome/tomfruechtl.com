@@ -13,13 +13,10 @@ if(isset($_GET['parent']) && !empty($_GET['parent']) ){
 <div class="modal" id="createSectionContainer">
 	<a href="javascript:;" class="closeBut">&times;</a>
 	<h3>↓Section name:</h3>
-		english name, Deutsch Name<br>
+		<?php echo FIRST_LANG; ?> name, <?php echo SECOND_LANG; ?> name<br>
 	<form name="createSectionForm" action="" method="post">
 		<input type="hidden" name="parent" value="<?php echo $parent; ?>">
-		<input type="text" name="createSection" value="" style="width:400px;" autofocus>
-		<?php /*if(empty($parent)){
-			echo '<input type="checkbox" name="isParent" id="isParent" value="isParentSection"><label for="isParent">this section will contain sub-sections?</label><br>';
-		}*/ ?>
+		<input type="text" name="createSection" maxlength="50" value="" style="width:400px;" autofocus>
 		<button type="submit" class="createSection" name="createSectionSubmit">Create</button>
 	</form>
 </div>

@@ -47,23 +47,11 @@ a.show:hover{font-style:normal !important;}
 a.newSub:hover{color:green !important;}
 a.delete:hover{color:red !important;}
 
-a.button.disabled, button:disabled, input:disabled{opacity:.3;}
-/*
-textarea{white-space: pre-wrap;}
-*/
-
-
 
 
 #working{display:none; position:absolute; background:#fee url('../images/progress.gif') 10px center no-repeat; height:20px; padding:10px; padding-left:65px; border:1px solid red; border-radius: 3px; top:-4px; left:46%;}
 
 .title{font-size:20px; font-weight:bold;}
-
-button, a.button{display:inline-block; padding:3px 10px; border:1px solid #888; border-radius:3px; margin:2px 10px;background-color:#eee; color:#000;
-cursor: pointer;}
-button[type=submit], a.button.submit{background-color:green; color:#fff;}
-button.cancel, a.button.cancel{background-color:red; color:#fff;}
-
 
 /* MODAL CONTAINER AND MODAL WINDOW */
 .modalContainer{
@@ -103,19 +91,25 @@ opacity: 0.3;
 }
 .overlayStay{display:block;}
 
-.closeBut{position:absolute; display:block; border:2px solid #fff; top: -13px; right:-15px; -ms-border-radius:15px;
+.closeBut{position:absolute; display:inline-block; border:2px solid #fff; top: -13px; right:-15px; -ms-border-radius:15px;
 -moz-border-radius:15px; -webkit-border-radius:15px; border-radius:15px; overflow:hidden; line-height:24px;
 width:24px; height:24px; background-color:#000; color:#fff; font-size:20px; text-align:center; text-shadow:none; vertical-align:middle;
 z-index:10;
 }
 .closeBut:hover{margin:auto; border:2px solid #fff; color:#ccc; cursor:pointer;}
 
-.error{color:red;}
-.success{color:green;}
+/** buttons **/
+button, a.button{display:inline-block; padding:3px 10px; border:1px solid #888; border-radius:3px; margin:2px 10px;background-color:#eee; color:#000;
+cursor: pointer;}
+button[type=submit], a.button.submit{background-color:green; color:#fff; border-color:#002c00;}
+button.cancel, a.button.cancel{background-color:red; color:#fff; border-color:#900;}
+a.button.disabled, button:disabled, input:disabled{opacity:.3;}
 .error{background-color:#f22; color:#fff;}
 .success{background-color:green; color:#fff;}
 .note{background-color:#fdf79a; color:#444;}
 .error, .success, .note{padding:2px 10px; border-radius:3px;}
+.preferences{background:#ccc url(/_code/admin/images/preferences.gif) no-repeat 50% 50%;}
+
 
 img.buttonProcess{visibility:hidden; vertical-align:middle; padding:5px; background-color:#fff; border:1px solid #ccc; border-radius:15px;}
 img.buttonProcess.visible{visibility:visible; z-index:1; margin-left:-60px;}
@@ -123,8 +117,8 @@ img.buttonProcess.visible{visibility:visible; z-index:1; margin-left:-60px;}
 div.tip{
 	margin-bottom:20px; padding:3px 10px; 
 	border-radius:3px;
-	border:1px solid #ccc; 
-	background-color:#fff;
+	border:1px solid #ccc;
+	background-color:#dedede;
 	font-size:.9em;
 }
 div.tip a.tipTitle{display:block;}
@@ -137,4 +131,13 @@ a.tipTitle.open::before{
 	color:#000;
 }
 div.tip ol{display:none;}
+
+div.txt.admin, div.html.admin{height:250px; padding:5px; border:1px solid #ccc; margin-right:10px; overflow: auto; background-color:#fff;}
+
+div.halfContainer{float:left; width:49.9%; min-width:400px;}
+div.quart{float:left; width:48%; padding:4px 1%;}
+
+#prefContainer input, #prefContainer textarea, #prefContainer select{width:99%;}
+.padding20{padding:20px; margin-bottom:10px; margin-right:10px; border:1px solid #888; background-color:#fff;}
+
 
