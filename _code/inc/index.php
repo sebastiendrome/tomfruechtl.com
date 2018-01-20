@@ -33,9 +33,6 @@ require(ROOT.'_code/inc/nav.php');
 $display = display_content_array(FULL_PATH); 
 ?>
 
-<!-- start container -->
-<div id="container">
-
 <!-- start content -->
 <div id="content">
 <?php
@@ -44,6 +41,5 @@ echo $display;
 </div><!-- end content -->
 
 <div class="clearBoth"></div>
-</div><!-- end container -->
 
 <?php require(ROOT.'_code/inc/footer.php'); ?>

@@ -32,7 +32,7 @@ $nav = make_nav($menu_array);
 <!-- start nav -->
 <div id="nav">
     <ul>
-        <li><h1><a href="/">Tom Früchtl</a></h1></li>
+        <li><h1><a href="/"><?php echo $user; ?></a></h1></li>
 <?php 
 echo $nav;
  ?>

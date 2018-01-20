@@ -168,7 +168,7 @@ function display_content_array($path, $menu_array = ''){
 				}
 				// display sub-section name and file only if a first file has been found
 				if( isset($first_file) ){
-					$display .= '<p class="title">'.$sec_name.' | <a href="'.URL_LINK.$sec_dir.'/" class="aMore">&rarr; '.$more.'</a></p>';
+					$display .= '<p class="title"><a href="'.URL_LINK.$sec_dir.'/" class="aMore">'.$sec_name.' | &rarr; '.$more.'</a></p>';
 					
 					// if optional 3rd var is TRUE, display file without enclosing <a> tag.
 					$display_file = display_file($path.'/'.$sec_dir, $k, TRUE);

@@ -16,31 +16,27 @@ h3{font-size: 1.17em; margin: 0.7em 0;}
 
 /***** LAYOUT *****/
 /** Relative to each other **/
-#nav, .backTitle{position:fixed;}
-#nav{top:20px; left:20px;}
-.backTitle{top:40px; left:270px; padding-left:5px;}
-#content{padding:20px;}
-#nav ul{margin:20px 25px;}
-#content{margin-top:20px; margin-left:270px; max-width:400px;}
-#nav{max-width:250px; z-index:2;}
+/*body, #nav, .backTitle{background-color: #fff;}*/
+#nav, #content{margin:20px;}
+#nav ul, #content{padding:20px;}
+.backTitle{margin:30px 20px 30px 20px; padding:10px 20px 10px 20px; z-index:1;}
+#container{padding-left:240px;}
+#nav{max-width:220px; z-index:2;}
 
-#nav ul li h1{margin-top: 0; font-size:1.5em;}
-#nav ul li a{display:inline-block; padding-bottom:.5em;}
+#nav, .backTitle{position:fixed; top:0; left:0;}
+.backTitle{left:240px;}
 
-#content p.description, #content p.title{margin:6px 0 14px 0;}
-.backTitle li{margin:6px 0; padding-right:20px;}
+#nav ul li h1{padding:0 10px 20px 5px; margin:0; font-size:1.5em;}
+#nav ul li a, .backTitle a{display:inline-block; padding:5px 10px;}
+#nav ul li h1 a{padding:0; margin:0;}
+
+#content p.description, #content p.title{margin:6px 0 14px 0; color:#666;}
+#content p:first-child{margin-top:5px;}
 .divItem img{width:100%;}
 .divItem img.icon{width:auto;}
 .divItem{margin-bottom:55px;}
 
-div.txt, div.html{padding-bottom:15px; padding-top:7px; position:relative;}
-/* first p, h1, h2 and h3 in txt or html div, should have a margin-top that aligns with nav title (h1) */
-div.txt p:first-child, div.html p:first-child{margin-top:-1px;}
-div.txt h3:first-child, div.html h3:first-child{margin-top:-3px;}
-div.txt h2:first-child, div.html h2:first-child{margin-top:-7px;}
-div.txt h1:first-child, div.html h1:first-child{margin-top:-14px;}
-
-#footer{padding-left:45px; font-size:smaller;}
+#footer{padding-left:50px; font-size:smaller;}
 
 #mobileMenu{display:block; position:absolute; top:9px; right:18px; visibility:hidden;}
 
@@ -52,13 +48,14 @@ a.imgMore{text-decoration:none;}
 a.imgMore:hover div.txt, a.imgMore:hover div.html{
 	border:1px solid #eee; 
 	padding:15px; padding-top:14px;
-	margin-top:-8px; margin-left:-16px; margin-right:-16px;
+	margin-top:-15px; margin-left:-16px; margin-right:-16px;
 }
 u{color:#000;}
 
 .divItem img, img#inOut, #contentContainer img{background:#fff url(/_code/images/progress.gif) 50% 50% no-repeat;}
 
-div.txt, div.html{border-bottom:1px solid #ddd; background-color:#fff;}
+div.txt, div.html{padding-bottom:15px; border-bottom:1px solid #ddd; background-color:#fff; position:relative;}
+div.txt h1{font-size:1.2em; margin:0; color:#111;}
 
 .zoom{cursor:zoom-in;}
 .clearBoth{clear:both;}
