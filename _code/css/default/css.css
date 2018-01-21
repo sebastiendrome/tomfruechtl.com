@@ -44,6 +44,8 @@ div.txt h1:first-child, div.html h1:first-child{margin-top:-14px;}
 
 #mobileMenu{display:block; position:absolute; top:9px; right:18px; visibility:hidden;}
 
+.backTitle.zoomPage{left:0;}
+
 
 /* STYLE */
 a{color:#000; text-decoration: none;}

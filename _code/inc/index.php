@@ -1,6 +1,6 @@
 <?php
 if( !empty(SECTION) ){
-	$title = $user.' '.filename(SECTION, 'decode').'.';
+	$title = $user.': '.filename(SECTION, 'decode').'.';
 }else{
 	$title = $user.' Artist Portfolio.';
 }
@@ -41,5 +41,7 @@ echo $display;
 </div><!-- end content -->
 
 <div class="clearBoth"></div>
+
+<?php require(ROOT.'_code/inc/js.php'); ?>
 
 <?php require(ROOT.'_code/inc/footer.php'); ?>

@@ -39,6 +39,9 @@ if(!file_exists(MENU_FILE)){
 	}
 }
 
+// reference to me...       
+define("AUTHOR_REF", 'sebdedie@gmail.com');
+
 
 // language (en/de) - set by GET query, stored as cookie
 if(isset($_GET['lang']) && ($_GET['lang'] == 'en' || $_GET['lang'] == 'de')){

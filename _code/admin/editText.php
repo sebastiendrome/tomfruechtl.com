@@ -112,11 +112,11 @@ require(ROOT.'_code/inc/doctype.php');
 <a data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="h3" title="Small Header text"><h3>H3</h3></a>
 <a data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="p" title="Paragraph">P</a>
 	
-<a data-wysihtml5-command="justifyLeft" title="Align left" unselectable="on" style="border-radius: 3px 0 0 3px;"><img src="/_code/admin/images/align-left.gif" style="width:13px; height:12px;">
-</a><a data-wysihtml5-command="justifyCenter" title="Align center" unselectable="on" style="border-radius:0; margin:0 -1px;"><img src="/_code/admin/images/align-center.gif" style="width:13px; height:12px;">
-</a><a data-wysihtml5-command="justifyRight" title="Align right" unselectable="on" style="border-radius: 0 3px 3px 0;"><img src="/_code/admin/images/align-right.gif" style="width:13px; height:12px;">
+<a data-wysihtml5-command="justifyLeft" title="Align left" unselectable="on" style="border-radius: 3px 0 0 3px;"><img src="/_code/admin/images/align-left.gif" style="width:13px; height:12px; vertical-align:middle;">
+</a><a data-wysihtml5-command="justifyCenter" title="Align center" unselectable="on" style="border-radius:0; margin:0 -1px;"><img src="/_code/admin/images/align-center.gif" style="width:13px; height:12px;vertical-align:middle;">
+</a><a data-wysihtml5-command="justifyRight" title="Align right" unselectable="on" style="border-radius: 0 3px 3px 0;"><img src="/_code/admin/images/align-right.gif" style="width:13px; height:12px;vertical-align:middle;">
 </a>
-<a data-wysihtml5-command="justifyFull" title="Justify" unselectable="on"><img src="/_code/admin/images/align-justify.gif" style="width:13px; height:12px;">
+<a data-wysihtml5-command="justifyFull" title="Justify" unselectable="on"><img src="/_code/admin/images/align-justify.gif" style="width:13px; height:12px;vertical-align:middle;">
 </a>
 
 <a data-wysihtml5-command="createLink" href="javascript:;" unselectable="on" class="wysihtml5-command-dialog-opened" style="border-radius: 3px 0 0 3px;">link</a><a data-wysihtml5-command="removeLink" href="javascript:;" unselectable="on" class="" style="border-radius: 0 3px 3px 0; margin-left:-1px;"><s>link</s></a>

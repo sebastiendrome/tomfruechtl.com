@@ -35,9 +35,9 @@ img.in{width:auto; cursor:zoom-out;}
 </style>
 
 <!-- start nav -->
-<div class="backTitle zoomPage" style="left:0; background-color:rgba(255, 255, 255, .8);">
+<div class="backTitle zoomPage">
     <ul>
-        <li><a href="javascript:history.go(-1);">&larr; <?php echo $back; ?></a></li>
+        <li><a href="javascript:window.history.back();">&larr; <?php echo $back; ?></a></li>
     </ul>
 </div><!-- end nav -->
     

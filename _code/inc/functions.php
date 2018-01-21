@@ -106,7 +106,8 @@ function display_content_array($path, $menu_array = ''){
 			}
 			
 	        $display .= '<div class="backTitle">
-	        <ul><li><a href="'.str_replace('/'.basename($_SERVER['REQUEST_URI']), '', $_SERVER['REQUEST_URI']).'">&larr; '.$back.'</a> | <u>'.$subsection_title.'</u></li></ul>
+			<ul><li><!--<a href="'.str_replace('/'.basename($_SERVER['REQUEST_URI']), '', $_SERVER['REQUEST_URI']).'">-->
+			<a href="javascript:window.history.back();">&larr; '.$back.'</a> | <u>'.$subsection_title.'</u></li></ul>
 	        </div>
 	        <p class="title">&nbsp;</p>'.PHP_EOL;
 		}
