@@ -103,7 +103,7 @@ button, a.button{display:inline-block; padding:3px 10px; border:1px solid #888; 
 cursor: pointer;}
 button[type=submit], a.button.submit{background-color:green; color:#fff; border-color:#002c00;}
 button.cancel, a.button.cancel{background-color:red; color:#fff; border-color:#900;}
-a.button.disabled, button:disabled, input:disabled{opacity:.3;}
+a.button.disabled, button.disabled, button:disabled, input:disabled{opacity:.3;}
 .error{background-color:#f22; color:#fff;}
 .success{background-color:green; color:#fff;}
 .note{background-color:#fdf79a; color:#444;}

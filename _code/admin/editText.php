@@ -17,15 +17,16 @@ if( isset($_GET['message']) ){
 	}
 }
 
-// form submit from within newFile.php modal: submitted: payj and fileName (optional)
+// form submit from within newFile.php modal: submitted: path, and fileName (optional)
 if( isset($_POST['createText']) ){
 	if( isset($_POST['path']) && !empty($_POST['path']) ){
 		$item = urldecode($_POST['path']);
-		$_SESSION['item'] = $item;
 		if( isset($_POST['fileName']) && !empty($_POST['fileName']) ){
-			$item .= '/'.filename( urldecode($_POST['fileName']), 'encode').'.html';
+			$file_name = filename( urldecode($_POST['fileName']), 'encode').'.html';
+			$item .= '/_XL/'.$file_name;
 			//echo $item;
 		}
+		$_SESSION['item'] = $item;
 	}else{
 		exit();
 	}
@@ -50,7 +51,7 @@ if(!isset($item)){
 	exit;	
 }
 
-// echo $item; -> 'section1/section2'
+//echo $item; //-> 'section1/section2'
 
 $title = 'ADMIN : Edit Text :';
 $description = filename(str_replace(array(ROOT.CONTENT, '_XL/'), '', $item), 'decode');

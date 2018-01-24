@@ -6,7 +6,7 @@ optional:
 $social_image, $social_url
 */
 if( !isset($social_url) || empty($social_url) ){
-	$social_url = 'http://'.SITE.substr($_SERVER['REQUEST_URI'],1);
+	$social_url = 'http://'.SITE.substr($_SERVER['REQUEST_URI'],1); // http://example.com/path/to/dir/
 }
 ?>
 <!DOCTYPE HTML>
@@ -28,7 +28,7 @@ if( isset($social_image) && !empty($social_image) ){ ?>
 ?>
 <title><?php echo $title; ?></title>
 
-<link href="/content/custom.css?v=2" rel="stylesheet" type="text/css">
+<?php require(ROOT.'_code/custom.css.php'); ?>
 <link href="/_code/css/<?php echo $css; ?>/css.css?v=12" rel="stylesheet" type="text/css">
 
 <style type="text/css">

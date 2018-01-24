@@ -20,12 +20,12 @@ if(isset($_GET['file']) && !empty($_GET['file']) ){
 
 ?>
 <div class="modal" id="deleteFileContainer">
-	<a href="javascript:;" class="closeBut">&times;</a>
-	<p><strong>Are you sure you want to delete this file:</strong></p>
-	<?php echo $display_file; ?><br>
-	<p><?php echo $file_url; ?></p>
+	<a href="javascript:;" class="closeBut closeModal">&times;</a>
+	<h3 class="first">Are you sure you want to delete this file:</h3>
+	<?php echo $display_file; ?>
+	<p><?php echo filename(str_replace(ROOT.CONTENT, '', $path), 'decode').'/'.filename($file_name, 'decode'); ?></p>
 	<form name="deleteFileForm" action="/_code/admin/delete_file.php" method="post">
 		<input type="hidden" name="deleteFile" value="<?php echo urlencode($file); ?>">
-	Yes, <button type="submit" name="deleteFileSubmit" class="cancel">Delete</button>
+	<a class="button hideModal" style="margin-left:0;">Cancel</a> <button type="submit" name="deleteFileSubmit" class="cancel" style="float:right;">Delete</button>
 </form>	
 </div>

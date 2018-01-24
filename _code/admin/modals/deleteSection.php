@@ -18,11 +18,11 @@ if(isset($_GET['deleteSection']) && !empty($_GET['deleteSection']) ){
 ?>
 <div class="modal" id="deleteSectionContainer">
 	<a href="javascript:;" class="closeBut">&times;</a>
-	Are you sure you want to delete this section:
-	<h3><?php echo urldecode($_GET['deleteSection']); ?></h3>
+	<h3 class="first">Are you sure you want to delete this section:</h3>
+	<p><?php echo urldecode($_GET['deleteSection']); ?></p>
 	<form name="deleteSectionForm" action="" method="post">
 		<input type="hidden" name="parent" value="<?php echo $parent; ?>">
 		<input type="hidden" name="deleteSection" value="<?php echo $deleteSection; ?>">
-		yes,<button type="submit" class="deleteSection cancel" name="deleteSectionSubmit">Delete</button>
+		<a class="button hideModal" style="margin-left:0;">Cancel</a> <button type="submit" class="deleteSection cancel" name="deleteSectionSubmit" style="float:right;">Delete</button>
 	</form>
 </div>

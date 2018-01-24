@@ -8,6 +8,25 @@ $description = '';
 $page = 'admin';
 $back_link = 'manage_structure.php';
 
+$custom_fonts = array(
+	'Courier New'=>'14px "Courier New", Courier, monospace',
+	'Lucida Console'=>'12px "Lucida Console", Monaco, monospace',
+	'Lucida Sans'=>'13px "Lucida Sans Unicode", "Lucida Grande", sans-serif',
+	'Tahoma'=>'13px Tahoma, Geneva, sans-serif',
+	'Trebuchet MS'=>'13px "Trebuchet MS", Helvetica, sans-serif',
+	'Verdana'=>'12px Verdana, Geneva, sans-serif',
+	'Times New Roman'=>'14px "Times New Roman", Times, serif',
+	'Georgia'=>'14px Georgia, serif',
+	'Palatino Linotype'=>'14px "Palatino Linotype", "Book Antiqua", Palatino, serif',
+	'Open Sans'=>'13px "Open Sans", sans-serif',
+	'EB Garamond'=>'17px "EB Garamond", serif',
+	'Old Standard TT'=>'16px "Old Standard TT", serif',
+	'Archivo Narrow'=>'17px "Archivo Narrow", serif',
+	'PT Sans'=>'14px "PT Sans", sans-serif',
+	'Vollkorn'=>'16px Vollkorn, serif',
+	'Arvo'=>'14px Arvo, serif',
+);
+
 // create new sub-section
 if(isset($_POST['submitSitePrefs'])){
 	
@@ -82,14 +101,21 @@ require(ROOT.'_code/inc/doctype.php');
 		<div class="quart" style="text-align:right;">site font: </div>
 		<div class="quart">
 		<select name="font">
-			<option value="" selected><?php echo $site_font; ?></option>
-			<option value="">Arial</option>
-			<option value="">Helvetica</option>
-			<option value="">...</option>
-			<option value="">...</option>
-			<option value="">...</option>
+			<?php 
+			foreach($custom_fonts as $k=>$v){
+				if($site_font == $v){
+					$selected = ' selected';
+				}else{
+					$selected = '';
+				}
+				echo '<option value="'.$k.'"'.$selected.'>'.$k.'</option>'.PHP_EOL;
+			}
+			?>
 		</select>
 		</div>
+
+		<div class="quart" style="text-align:right;">font color:</div>
+		<div class="quart"><input name="font_color" class="jscolor jscolor-active" value="<?php echo $font_color; ?>" onchange="update(this.jscolor)" autocomplete="off" style="background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);"></div>
 			
 		<div class="quart" style="text-align:right;">images border:</div>
 		<div class="quart">

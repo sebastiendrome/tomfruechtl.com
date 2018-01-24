@@ -263,7 +263,7 @@ function site_structure($menu_array = '', $currentItem = ''){
 							}
 							
 							// html output for a sub-section
-							$site_structure .= '<li class="sub'.$status.'" data-name="'.$k.'" data-position="'.$s.'"><input type="text" class="nameInput" name="'.$k.'" value="'.$name.'"> <input type="text" class="position" name="order'.$k.'" value="'.$s.'" data-parent="'.$key.'" data-item="'.$k.'" data-oldposition="'.$s.'"><a href="javascript:;" class="up" title="move up">∧</a><a href="javascript:;" class="down" title="move down">∨</a> 
+							$site_structure .= '<li class="sub'.$status.'" data-name="'.$k.'" data-parent="'.$key.'" data-position="'.$s.'"><input type="text" class="nameInput" name="'.$k.'" value="'.$name.'"> <input type="text" class="position" name="order'.$k.'" value="'.$s.'" data-parent="'.$key.'" data-item="'.$k.'" data-oldposition="'.$s.'"><a href="javascript:;" class="up" title="move up">∧</a><a href="javascript:;" class="down" title="move down">∨</a> 
 							<a href="manage_contents.php?item='.$path.$subpath.'">edit content</a> <a href="javascript:;" class="'.$sh_class.'" title="hide this from the public, without deleting it.">'.$show_hide.'</a> <a href="javascript:;" class="delete showModal" rel="deleteSection?parent='.urlencode($key).'&deleteSection='.urlencode($k).'">[x]delete</a></li>'.PHP_EOL;
 						
 						// files
@@ -417,7 +417,7 @@ function display_content_admin($path = '', $menu_array = ''){
 					<a href="javascript:;" class="up" title="move up">∧</a><a href="javascript:;" class="down" title="move down">∨</a></p>
 					<p>
 					<!--<a href="/_code/admin/rotate_image.php?image='.$item.'" class="button rotate" data-image="'.$item.'" style="margin-left:0;"><img src="images/img-rotate.png" style="border:none; background:none; display:inline;"> rotate</a>-->
-					<a href="javascript:;" class="button replace showModal" style="margin-left:0;"  rel="uploadFile?path='.urlencode(ROOT.$_SESSION['item']).'&replace='.urlencode($item).'">replace</a> 
+					<a href="javascript:;" class="button replace showModal" style="margin-left:0;"  rel="newFile?path='.urlencode(ROOT.$_SESSION['item']).'&replace='.urlencode($item).'">replace</a> 
 					<a href="javascript:;" class="button cancel delete showModal" rel="deleteFile?file='.urlencode($item).'" style="margin-right:0;">delete</a>';
 					if( preg_match($_POST['types']['text_types'], $ext) ){ // txt
 						$display .= '<a class="button submit" href="/_code/admin/editText.php?item='.urlencode($item).'" style="float:right;">Edit Text</a>';
@@ -432,7 +432,7 @@ function display_content_admin($path = '', $menu_array = ''){
 					
 					$display .= '↓'.FIRST_LANG.'<br>
 					<textarea class="en" name="en_txt" maxlength="300">'.$en.'</textarea>
-					↓Deutsch<br>
+					↓'.SECOND_LANG.'<br>
 					<textarea class="de" name="de_txt" maxlength="300">'.$de.'</textarea>
 					<a href="javascript:;" class="button saveText disabled" style="float:right; margin-top:10px; margin-right:0;">Save changes</a>';
 					$display .= '</div>
@@ -445,10 +445,9 @@ function display_content_admin($path = '', $menu_array = ''){
 					$sub_item = $key;
 					$split = explode(',', $sub_item);
 					$sub_dir = filename($split[0], 'encode');
-					
-					$display .= '<div style="float:left; width:400px;">';
-					
 					$section_name = filename(basename($sub_item), 'decode');
+
+					$display .= '<div style="float:left; width:400px;" data-name="'.$section_name.'" data-parent="'.$parent.'">';
 					
 					// html output for a sub-section
 					$display .= '<p><strong>Sub-section:</strong></p>
@@ -470,7 +469,7 @@ function display_content_admin($path = '', $menu_array = ''){
 						if( preg_match($_POST['types']['resizable_types'], $ext) ){
 							$display_file = '<img src="'.$first_file_link.'" alt="'.$sub_item.'" style="display:block; float:left; width:160px; margin-right:50px;">';
 						}else{
-							$display_file = '<div style="float:left; width:160px; margin-right:50px; height:80px; padding-top:45px; border:1px solid #ccc;">'.basename($first_file_link).'</div>';
+							$display_file = '<div style="float:left; width:160px; margin-right:50px; height:80px; padding-top:45px; border:1px solid #ccc; overflow:hidden;">'.basename($first_file_link).'</div>';
 						}
 						$display .= $display_file;
 						unset($first_file); // make sure first_file doesn't stay set for next sub-section through the foreach loop
@@ -504,8 +503,8 @@ function display_content_admin($path = '', $menu_array = ''){
 /*********** 3: ACTIVE FUNCTIONS (FUNCTIONS THAT CHANGE THE CONTENT) ***************/
 
 // change section or sub-section name (update menu.txt AND rename directory)
-function update_name($oldName, $newName, $parent){
-	$result = $menu_array = $site_structure = $error = '';
+function update_name($oldName, $newName, $parent, $adminPage){
+	$result = $menu_array = $output = $error = '';
 
 	if(!empty($oldName) && !empty($newName)){
 		
@@ -551,10 +550,18 @@ function update_name($oldName, $newName, $parent){
 	if(!empty($error)){
 		$result .= $error;
 	}else{
-		$menu_array = menu_file_to_array();
-		$currentItem = $newName;
-		$site_structure = site_structure($menu_array, $currentItem);
-		$result .= $site_structure;
+		//$menu_array = menu_file_to_array();
+		//$currentItem = $newName;
+
+		// generate html output for manage structure admin page
+		if($adminPage == 'manage_structure'){
+			$output = site_structure();
+		// generate html output for manage content admin page
+		}elseif($adminPage == 'manage_contents'){
+			$output = display_content_admin();
+		}
+
+		$result .= $output;
 	}
 
 	echo $result;

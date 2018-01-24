@@ -40,6 +40,8 @@ div.txt h3:first-child, div.html h3:first-child{margin-top:-3px;}
 div.txt h2:first-child, div.html h2:first-child{margin-top:-7px;}
 div.txt h1:first-child, div.html h1:first-child{margin-top:-14px;}
 
+.first{margin-top:0;}
+
 #footer{padding-left:45px; font-size:smaller;}
 
 #mobileMenu{display:block; position:absolute; top:9px; right:18px; visibility:hidden;}
@@ -60,7 +62,7 @@ u{color:#000;}
 
 .divItem img, img#inOut, #contentContainer img{background:#fff url(/_code/images/progress.gif) 50% 50% no-repeat;}
 
-div.txt, div.html{border-bottom:1px solid #ddd; background-color:#fff;}
+div.txt, div.html{border-bottom:1px solid #ddd;}
 
 .zoom{cursor:zoom-in;}
 .clearBoth{clear:both;}

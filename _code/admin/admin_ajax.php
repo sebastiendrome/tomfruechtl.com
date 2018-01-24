@@ -9,8 +9,9 @@ if( isset($_GET['updateName']) ){
 	$oldName = trim(urldecode($_GET['oldName']));
 	$newName = trim(urldecode($_GET['newName']));
 	$parent = urldecode($_GET['parent']); // if $parent is NOT empty or 'undefined', then we're renaming a sub-section
+	$adminPage = urldecode($_GET['adminPage']);
 	
-	$result = update_name($oldName, $newName, $parent);
+	$result = update_name($oldName, $newName, $parent, $adminPage);
 }
 
 // update position

@@ -10,7 +10,7 @@ if(isset($_POST['saveTextEditor'])){
 		$file = urldecode($_POST['item']); // full path to file
 	}
 	if( isset($_POST['content']) && !empty($_POST['content']) ){
-		$content = urldecode($_POST['content']); // full path to file
+		$content = urldecode($_POST['content']);
 	}
 	if( isset($file) && isset($content) ){
 		$message = save_text_editor($file, $content);

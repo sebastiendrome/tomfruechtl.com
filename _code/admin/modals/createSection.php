@@ -12,12 +12,12 @@ if(isset($_GET['parent']) && !empty($_GET['parent']) ){
 ?>
 <div class="modal" id="createSectionContainer">
 	<a href="javascript:;" class="closeBut">&times;</a>
-	<h3>↓Section name:</h3>
-		<?php echo FIRST_LANG; ?> name, <?php echo SECOND_LANG; ?> name<br>
+	<h3 class="first">↓Section name:</h3>
 	<form name="createSectionForm" action="" method="post">
+		In both languages, separated with a coma.
 		<input type="hidden" name="parent" value="<?php echo $parent; ?>">
-		<input type="text" name="createSection" maxlength="50" value="" style="width:400px;" autofocus>
-		<button type="submit" class="createSection" name="createSectionSubmit">Create</button>
+		<input type="text" name="createSection" maxlength="50" value="" style="width:100%;" placeholder="<?php echo FIRST_LANG; ?>, <?php echo SECOND_LANG; ?>" autofocus>
+		<p><a class="button hideModal" style="margin-left:0;">Cancel</a> <button type="submit"  name="createSectionSubmit" style="float:right; margin-right:0;">Create</button></p>
 	</form>
 </div>
 <script type="text/javascript">

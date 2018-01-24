@@ -1,16 +1,24 @@
 
 /***** manage site structure functions *****************************************************/
 // change input NAME
-$('#structureContainer').on('change', 'input.nameInput', function() {
+$('#structureContainer, #contentContainer').on('change', 'input.nameInput', function() {
+	var url = window.location.href;
+	//alert(url);
+	if( url.match(/manage_contents/) ){
+		var adminPage = 'manage_contents';
+	}else if( url.match(/manage_structure/) ){
+		var adminPage = 'manage_structure';
+	}
+	//alert(adminPage);
 	var oldName = $(this).parent().data("name");
 	var newName = $(this).val();
-	var parent = $(this).parents('ul').parents('li').data("name"); // get parent name in case this is a sub-section
+	var parent = $(this).parent().data("parent"); // get parent name in case this is a sub-section
 	//alert(parent+' > '+oldName);
 	// add underscore to newName if necessary
 	if(oldName.substr(0, 1) == '_'){
 		newName = '_'+newName;
 	}
-	updateName(oldName, newName, parent);
+	updateName(oldName, newName, parent, adminPage);
 });
 
 
@@ -101,14 +109,14 @@ $('body').on('click', 'div.tip a.tipTitle', function(e){
 
 
 // update item name
-function updateName(oldName, newName, parent){
+function updateName(oldName, newName, parent, adminPage){
 	var oldName = encodeURIComponent(oldName);
 	var newName = encodeURIComponent(newName);
 	var parent = encodeURIComponent(parent);
 	$.ajax({
 		method: "GET",
 		url: "admin_ajax.php",
-		data: 'updateName&oldName='+oldName+'&newName='+newName+'&parent='+parent
+		data: 'updateName&oldName='+oldName+'&newName='+newName+'&parent='+parent+'&adminPage='+adminPage
 	})
 	.done(function(msg){
 		$('#ajaxTarget').html(msg);
