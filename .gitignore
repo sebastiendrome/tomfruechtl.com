@@ -1,3 +1,4 @@
 /content/*
 *.psd
 .vscode/*
+.DS_Store

@@ -2,7 +2,7 @@
 /******** TO DO ********
  * User admin: upload home page backgound-image
  * preferences admin (set all vars in user_cutom.php) 
- * zoom in and out on target
+ * _zoom.php: zoom in and out on target
  * audio plays ininterrupted on page change
  */
 session_start();
