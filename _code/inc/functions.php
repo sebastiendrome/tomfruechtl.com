@@ -60,14 +60,6 @@ function display_content_array($path, $menu_array = ''){
 	
 	// initialize output
     $display = '';
-	// language dependent vars
-	if(LANG == 'en'){
-		$more = 'more';
-		$back = 'back';
-	}elseif(LANG == 'de'){
-		$more = 'mehr';
-		$back = 'zurück';
-	}
 	
 	// generate menu array from menu.txt file
 	if( empty($menu_array) ){
@@ -107,7 +99,7 @@ function display_content_array($path, $menu_array = ''){
 			
 	        $display .= '<div class="backTitle">
 			<ul><li><!--<a href="'.str_replace('/'.basename($_SERVER['REQUEST_URI']), '', $_SERVER['REQUEST_URI']).'">-->
-			<a href="javascript:window.history.back();">&larr; '.$back.'</a> | <u>'.$subsection_title.'</u></li></ul>
+			<a href="javascript:window.history.back();">&larr; '.BACK.'</a> | <u>'.$subsection_title.'</u></li></ul>
 	        </div>
 	        <p class="title">&nbsp;</p>'.PHP_EOL;
 		}
@@ -147,10 +139,9 @@ function display_content_array($path, $menu_array = ''){
 
 				
 			}else{ // folder = sub-section. show sub-section name and its first file.
-				$menu_section = $key;
 				
 				// langage dependent title for this subsection
-				$split = explode(',', $menu_section);
+				$split = explode(',', $key);
 				if(LANG == 'en'){
 					$sec_name = $split[0];
 				}elseif(LANG == 'de'){
@@ -169,12 +160,14 @@ function display_content_array($path, $menu_array = ''){
 				}
 				// display sub-section name and file only if a first file has been found
 				if( isset($first_file) ){
-					$display .= '<p class="title"><a href="'.URL_LINK.$sec_dir.'/" class="aMore">'.$sec_name.' | &rarr; '.$more.'</a></p>';
+					//echo $sec_dir;
+					$url_link = str_replace(ROOT.CONTENT, '', $path);
+					$display .= '<p class="title"><a href="/'.$url_link.'/'.$sec_dir.'/" class="aMore">'.$sec_name.' | &rarr; '.MORE.'</a></p>';
 					
 					// if optional 3rd var is TRUE, display file without enclosing <a> tag.
 					$display_file = display_file($path.'/'.$sec_dir, $k, TRUE);
 					
-					$display .= '<a href="'.URL_LINK.$sec_dir.'/" class="imgMore">'.$display_file.'</a>';
+					$display .= '<a href="/'.$url_link.'/'.$sec_dir.'/" class="imgMore">'.$display_file.'</a>';
 				}
 			}
 			

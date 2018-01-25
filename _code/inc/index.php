@@ -30,7 +30,7 @@ require(ROOT.'_code/inc/doctype.php');
 
 require(ROOT.'_code/inc/nav.php');
 
-$display = display_content_array(FULL_PATH); 
+$display = display_content_array($full_path); 
 ?>
 
 <!-- start content -->

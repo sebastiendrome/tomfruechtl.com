@@ -17,18 +17,10 @@ if(isset($_GET['img'])){
     $img = preg_replace('/\/_(S|M|L)\//', '/'.$dir_size.'/', $get_img);
 	list($w, $h) = getimagesize(ROOT.$img);
 }
-
-if(LANG == 'en'){
-	$back = 'back';
-}elseif(LANG == 'de'){
-	$back = 'zurück';
-}
-
-//$back = $_SERVER['HTTP_REFERER'];
 ?>
 
 <style>
-body, html{height:100%;}
+/*body, html{height:100%;}*/
 img#inOut{display:block; margin:auto; max-width:<?php echo $w; ?>px;}
 img.out{width:100%; cursor:zoom-in;}
 img.in{width:auto; cursor:zoom-out;}
@@ -37,14 +29,14 @@ img.in{width:auto; cursor:zoom-out;}
 <!-- start nav -->
 <div class="backTitle zoomPage">
     <ul>
-        <li><a href="javascript:window.history.back();">&larr; <?php echo $back; ?></a></li>
+        <li><a href="javascript:window.history.back();">&larr; <?php echo BACK; ?></a></li>
     </ul>
 </div><!-- end nav -->
     
     
-<div id="bigImgContainer">
+
 <img src="<?php echo $img; ?>" id="inOut" class="out">
-</div>
+
 
 
 

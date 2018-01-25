@@ -62,8 +62,6 @@ u{color:#000;}
 
 .divItem img, img#inOut, #contentContainer img{background:#fff url(/_code/images/progress.gif) 50% 50% no-repeat;}
 
-div.txt, div.html{border-bottom:1px solid #ddd;}
-
 .zoom{cursor:zoom-in;}
 .clearBoth{clear:both;}
 

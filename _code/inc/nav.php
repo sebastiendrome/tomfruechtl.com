@@ -37,7 +37,7 @@ $nav = make_nav($menu_array);
 echo $nav;
  ?>
      <li>&nbsp;</li>
-     <li><a href="?lang=en"<?php if(LANG == 'en'){echo ' class="selected"';} ?> style="padding-right:0;"><?php echo FIRST_LANG; ?></a> | <a href="?lang=de"<?php if(LANG == 'de'){echo ' class="selected"';} ?> style="padding-left:0;"><?php echo SECOND_LANG; ?></a></li>
+     <li><a href="?lang=en"<?php if(LANG == 'en'){echo ' class="selected"';} ?> style="padding-right:0;"><?php echo $first_lang; ?></a> | <a href="?lang=de"<?php if(LANG == 'de'){echo ' class="selected"';} ?> style="padding-left:0;"><?php echo $second_lang; ?></a></li>
     </ul>
 	<a id="mobileMenu" href="javascript:;"><img src="/_code/images/mobile-menu.svg" style="width:23px;" onerror="this.onerror=null; this.src='/_code/images/mob-nav.png'"></a>
 </div><!-- end nav -->

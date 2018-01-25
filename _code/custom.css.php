@@ -43,10 +43,12 @@ body, td, th, select, input, button, textarea{
 ';
 if($borders != 'none'){
 	if(strstr($borders, 'FFFFFF') && $site_bg_color != 'FFFFFF'){
-		echo '.divItem div.txt, divItem.div.html{padding:20px;}';
+		echo '.divItem div.txt, divItem.div.html{padding:20px;}'.PHP_EOL;
 	}elseif( !strstr($borders, 'FFFFFF') ){
-		echo '.divItem div.txt, divItem.div.html{padding:20px;}';
+		echo '.divItem div.txt, divItem.div.html{padding:20px;}'.PHP_EOL;
 	}
+}else{
+	echo '.divItem div.txt, divItem.div.html{border-bottom:1px solid #ddd;}'.PHP_EOL;
 }
 echo '
 </style>';

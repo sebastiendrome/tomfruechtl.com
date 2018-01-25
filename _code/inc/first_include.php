@@ -10,7 +10,7 @@ session_start();
 define("SITE", $_SERVER['HTTP_HOST'].'/');
 
 // php root and error reporting, local vs. remote
-if( strstr($_SERVER['HTTP_HOST'],'.local') ){ 	// local server
+if( strstr(SITE,'.local') ){ 	// local server
     define("ROOT", '/Users/seb/Sites/'.SITE);
 	ini_set('error_reporting', E_ALL);
 	ini_set('display_errors', 1);
@@ -28,12 +28,9 @@ if( strstr($_SERVER['HTTP_HOST'],'.local') ){ 	// local server
 define("CSS", 'default');
 
 // reference paths
-define("FULL_PATH", getcwd());
-define("CONTEXT_PATH", str_replace(ROOT, '', FULL_PATH) );
-define("SECTION", urldecode( basename(FULL_PATH) ) );
-
-// url link
-define("URL_LINK", str_replace('?'.$_SERVER['QUERY_STRING'], '', $_SERVER['REQUEST_URI']) );
+$full_path = getcwd();
+define("CONTEXT_PATH", str_replace(ROOT, '', $full_path) );
+define("SECTION", urldecode( basename($full_path) ) );
 
 // content directory (which contains menu.txt and all public sections/files, although it is hidden from urls via mod_rewrite)
 define("CONTENT", 'content/');
@@ -45,7 +42,7 @@ if(!file_exists(MENU_FILE)){
 	}
 }
 
-// reference to me...       
+// reference to site author...       
 define("AUTHOR_REF", 'sebdedie@gmail.com');
 
 
@@ -63,7 +60,6 @@ if(isset($_COOKIE['lang']) && ($_COOKIE['lang'] == 'en' || $_COOKIE['lang'] == '
     $lang = "en"; // default
 }
 define("LANG", $lang);
-//echo 'lang: '.$_COOKIE['lang'].'<br>';
 
 // image size 
 $size = "_M";
@@ -75,7 +71,6 @@ if(isset($_COOKIE['wW'])){
 	}
 }
 define("SIZE", $size);
-
 
 // FILE TYPES
 $types = array();
@@ -104,15 +99,45 @@ $sizes['S'] = array("width"=>300, "height"=>250);
 // register $sizes as a $_POST var, so it is accessible within all functions...
 $_POST['sizes'] = $sizes;
 
+// LANGUAGES
+$lang = array();
+$lang['english'] = array('more'=>'more', 'back'=>'back');
+$lang['français'] = array('more'=>'plus', 'back'=>'retour');
+$lang['Deutsch'] = array('more'=>'mehr', 'back'=>'zurück');
+
+
 // set allowed tags for strip_tags function, used for validating user txt input
 define("ALLOWED_TAGS", '<b><strong><br><u><i><a><h1><h2><h3><span><div>');
 
 // error handler
 require(ROOT.'_code/errors.php');
-// require custom parameters set by user (username, css style, admin creds...)
+
+// require custom parameters set by user (first_lang and second_lang css style, username, admin creds...)
 require(ROOT.CONTENT.'user_custom.php');
+
+// language dependent constants (for 'more' and 'back' links)
 define("FIRST_LANG", $first_lang);
 define("SECOND_LANG", $second_lang);
+
+if(LANG == 'en'){ // en is $first_lang
+	if( !array_key_exists($first_lang, $lang) ){ // if choosen first lang is not part of the lang array
+		$default_lang = 'english';
+	}else{
+		$default_lang = $first_lang;
+	}
+	define("MORE", $lang[$default_lang]['more']);
+	define("BACK", $lang[$default_lang]['back']);
+	
+}elseif(LANG == 'de'){ // de is $second_lang
+	if( !array_key_exists($second_lang, $lang) ){ // if choosen first lang is not part of the lang array
+		$other_lang = 'english';
+	}else{
+		$other_lang = $second_lang;
+	}
+	define("MORE", $lang[$other_lang]['more']);
+	define("BACK", $lang[$other_lang]['back']);
+}
+
 // require common functions
 require(ROOT.'_code/inc/functions.php');
 

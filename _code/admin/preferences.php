@@ -77,7 +77,7 @@ require(ROOT.'_code/inc/doctype.php');
 		?>
 		
 		<div class="halfContainer"><!-- start 1st half container -->
-			<form class="padding20" action="" name="sitePreferences" method="post">
+			<form action="" name="sitePreferences" method="post">
 		<h3 style="margin-top:0; padding-top:0; border-bottom:1px solid #ccc;">Site:</h3>
 		
 		<div class="quart" style="text-align:right;">First language:</div>
@@ -134,7 +134,7 @@ require(ROOT.'_code/inc/doctype.php');
 	</div><!-- end 1st half container -->
 		
 	<div class="halfContainer"><!-- start 2nd half container -->
-		<form class="padding20" action="" name="userPreferences" method="post">
+		<form action="" name="userPreferences" method="post">
 			
 		<h3 style="margin-top:0; padding-top:0; border-bottom:1px solid #ccc;">You:</h3>
 		

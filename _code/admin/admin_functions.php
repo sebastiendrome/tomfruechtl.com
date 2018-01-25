@@ -263,7 +263,9 @@ function site_structure($menu_array = '', $currentItem = ''){
 							}
 							
 							// html output for a sub-section
-							$site_structure .= '<li class="sub'.$status.'" data-name="'.$k.'" data-parent="'.$key.'" data-position="'.$s.'"><input type="text" class="nameInput" name="'.$k.'" value="'.$name.'"> <input type="text" class="position" name="order'.$k.'" value="'.$s.'" data-parent="'.$key.'" data-item="'.$k.'" data-oldposition="'.$s.'"><a href="javascript:;" class="up" title="move up">∧</a><a href="javascript:;" class="down" title="move down">∨</a> 
+							$site_structure .= '<li class="sub'.$status.'" data-name="'.$k.'" data-parent="'.$key.'" data-position="'.$s.'"><input type="text" class="nameInput" name="'.$k.'" value="'.$name.'"> <input type="text" class="position" name="order'.$k.'" value="'.$s.'" data-parent="'.$key.'" data-item="'.$k.'" data-oldposition="'.$s.'"> 
+							<a href="javascript:;" class="up" title="move up">∧</a> 
+							<a href="javascript:;" class="down" title="move down">∨</a> 
 							<a href="manage_contents.php?item='.$path.$subpath.'">edit content</a> <a href="javascript:;" class="'.$sh_class.'" title="hide this from the public, without deleting it.">'.$show_hide.'</a> <a href="javascript:;" class="delete showModal" rel="deleteSection?parent='.urlencode($key).'&deleteSection='.urlencode($k).'">[x]delete</a></li>'.PHP_EOL;
 						
 						// files
@@ -297,7 +299,9 @@ function site_structure($menu_array = '', $currentItem = ''){
 								$description = substr($description, 0, 35);
 							}
 							$site_structure .= '<li data-name="'.$k.'" data-position="'.$s.'"><span class="imgInput" style="background-image:url(/'.$display_file.');">'.$description.'</span>
-							<input type="text" class="position" name="order'.$k.'" value="'.$s.'" data-parent="'.$key.'" data-item="'.$k.'" data-oldposition="'.$s.'"><a href="javascript:;" class="up" title="move up">∧</a><a href="javascript:;" class="down" title="move down">∨</a> 
+							<input type="text" class="position" name="order'.$k.'" value="'.$s.'" data-parent="'.$key.'" data-item="'.$k.'" data-oldposition="'.$s.'">
+							<a href="javascript:;" class="up" title="move up">∧</a>
+							<a href="javascript:;" class="down" title="move down">∨</a> 
 							<a href="manage_contents.php?item='.$path.'#'.preg_replace('/[^A-Za-z0-9]/', '', $k).'">edit</a> 
 							<a href="javascript:;" class="delete showModal" rel="deleteFile?parent='.urlencode($key).'&file='.urlencode(ROOT.$file).'">[x]delete</a></li>'.PHP_EOL;
 						}
@@ -414,7 +418,8 @@ function display_content_admin($path = '', $menu_array = ''){
 					$display .= '<div class="imgContainer" data-file_path="'.$item.'">file:<br><span style="color:#aaa;">'.filename($key, 'decode').'</span><br>';
 					$display .= $display_file;
 					$display .= '<p style="clear:both;">position: <input type="text" class="position" name="order'.$item.'" value="'.$n.'" data-oldposition="'.$n.'" data-parent="'.$parent.'" data-item="'.$key.'">
-					<a href="javascript:;" class="up" title="move up">∧</a><a href="javascript:;" class="down" title="move down">∨</a></p>
+					<a href="javascript:;" class="up" title="move up">∧</a>
+					<a href="javascript:;" class="down" title="move down">∨</a></p>
 					<p>
 					<!--<a href="/_code/admin/rotate_image.php?image='.$item.'" class="button rotate" data-image="'.$item.'" style="margin-left:0;"><img src="images/img-rotate.png" style="border:none; background:none; display:inline;"> rotate</a>-->
 					<a href="javascript:;" class="button replace showModal" style="margin-left:0;"  rel="newFile?path='.urlencode(ROOT.$_SESSION['item']).'&replace='.urlencode($item).'">replace</a> 
@@ -453,7 +458,8 @@ function display_content_admin($path = '', $menu_array = ''){
 					$display .= '<p><strong>Sub-section:</strong></p>
 					<input type="text" class="nameInput" name="'.$sub_item.'" value="'.$section_name.'">
 					<p style="clear:both;">position: <input type="text" class="position" name="order'.$sub_item.'" value="'.$n.'" data-oldposition="'.$n.'" data-parent="'.$parent.'" data-item="'.$sub_item.'">
-					<a href="javascript:;" class="up" title="move up">∧</a><a href="javascript:;" class="down" title="move down">∨</a></p>';
+					<a href="javascript:;" class="up" title="move up">∧</a>
+					<a href="javascript:;" class="down" title="move down">∨</a></p>';
 					
 					$display .= '</div>';
 					
