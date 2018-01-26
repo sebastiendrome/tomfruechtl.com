@@ -14,7 +14,7 @@ if( file_exists( ROOT.'_code/images/home/bg.jpg') ){
 	$home_image = 'bg.png';
 }
 if( isset($home_image) ){
-	$social_image = 'http://'.SITE.'_code/images/home/'.$home_image;
+	$social_image = PROTOCOL.SITE.'_code/images/home/'.$home_image;
 }
 
 

@@ -1,13 +1,28 @@
 <?php
 /* 
-required to be defined on top of each page:
+required to be defined on top of each page individualy:
 $title, $description
+*/
+
+/*
 optional: 
-$social_image, $social_url
+$social_url, $social_image
 */
 if( !isset($social_url) || empty($social_url) ){
-	$social_url = 'http://'.SITE.substr($_SERVER['REQUEST_URI'],1); // http://example.com/path/to/dir/
+	$social_url = PROTOCOL.SITE.substr($_SERVER['REQUEST_URI'],1); // http(s)://example.com/path/to/dir/
 }
+// social image (for meta property="og:image") is the background image in home page...
+if( file_exists( ROOT.CONTENT.'bg.jpg') ){
+	$home_image = 'bg.jpg';
+}elseif( file_exists( ROOT.CONTENT.'bg.gif') ){
+	$home_image = 'bg.gif';
+}elseif( file_exists( ROOT.CONTENT.'bg.png') ){
+	$home_image = 'bg.png';
+}
+if( isset($home_image) && !isset($social_image) ){
+	$social_image = PROTOCOL.SITE.CONTENT.$home_image;
+}
+
 ?>
 <!DOCTYPE HTML>
 <html lang="en">

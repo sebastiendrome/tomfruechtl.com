@@ -14,24 +14,13 @@ if( !empty(CONTEXT_PATH) ){
 	$description = '';
 }
 
-// social image (for meta property="og:image") is the background image in home page...
-if( file_exists( ROOT.CONTENT.'bg.jpg') ){
-	$home_image = 'bg.jpg';
-}elseif( file_exists( ROOT.CONTENT.'bg.gif') ){
-	$home_image = 'bg.gif';
-}elseif( file_exists( ROOT.CONTENT.'bg.png') ){
-	$home_image = 'bg.png';
-}
-if( isset($home_image) ){
-	$social_image = ROOT.CONTENT.$home_image;
-}
-
 require(ROOT.'_code/inc/doctype.php');
 
 require(ROOT.'_code/inc/nav.php');
 
-$display = display_content_array($full_path); 
+$display = display_content_array(getcwd()); 
 ?>
+
 
 <!-- start content -->
 <div id="content">
@@ -45,3 +34,4 @@ echo $display;
 <?php require(ROOT.'_code/inc/js.php'); ?>
 
 <?php require(ROOT.'_code/inc/footer.php'); ?>
+

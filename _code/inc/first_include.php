@@ -6,11 +6,16 @@
  * audio plays ininterrupted on page change
  */
 session_start();
+
 // initialize site 
 define("SITE", $_SERVER['HTTP_HOST'].'/');
 
+// Protocol: http vs https
+$protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+define("PROTOCOL", $protocol);
+
 // php root and error reporting, local vs. remote
-if( strstr(SITE,'.local') ){ 	// local server
+if( strstr(SITE,'.local') ){ 					// local server
     define("ROOT", '/Users/seb/Sites/'.SITE);
 	ini_set('error_reporting', E_ALL);
 	ini_set('display_errors', 1);
@@ -23,28 +28,42 @@ if( strstr(SITE,'.local') ){ 	// local server
 	define( 'DISPLAY_DEBUG', FALSE );
 	define( 'LOG_ERRORS', TRUE );
 }
+// error handler
+require(ROOT.'_code/errors.php');
 
-// site style sheet
-define("CSS", 'default');
-
-// reference paths
-$full_path = getcwd();
-define("CONTEXT_PATH", str_replace(ROOT, '', $full_path) );
-define("SECTION", urldecode( basename($full_path) ) );
-
-// content directory (which contains menu.txt and all public sections/files, although it is hidden from urls via mod_rewrite)
+// content directory (which contains all user files)
 define("CONTENT", 'content/');
-// menu file
+
+// menu file (used as site structure)
 define("MENU_FILE", ROOT.CONTENT.'menu.txt');
 if(!file_exists(MENU_FILE)){
 	if( !$fp = fopen(MENU_FILE, 'w') ){
-		echo 'could not create menu file!';
+		echo '<p style="color:red;">Error: Could not create menu file!</p>';
 	}
 }
 
-// reference to site author...       
+// reference paths
+define("CONTEXT_PATH", str_replace( ROOT, '', getcwd() ) );
+define("SECTION", urldecode( basename(CONTEXT_PATH) ) );
+
+// reference to site author...
 define("AUTHOR_REF", 'sebdedie@gmail.com');
 
+// require custom parameters set by user (first_lang and second_lang css style, username, admin creds...)
+require(ROOT.CONTENT.'user_custom.php');
+
+// set allowed tags for strip_tags function, used for validating user txt input
+define("ALLOWED_TAGS", '<b><strong><br><u><i><a><h1><h2><h3><span><div>');
+
+// language dependent constants (for 'more' and 'back' links)
+define("FIRST_LANG", $first_lang);
+define("SECOND_LANG", $second_lang);
+
+// LANGUAGES
+$languages = array();
+$languages['english'] = array('more'=>'more', 'back'=>'back');
+$languages['français'] = array('more'=>'plus', 'back'=>'retour');
+$languages['Deutsch'] = array('more'=>'mehr', 'back'=>'zurück');
 
 // language (en/de) - set by GET query, stored as cookie
 if(isset($_GET['lang']) && ($_GET['lang'] == 'en' || $_GET['lang'] == 'de')){
@@ -61,16 +80,24 @@ if(isset($_COOKIE['lang']) && ($_COOKIE['lang'] == 'en' || $_COOKIE['lang'] == '
 }
 define("LANG", $lang);
 
-// image size 
-$size = "_M";
-if(isset($_COOKIE['wW'])){
-    if($_COOKIE['wW'] > 1370 ){
-        $size = "_L";
-    }elseif($_COOKIE['wW'] < 340){
-		$size = "_S";
+if(LANG == 'en'){ // en is $first_lang
+	if( !array_key_exists($first_lang, $languages) ){ // if choosen first lang is not part of the lang array
+		$default_lang = 'english';
+	}else{
+		$default_lang = $first_lang;
 	}
+	define("MORE", $languages[$default_lang]['more']);
+	define("BACK", $languages[$default_lang]['back']);
+	
+}elseif(LANG == 'de'){ // de is $second_lang
+	if( !array_key_exists($second_lang, $languages) ){ // if choosen first lang is not part of the lang array
+		$other_lang = 'english';
+	}else{
+		$other_lang = $second_lang;
+	}
+	define("MORE", $languages[$other_lang]['more']);
+	define("BACK", $languages[$other_lang]['back']);
 }
-define("SIZE", $size);
 
 // FILE TYPES
 $types = array();
@@ -88,7 +115,7 @@ $types['audio_types'] = '/^\.(mp3|mpe?g|ogg|wav)$/i';
 $types['image_types'] = '/^\.(jpe?g?|png|gif|pdf)$/i';
 // re-sizable
 $types['resizable_types'] = '/^\.(jpe?g?|png|gif)$/i';
-// register $types as a $_POST var, so it is accessible within all functions...
+// register $types as a $_POST var, so it is accessible within functions scope (like a contant).
 $_POST['types'] = $types;
 
 // FILE SIZES:
@@ -96,47 +123,19 @@ $sizes = array();
 $sizes['L'] = array("width"=>800, "height"=>667);
 $sizes['M'] = array("width"=>650, "height"=>542);
 $sizes['S'] = array("width"=>300, "height"=>250);
-// register $sizes as a $_POST var, so it is accessible within all functions...
+// register $sizes as a $_POST var, so it is accessible within functions scope.
 $_POST['sizes'] = $sizes;
 
-// LANGUAGES
-$lang = array();
-$lang['english'] = array('more'=>'more', 'back'=>'back');
-$lang['français'] = array('more'=>'plus', 'back'=>'retour');
-$lang['Deutsch'] = array('more'=>'mehr', 'back'=>'zurück');
-
-
-// set allowed tags for strip_tags function, used for validating user txt input
-define("ALLOWED_TAGS", '<b><strong><br><u><i><a><h1><h2><h3><span><div>');
-
-// error handler
-require(ROOT.'_code/errors.php');
-
-// require custom parameters set by user (first_lang and second_lang css style, username, admin creds...)
-require(ROOT.CONTENT.'user_custom.php');
-
-// language dependent constants (for 'more' and 'back' links)
-define("FIRST_LANG", $first_lang);
-define("SECOND_LANG", $second_lang);
-
-if(LANG == 'en'){ // en is $first_lang
-	if( !array_key_exists($first_lang, $lang) ){ // if choosen first lang is not part of the lang array
-		$default_lang = 'english';
-	}else{
-		$default_lang = $first_lang;
+// image size 
+$size = "_M";
+if(isset($_COOKIE['wW'])){
+    if($_COOKIE['wW'] > 1370 ){
+        $size = "_L";
+    }elseif($_COOKIE['wW'] < 340){
+		$size = "_S";
 	}
-	define("MORE", $lang[$default_lang]['more']);
-	define("BACK", $lang[$default_lang]['back']);
-	
-}elseif(LANG == 'de'){ // de is $second_lang
-	if( !array_key_exists($second_lang, $lang) ){ // if choosen first lang is not part of the lang array
-		$other_lang = 'english';
-	}else{
-		$other_lang = $second_lang;
-	}
-	define("MORE", $lang[$other_lang]['more']);
-	define("BACK", $lang[$other_lang]['back']);
 }
+define("SIZE", $size);
 
 // require common functions
 require(ROOT.'_code/inc/functions.php');
