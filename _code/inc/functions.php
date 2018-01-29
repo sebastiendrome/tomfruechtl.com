@@ -305,7 +305,7 @@ function file_name_no_ext($file_name){
 	return $file_name_no_ext;
 }
 
-// get file extension from file name
+// get file extension from file name (including the dot: ".jpg")
 function file_extension($file_name){
 	preg_match('/\.[a-zA-Z]*$/', $file_name, $matches);
 	if( !empty($matches) ){

@@ -121,9 +121,10 @@ require(ROOT.'_code/inc/doctype.php');
 		<div class="quart">
 			<select name="border">
 			<option value="none">none</option>
-			<option value="black">black</option>
-			<option value="grey">grey</option>
-			<option value="lightGrey">light grey</option>
+			<option value="000000">black</option>
+			<option value="AAAAAA">grey</option>
+			<option value="EEEEEE">light grey</option>
+			<option value="FFFFFF">white</option>
 		</select>
 		</div>
 	

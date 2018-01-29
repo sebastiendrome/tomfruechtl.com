@@ -106,7 +106,7 @@ button.cancel, a.button.cancel{background-color:red; color:#fff; border-color:#9
 a.button.disabled, button.disabled, button:disabled, input:disabled{opacity:.3;}
 .error{background-color:#f22; color:#fff;}
 .success{background-color:green; color:#fff;}
-.note{background-color:#fdf79a; color:#444;}
+.note{background-color:#fdf79a; color:#555;}
 .error, .success, .note{padding:2px 10px; border-radius:3px;}
 .preferences{background:#ccc url(/_code/admin/images/preferences.gif) no-repeat 50% 50%;}
 
