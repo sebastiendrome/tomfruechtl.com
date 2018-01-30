@@ -26,10 +26,7 @@ require(ROOT.'_code/inc/nav.php');
 
 
 
-    
-    
-<!-- start container -->
-<div id="container">
+
 
 <!-- start content -->
 <div id="content">
@@ -38,7 +35,6 @@ page not found</div>
 </div><!-- end content -->
 
 <div class="clearBoth"></div>
-</div><!-- end container -->
 
 <?php require(ROOT.'_code/inc/footer.php'); ?>
 
