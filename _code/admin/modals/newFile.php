@@ -40,8 +40,13 @@ $split_types = explode('|', $supported_types);
 		<input type="file" name="file" id="fileUpload" style="width:70%;"> 
 		<button type="submit" name="uploadFileSubmit" onclick="this.style.opacity=0; this.style.cursor='default'; var i=document.getElementById('uf'); i.className += ' visible';">Upload</button><img src="/_code/images/progress.gif" id="uf" class="buttonProcess">
 	</form>
+	<?php 
+// only show the create file option if the modal is not opened from the replace button
+if(empty($replace)){
+?>
 	<p><b>PDF</b> and <b>DOC</b> files (i.e. files created with microsoft Word, Adobe Reader or similar apps) will not be directly readable on the site but only available for download. To format text content and make it readable on the site, use the "Create file" option below.
 	</p>
+<?php } ?>
 	</div>
 	<!-- upload file end -->
 	
@@ -89,15 +94,6 @@ if(empty($replace)){
 			</ol>
 		</div>
 		
-		<!--
-		<div class="tip">
-			<a href="javascript:;" class="tipTitle">Dealing with Texts</a>
-			<ol>
-			If you want your visitors to download PDF or DOC files, it is best to upload them here. 
-			However, if you want to provide reading material directly on your site pages, the best is to click on the <a class="button" href="editText.php?item=<?php echo urlencode($path); ?>">[+]new text</a> button at the top of this page. This will open a text editor in which you can paste text from whatever source/format. The text will be re-formatted to look good on the site, with no download necessary for your visitors.
-			</ol>
-		</div>
-		-->
 	</div>
 	<!-- tips end -->
 

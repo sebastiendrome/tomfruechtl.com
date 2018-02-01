@@ -415,15 +415,15 @@ function display_content_admin($path = '', $menu_array = ''){
 					$de = stripslashes( my_br2nl( file_get_contents($de_file) ) );
 					
 					// html output for a file
-					$display .= '<div class="imgContainer" data-file_path="'.$item.'">file:<br><span style="color:#aaa;">'.filename($key, 'decode').'</span><br>';
-					$display .= $display_file;
-					$display .= '<p style="clear:both;">position: <input type="text" class="position" name="order'.$item.'" value="'.$n.'" data-oldposition="'.$n.'" data-parent="'.$parent.'" data-item="'.$key.'">
+					$display .= '<div class="imgContainer" data-file_path="'.$item.'"><p>
+					<input type="text" class="position" name="order'.$item.'" value="'.$n.'" data-oldposition="'.$n.'" data-parent="'.$parent.'" data-item="'.$key.'">
 					<a href="javascript:;" class="up" title="move up">∧</a>
-					<a href="javascript:;" class="down" title="move down">∨</a></p>
-					<p>
+					<a href="javascript:;" class="down" title="move down">∨</a><!-- '.filename($key, 'decode').'--></p>';
+					$display .= $display_file;
+					$display .= '<p>
 					<!--<a href="/_code/admin/rotate_image.php?image='.$item.'" class="button rotate" data-image="'.$item.'" style="margin-left:0;"><img src="images/img-rotate.png" style="border:none; background:none; display:inline;"> rotate</a>-->
 					<a href="javascript:;" class="button replace showModal" style="margin-left:0;"  rel="newFile?path='.urlencode(ROOT.$_SESSION['item']).'&replace='.urlencode($item).'">replace</a> 
-					<a href="javascript:;" class="button cancel delete showModal" rel="deleteFile?file='.urlencode($item).'" style="margin-right:0;">delete</a>';
+					<a href="javascript:;" class="button cancel showModal" rel="deleteFile?file='.urlencode($item).'" style="margin-right:0;">delete</a>';
 					if( preg_match($_POST['types']['text_types'], $ext) ){ // txt
 						$display .= '<a class="button submit" href="/_code/admin/editText.php?item='.urlencode($item).'" style="float:right;">Edit Text</a>';
 					}
@@ -433,13 +433,15 @@ function display_content_admin($path = '', $menu_array = ''){
 					// texts
 					$display .= '<div class="actions">
 					<input type="hidden" class="file" value="'.$item.'">
-					description: <span style="color:#bbb; display:inline-block; float:right;">allowed tags: &lt;b>&lt;u>&lt;i>&lt;a></span><br><br>';
+					<p>description: <span style="color:#bbb; display:inline-block; float:right;">allowed tags: &lt;b>&lt;u>&lt;i>&lt;a></span></p>';
 					
 					$display .= '↓'.FIRST_LANG.'<br>
+					<input type="hidden" class="enMemory" value="'.$en.'">
 					<textarea class="en" name="en_txt" maxlength="300">'.$en.'</textarea>
 					↓'.SECOND_LANG.'<br>
+					<input type="hidden" class="deMemory" value="'.$de.'">
 					<textarea class="de" name="de_txt" maxlength="300">'.$de.'</textarea>
-					<a href="javascript:;" class="button saveText disabled" style="float:right; margin-top:10px; margin-right:0;">Save changes</a>';
+					<a href="javascript:;" class="button submit saveText disabled" style="float:right; margin-top:10px; margin-right:0;">Save changes</a>';
 					$display .= '</div>
 					<div style="clear:both;">&nbsp;</div>';
 					
@@ -455,11 +457,12 @@ function display_content_admin($path = '', $menu_array = ''){
 					$display .= '<div style="float:left; width:400px;" data-name="'.$section_name.'" data-parent="'.$parent.'">';
 					
 					// html output for a sub-section
-					$display .= '<p><strong>Sub-section:</strong></p>
-					<input type="text" class="nameInput" name="'.$sub_item.'" value="'.$section_name.'">
-					<p style="clear:both;">position: <input type="text" class="position" name="order'.$sub_item.'" value="'.$n.'" data-oldposition="'.$n.'" data-parent="'.$parent.'" data-item="'.$sub_item.'">
+					$display .= '<p>
+					<input type="text" class="position" name="order'.$sub_item.'" value="'.$n.'" data-oldposition="'.$n.'" data-parent="'.$parent.'" data-item="'.$sub_item.'">
 					<a href="javascript:;" class="up" title="move up">∧</a>
-					<a href="javascript:;" class="down" title="move down">∨</a></p>';
+					<a href="javascript:;" class="down" title="move down">∨</a> 
+					&nbsp;&nbsp;&nbsp;<strong>Sub-section:</strong></p>
+					<input type="text" class="nameInput" name="'.$sub_item.'" value="'.$section_name.'">';
 					
 					$display .= '</div>';
 					
@@ -1028,6 +1031,17 @@ function save_text_editor($file, $content){
 
 /******************************* UPLOAD / RESIZE FILE *******************************************/
 
+// straight-up upload file function, used in later function. 
+// Requires a FORM-submitted file input named "file"
+function up_file($upload_dest){
+	if( move_uploaded_file($_FILES['file']['tmp_name'], $upload_dest) ) {
+		return true;
+	}else{
+		return false;
+	}
+}
+
+
 // upload file (under manage content) - requires updating menu.txt
 function upload_file($path, $replace){
 	// initialize upload results
@@ -1107,7 +1121,8 @@ function upload_file($path, $replace){
 		}
 		
 		// upload
-		if (move_uploaded_file ($_FILES['file']['tmp_name'], $upload_dest)) {
+		if( up_file($upload_dest) ){
+
 			//@chmod($upload_dest, 0775);
 			
 			// RESIZE, if file is resizable (image)

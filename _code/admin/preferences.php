@@ -91,9 +91,21 @@ require(ROOT.'_code/inc/doctype.php');
 		<div class="quart" style="text-align:right;">home page description:</div>
 		<div class="quart"><textarea maxlength="500" name="seo_description"><?php echo $seo_description; ?></textarea></div>
 		
-		<div class="quart" style="text-align:right;">home page background image:</div>
-		<div class="quart"><img src="/content/bg.png" style="width:100%;"><br>
-		<a href="javascript:;" class="button">Change</a></div>
+		<div class="quart" style="text-align:right;">home page background image:
+		<?php
+		if(isset($_GET['upload_result']) && urldecode($_GET['upload_result']) == 'file uploaded'){
+			echo '<p class="success">file uploaded</p>';
+		}
+		?>
+		</div>
+		<div class="quart"><img src="/content/<?php echo $home_image; ?>" style="width:100%;"><br>
+		<a href="javascript:;" class="button showModal" rel="uploadFile?path=<?php echo urlencode(ROOT.'content/'); ?>&replace=<?php echo urlencode(ROOT.'content/bg.png'); ?>">Change</a>
+		<?php
+		if(isset($_GET['upload_result']) && urldecode($_GET['upload_result']) == 'file uploaded'){
+			echo '<a href="/">test</a>';
+		}
+		?>
+		</div>
 		
 		<div class="quart" style="text-align:right;">site background color:</div>
 		<div class="quart"><input name="site_bg_color" class="jscolor jscolor-active" value="<?php echo $site_bg_color; ?>" onchange="update(this.jscolor)" autocomplete="off" style="background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);"></div>

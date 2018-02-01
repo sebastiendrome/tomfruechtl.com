@@ -6,7 +6,7 @@
 ul.structure{margin-left:-50px;}
 ul.structure li{padding:5px; margin-left:50px; color:#fff; background-color:#fff; /*cursor:move;*/}
 ul.structure li a{color:#fff; margin-left:25px; display:inline-block; padding:3px 0; white-space: nowrap;}
-ul.structure li:hover{background-color:rgba(122, 122, 122, .1);}
+ul.structure li:hover, ul.content li:hover{background-color:rgba(122, 122, 122, .1);}
 ul.structure li:hover a{color:#333;}
 ul.structure li ul li.sub::before{
 	content: '↳ ';
@@ -34,22 +34,22 @@ ul.structure li span.imgInput{
 }
 ul.structure li.hidden span.imgInput{opacity:.5;}
 
-ul.content li{padding-top:20px; border-top:2px solid #333;}
+ul.content li{padding-left:15px; border-top:1px solid #ccc;}
 ul.content li div.imgContainer{width:350px; float:left; margin-right:20px;}
 ul.content li img{display:block; border:1px solid #777;}
-ul.content div.actions{float:left; width:500px;}
+ul.content div.actions{float:left; width:97%; max-width:500px;}
 ul.content li textarea{width:100%; height:80px; margin:5px 0;}
 
 input.position{width:20px; text-align:right;}
 a.down, a.up{margin-left:0 !important; font-style: normal !important;}
 a.hide:hover{font-style:italic; color:#999 !important;}
 a.show:hover{font-style:normal !important;}
-a.newSub:hover{color:green !important;}
-a.delete:hover{color:red !important;}
+a.newSub:hover{color:#25850d !important;}
+a.delete:hover{color:#bb0808 !important;}
 
 
 
-#working{display:none; position:absolute; background:#fee url('../images/progress.gif') 10px center no-repeat; height:20px; padding:10px; padding-left:65px; border:1px solid red; border-radius: 3px; top:-4px; left:46%;}
+#working{display:none; position:absolute; background:#fee url('../images/progress.gif') 10px center no-repeat; height:20px; padding:10px; padding-left:65px; border:1px solid #bb0808; border-radius: 3px; top:-4px; left:46%;}
 
 .title{font-size:20px; font-weight:bold;}
 
@@ -101,14 +101,18 @@ z-index:10;
 /** buttons **/
 button, a.button{display:inline-block; padding:3px 10px; border:1px solid #888; border-radius:3px; margin:2px 10px;background-color:#eee; color:#000;
 cursor: pointer;}
-button[type=submit], a.button.submit{background-color:green; color:#fff; border-color:#002c00;}
-button.cancel, a.button.cancel{background-color:red; color:#fff; border-color:#900;}
-a.button.disabled, button.disabled, button:disabled, input:disabled{opacity:.3;}
-.error{background-color:#f22; color:#fff;}
-.success{background-color:green; color:#fff;}
+button[type=submit], a.button.submit{background-color:#25850d; color:#fff; border-color:#1c3b14;}
+button.cancel, a.button.cancel{background-color:#bb0808; color:#fff; border-color:#7c0011;}
+button.cancel, a.button.cancel, button[type=submit], a.button.submit{text-shadow:-1px -1px rgb(0, 0, 0);}
+button.cancel:hover, a.cancel:hover, button[type=submit]:hover, a.submit:hover{text-shadow:1px 1px rgb(0, 0, 0);}
+button.disabled, a.button.disabled, button:disabled, input:disabled{opacity:.3;}
+.error{background-color:#bb0808; color:#fff;}
+.success{background-color:#25850d; color:#fff;}
 .note{background-color:#fdf79a; color:#555;}
 .error, .success, .note{padding:2px 10px; border-radius:3px;}
 .preferences{background:#ccc url(/_code/admin/images/preferences.gif) no-repeat 50% 50%;}
+
+#localMessage{color:#25850d;}
 
 
 img.buttonProcess{visibility:hidden; vertical-align:middle; padding:5px; background-color:#fff; border:1px solid #ccc; border-radius:15px;}

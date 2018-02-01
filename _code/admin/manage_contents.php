@@ -9,6 +9,8 @@ ini_set('post_max_size', '21M');
 
 $max_upload_size = ini_get('upload_max_filesize');
 $message = '';
+// back history, will be attached to the "back" button, using javascript:history.go(n)
+$back_History = -1; // will be decremented each time we reload this page (if $item is not set but $_SESSION['item'] is)
 
 
 // upload result (from admin/upload_file.php)
@@ -32,6 +34,7 @@ if(isset($_GET['item'])){
 	
 }elseif(isset($_SESSION['item'])){
 	$item = $_SESSION['item'];
+	--$back_History; // we've reloaded this page, decrement back history
 }
 
 // if no item, go back to admin manage_structure page
@@ -48,9 +51,14 @@ if(!isset($item)){
 
 // echo $item; -> 'section1/section2'
 
+
 $title = 'ADMIN : Site Content :';
 $description = filename(str_replace(CONTENT, '', $item), 'decode');
-$back_link = 'manage_structure.php';
+//$back_link = 'manage_structure.php';
+if($_SERVER['HTTP_REFERER'] == $_SERVER['REQUEST_URI']){
+
+}
+$back_link = 'javascript:history.go('.$back_History.')';
 $path = ROOT.$item;
 
 //echo $path;

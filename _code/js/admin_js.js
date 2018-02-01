@@ -66,7 +66,7 @@ $('#structureContainer, #contentContainer').on('click', 'a.up, a.down', function
 });
 
 
-// SHOW or HIDE
+// SHOW or HIDE section
 $('#structureContainer').on('click', 'a.show, a.hide', function(e) {
 	var item = $(this).parent().data("name");
 	var parent = $(this).parents('ul').parents('li').data("name"); // get parent name in case this is a sub-section
@@ -90,7 +90,7 @@ $('#contentContainer').on('click', 'a.saveText', function() {
 	saveTextDescription(file, enText, deText);
 });
 
-// show tip
+// show / hide tips
 $('body').on('click', 'div.tip a.tipTitle', function(e){
 	var olDisplay = $(this).closest('div.tip').children('ol').css('display');
 	//alert(olDisplay);
@@ -206,6 +206,15 @@ function saveTextDescription(file, enText, deText){
 	})
 	.done(function(msg){
 		$('#message').html(msg);
+		$('a.button.saveText').each( function(i){
+			if(!$(this).hasClass("disabled")){
+				$(this).addClass("disabled");
+				if(msg.match("^<p class=\"success")){
+					$(this).before('<span id="localMessage">text saved</span> ');
+				}
+				return false;
+			}
+		});
 	});
 }
 
@@ -216,7 +225,7 @@ function saveTextDescription(file, enText, deText){
 
 
 
-/***** general functions *****************************************************/
+/***** behavior functions *****************************************************/
 
 // select text input
 $('#adminContainer').on('click', 'input.position', function(){
@@ -251,20 +260,33 @@ $('body').on('click', '.closeBut, .hideModal', function(){
     return false;
 });
 
+// display 'working' div while processing ajax requests
 $('#working').bind('ajaxStart', function(){
     $(this).show();
 }).bind('ajaxStop', function(){
     $(this).hide();
 });
 
+// if the value of textarea (for description texts) is changed, highlight "save changes" button
 $('textarea.en, textarea.de').bind('input propertychange', function(){
-	if(this.value.length){
-		$(this).parent().find('a.button').removeClass("disabled");
+	// check which one (en or de) was changed
+	if($(this).hasClass("en")){
+		var oldValue = $(this).parent().find('input.enMemory').val();
+	}else if($(this).hasClass("de")){
+		var oldValue = $(this).parent().find('input.deMemory').val();
+	}
+	// compare old and new value
+	if($(this).val() != oldValue){ // it has changed
+		$(this).parent().find('a.button.saveText').removeClass("disabled");
+		if ($("#localMessage").length){
+			$("#localMessage").remove();
+		}
 	}else{
-		$(this).parent().find('a.button').addClass("disabled");
+		$(this).parent().find('a.button.saveText').addClass("disabled");
 	}
 });
 
+// highlight current container (li) when a link is clicked that starts an ajx request
 $('#structureContainer').on('click', 'ul.structure li a, ul.structure li input', function(){
 	$(this).parent().addClass("active");
 });
@@ -275,6 +297,12 @@ $('#structureContainer').on('blur', 'ul.structure li input', function(){
 	$(this).parent().removeClass("active");
 });
 
+// go to editor when click inside text or html file
+$("div.txt.admin, div.html.admin").on('click', function(){
+	var redirect = $(this).parent().find('a.button.submit').attr("href");
+	//alert(redirect);
+	window.location.href = redirect;
+});
 
 
 // show Modal window
@@ -328,7 +356,7 @@ function hideModal($elem){
     }
 }
 
-// change positioning of cart to account for scrolling down window!
+// change positioning of modals to account for scrolling down window!
 function checkModalHeight(elem){
     var scroltop = parseInt($(window).scrollTop());
     var newtop = scroltop+50;

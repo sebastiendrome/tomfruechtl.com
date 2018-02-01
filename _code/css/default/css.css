@@ -65,6 +65,8 @@ u{color:#000;}
 .zoom{cursor:zoom-in;}
 .clearBoth{clear:both;}
 
+#footer{text-shadow:1px 1px 0 rgba(255, 255, 255, .5);}
+
 /* wysiwyg txt editor */
 .wysiwyg-text-align-left{text-align:left;}
 .wysiwyg-text-align-right{text-align:right;}

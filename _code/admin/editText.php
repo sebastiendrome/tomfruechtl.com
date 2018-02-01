@@ -17,6 +17,9 @@ if( isset($_GET['message']) ){
 	}
 }
 
+// back history, will be attached to the "back" button, using javascript:history.go(n)
+$back_History = -1; // will be decremented each time we reload this page (if $item is not set but $_SESSION['item'] is)
+
 // form submit from within newFile.php modal: submitted: path, and fileName (optional)
 if( isset($_POST['createText']) ){
 	if( isset($_POST['path']) && !empty($_POST['path']) ){
@@ -43,7 +46,7 @@ if( isset($_GET['item']) ){
 	
 }elseif( isset($_SESSION['item']) ){
 	$item = $_SESSION['item'];
-
+	--$back_History; // we've reloaded this page, decrement back history
 }
 
 if(!isset($item)){
@@ -55,7 +58,7 @@ if(!isset($item)){
 
 $title = 'ADMIN : Edit Text :';
 $description = filename(str_replace(array(ROOT.CONTENT, '_XL/'), '', $item), 'decode');
-$back_link = 'manage_structure.php';
+$back_link = 'javascript:history.go('.$back_History.')';
 
 $ext = file_extension(basename($item));
 
