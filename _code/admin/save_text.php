@@ -14,7 +14,7 @@ if(isset($_POST['saveTextEditor'])){
 	}
 	if( isset($file) && isset($content) ){
 		$message = save_text_editor($file, $content);
-		$_SESSION['item'] = $file;
+		$_SESSION['editItem'] = $file;
 	}else{
 		$message = '0|Missing data';
 	}

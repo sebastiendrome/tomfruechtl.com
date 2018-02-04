@@ -384,7 +384,7 @@ function display_content_admin($path = '', $menu_array = ''){
 				if( !strstr($key, ',') ){
 					
 					$ext = file_extension($key);
-					$item = $path.'/_S/'.$key;
+					$item = $path.'/_S/'.$key; // default
 					
 					$display_file = display_file_admin($path, $key);
 					
@@ -433,7 +433,7 @@ function display_content_admin($path = '', $menu_array = ''){
 					// texts
 					$display .= '<div class="actions">
 					<input type="hidden" class="file" value="'.$item.'">
-					<p>description: <span style="color:#bbb; display:inline-block; float:right;">allowed tags: &lt;b>&lt;u>&lt;i>&lt;a></span></p>';
+					<p>description: <span class="tags">allowed tags: &lt;b>&lt;u>&lt;i>&lt;a> <span class="tagTip">&lt;b><b>bold</b>&lt;/b> &lt;u><u>underline</u>&lt;/u> &lt;i><i>italic</i>&lt;/i> &lt;a&nbsp;href="http://yourlink.com">link&lt;/a></span></span></p>';
 					
 					$display .= '↓'.FIRST_LANG.'<br>
 					<input type="hidden" class="enMemory" value="'.$en.'">
@@ -948,7 +948,7 @@ function save_text_description($file, $en_txt, $de_txt){
 	if(!empty($error)){
 		$result .= $error;
 	}else{
-		$result .= '<p class="success">Text saved for image: '.$file.'</p>';
+		$result .= '<p class="success">Text saved for file: '.filename(basename($file), 'decode').'</p>';
 	}
 	return $result;
 }

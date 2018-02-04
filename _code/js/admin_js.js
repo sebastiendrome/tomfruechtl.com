@@ -304,6 +304,16 @@ $("div.txt.admin, div.html.admin").on('click', function(){
 	window.location.href = redirect;
 });
 
+// show allowd tags tip
+$('.tags').on("mouseenter", function(){
+	//alert('hover');
+	$(this).children("span.tagTip").show();
+});
+$('.tags').on("mouseleave", function(){
+	//alert('out');
+	$(this).children("span.tagTip").hide();
+});
+
 
 // show Modal window
 function showModal(modal, callback){

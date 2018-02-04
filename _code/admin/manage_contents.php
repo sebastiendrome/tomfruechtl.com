@@ -35,6 +35,7 @@ if(isset($_GET['item'])){
 }elseif(isset($_SESSION['item'])){
 	$item = $_SESSION['item'];
 	--$back_History; // we've reloaded this page, decrement back history
+	//echo $item; exit;
 }
 
 // if no item, go back to admin manage_structure page
@@ -54,10 +55,7 @@ if(!isset($item)){
 
 $title = 'ADMIN : Site Content :';
 $description = filename(str_replace(CONTENT, '', $item), 'decode');
-//$back_link = 'manage_structure.php';
-if($_SERVER['HTTP_REFERER'] == $_SERVER['REQUEST_URI']){
 
-}
 $back_link = 'javascript:history.go('.$back_History.')';
 $path = ROOT.$item;
 

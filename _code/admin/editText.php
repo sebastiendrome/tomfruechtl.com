@@ -10,15 +10,16 @@ if( isset($_GET['message']) ){
 	$message = urldecode($_GET['message']);
 	if( substr($message, 0, 2) == '1|'){
 		$item = substr($message, 2);
-		$_SESSION['item'] = $item;
+		$_SESSION['editItem'] = $item;
 		$message = '<p class="success">Text Saved.</p>';
+		$back_link = '/_code/admin/manage_contents.php'; // back_link should not use browser history in this case, because we want the page to *reload* and show the new content (edited text). 
 	}else{
 		$message = '<p class="error">'.substr($message, 2).'</p>';
 	}
 }
 
 // back history, will be attached to the "back" button, using javascript:history.go(n)
-$back_History = -1; // will be decremented each time we reload this page (if $item is not set but $_SESSION['item'] is)
+$back_History = -1; // will be decremented each time we reload this page (if $item is not set but $_SESSION['editItem'] is)
 
 // form submit from within newFile.php modal: submitted: path, and fileName (optional)
 if( isset($_POST['createText']) ){
@@ -29,7 +30,7 @@ if( isset($_POST['createText']) ){
 			$item .= '/_XL/'.$file_name;
 			//echo $item;
 		}
-		$_SESSION['item'] = $item;
+		$_SESSION['editItem'] = $item;
 	}else{
 		exit();
 	}
@@ -42,11 +43,11 @@ if( isset($_GET['item']) ){
 		header("location: manage_structure.php");
 		exit;
 	}
-	$_SESSION['item'] = $item;
+	$_SESSION['editItem'] = $item;
 	
-}elseif( isset($_SESSION['item']) ){
-	$item = $_SESSION['item'];
-	--$back_History; // we've reloaded this page, decrement back history
+}elseif( isset($_SESSION['editItem']) ){
+	$item = $_SESSION['editItem'];
+	--$back_History; // we've reloaded this page, decrement back-history
 }
 
 if(!isset($item)){
@@ -58,7 +59,9 @@ if(!isset($item)){
 
 $title = 'ADMIN : Edit Text :';
 $description = filename(str_replace(array(ROOT.CONTENT, '_XL/'), '', $item), 'decode');
-$back_link = 'javascript:history.go('.$back_History.')';
+if(!isset($back_link)){ // if back_link has not already been set (which happens if we've saved the edited text, see above, line 15)
+	$back_link = 'javascript:history.go('.$back_History.')'; // use browser's history.
+}
 
 $ext = file_extension(basename($item));
 

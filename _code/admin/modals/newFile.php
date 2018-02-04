@@ -44,7 +44,7 @@ $split_types = explode('|', $supported_types);
 // only show the create file option if the modal is not opened from the replace button
 if(empty($replace)){
 ?>
-	<p><b>PDF</b> and <b>DOC</b> files (i.e. files created with microsoft Word, Adobe Reader or similar apps) will not be directly readable on the site but only available for download. To format text content and make it readable on the site, use the "Create file" option below.
+	<p>PDF and DOC files (i.e. files created with microsoft Word, Adobe Reader or similar apps) will not be directly readable on the site but only available for download. To format text content and make it readable on the site, use the "Create file" option below.
 	</p>
 <?php } ?>
 	</div>

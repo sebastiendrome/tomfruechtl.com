@@ -47,7 +47,13 @@ a.show:hover{font-style:normal !important;}
 a.newSub:hover{color:#25850d !important;}
 a.delete:hover{color:#bb0808 !important;}
 
-
+.tags{color:#bbb; /*display:inline-block;*/ float:right; position:relative;}
+.tags:hover{color:#000;}
+.tagTip{
+	position:absolute; display:none; bottom:16px; right:-10px; 
+	background-color:#ffc; 
+	padding:6px 9px; border:1px solid #aaa; border-radius:3px;
+}
 
 #working{display:none; position:absolute; background:#fee url('../images/progress.gif') 10px center no-repeat; height:20px; padding:10px; padding-left:65px; border:1px solid #bb0808; border-radius: 3px; top:-4px; left:46%;}
 
@@ -108,7 +114,7 @@ button.cancel:hover, a.cancel:hover, button[type=submit]:hover, a.submit:hover{t
 button.disabled, a.button.disabled, button:disabled, input:disabled{opacity:.3;}
 .error{background-color:#bb0808; color:#fff;}
 .success{background-color:#25850d; color:#fff;}
-.note{background-color:#fdf79a; color:#555;}
+.note{background-color:#ffc; color:#555;}
 .error, .success, .note{padding:2px 10px; border-radius:3px;}
 .preferences{background:#ccc url(/_code/admin/images/preferences.gif) no-repeat 50% 50%;}
 
