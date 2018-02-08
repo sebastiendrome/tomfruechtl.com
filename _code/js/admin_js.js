@@ -68,7 +68,7 @@ $('#structureContainer, #contentContainer').on('click', 'a.up, a.down', function
 
 // SHOW or HIDE section
 $('#structureContainer').on('click', 'a.show, a.hide', function(e) {
-	var item = $(this).parent().data("name");
+	var item = $(this).parents('li').data("name");
 	var parent = $(this).parents('ul').parents('li').data("name"); // get parent name in case this is a sub-section
 	//alert(parent+' > '+item);
 	showHide(item, parent);
@@ -299,7 +299,7 @@ $('#structureContainer').on('blur', 'ul.structure li input', function(){
 
 // go to editor when click inside text or html file
 $("div.txt.admin, div.html.admin").on('click', function(){
-	var redirect = $(this).parent().find('a.button.submit').attr("href");
+	var redirect = $(this).parent().find('a.button.edit').attr("href");
 	//alert(redirect);
 	window.location.href = redirect;
 });

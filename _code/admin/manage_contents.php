@@ -18,6 +18,13 @@ if(isset($_GET['upload_result'])){
 	$message = urldecode($_GET['upload_result']);
 }
 
+// embed result (from admin/embed_media.php)
+if(isset($_GET['embed_result'])){
+	$message = urldecode($_GET['embed_result']);
+	// disable XXS protection so that iframes in embeded media that was just edited do load
+	header("X-XSS-Protection: 0");
+}
+
 // message GET (from delete_file.php for exemple)
 if(isset($_GET['message'])){
 	$message = urldecode($_GET['message']);
@@ -66,13 +73,16 @@ require(ROOT.'_code/inc/doctype.php');
 
 <link href="/_code/css/admincss.css?v=2" rel="stylesheet" type="text/css">
 
+<!-- load responsive design style sheets -->
+<link rel="stylesheet" media="(max-width: 720px)" href="/_code/css/admin-max-720px.css">
+
 <div id="working">working...</div>
 
 <!-- start container -->
 <div id="adminContainer">
 	
 	<span class="title"><a href="<?php echo $back_link; ?>">&larr; back</a> | <?php echo $description; ?></span> 
-	<a href="javascript:;" class="button showModal" rel="newFile?path=<?php echo urlencode(ROOT.$item); ?>">[+] new file</a>  <a href="?logout" class="button" style="float:right;">-> logout</a>
+	<a href="javascript:;" class="button showModal" rel="newFile?path=<?php echo urlencode(ROOT.$item); ?>" title="upload or create a file">new file</a> <a href="javascript:;" class="button showModal" rel="embedMedia?path=<?php echo urlencode(ROOT.$item); ?>" title="insert media content from other sites">&lt;embed media></a> <a href="?logout" class="button" style="float:right;">logout</a>
 	<div class="clearBoth" id="message" style="margin:20px 0;">
 		<?php if( isset($message) ){
 			echo $message;

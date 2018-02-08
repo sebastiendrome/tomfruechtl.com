@@ -250,8 +250,12 @@ function display_file($path, $file_name, $raw = FALSE){
 				}else{
 					$display_file = '<div class="txt">'.$contents.'</div>';
 				}
-			
 			}
+
+		}elseif($ext == '.emb'){ // embeded media
+			$contents = file_get_contents($item);
+			$display_file = $contents;
+			
 		}else{
 			$display_file = '<a href="/'.$file_link.'" title="open in new window" target="_blank"><img src="/_code/images/'.substr($ext,1).'.png" class="icon"></a>';
 		}

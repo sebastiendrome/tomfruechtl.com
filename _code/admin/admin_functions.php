@@ -74,7 +74,6 @@ function sanitize_text($input){
 	$input = 
 	preg_replace('/on(load|unload|click|dblclick|mouseover|mouseenter|mouseout|mouseleave|mousemove|mouseup|keydown|pageshow|pagehide|resize|scroll)[^"]*/i', '', $input);
 	$input = addslashes( strip_tags($input, ALLOWED_TAGS) );
-	//$input = preg_replace('/(#|?/i', '', $input);
 	return $input;
 }
 /*
@@ -120,6 +119,9 @@ function display_file_admin($path, $file_name){
 		
 		}elseif($ext == '.html'){ // html
 			$display_file = '<div class="html admin">'.strip_tags( file_get_contents($item) , ALLOWED_TAGS ).'</div>';
+
+		}elseif($ext == '.emb'){ // embeded media
+			$display_file = '<div class="html admin">'.file_get_contents($item).'</div>';
 		
 		}else{
 			$display_file = '<a href="/'.str_replace('/_S/', '/_XL/', $file_link).'" title="open in new window" target="_blank"><img src="/_code/images/'.substr($ext,1).'.png" id="'.$file_name.'"></a>';
@@ -224,12 +226,12 @@ function site_structure($menu_array = '', $currentItem = ''){
 			
 			// html output for a section
 			$site_structure .= '<li'.$status.' data-name="'.$key.'" data-position="'.$n.'">
-			<input type="text" class="nameInput" name="'.$key.'" value="'.$name.'"> <input type="text" class="position" name="order'.$key.'" value="'.$n.'" data-parent="undefined" data-item="'.$key.'" data-oldposition="'.$n.'">
+			<input type="text" class="nameInput" name="'.$key.'" value="'.$name.'"> <span style="white-space:nowrap;"><input type="text" class="position" name="order'.$key.'" value="'.$n.'" data-parent="undefined" data-item="'.$key.'" data-oldposition="'.$n.'">
 			<a href="javascript:;" class="up" title="move up">∧</a>
-			<a href="javascript:;" class="down" title="move down">∨</a> 
-			<a href="manage_contents.php?item='.$path.'">edit content</a> <a href="javascript:;" class="newSub showModal" rel="createSection?parent='.urlencode($key).'">↓create sub-section</a>
+			<a href="javascript:;" class="down" title="move down">∨</a></span> 
+			<span style="white-space:nowrap;"><a href="manage_contents.php?item='.$path.'">edit</a> <a href="javascript:;" class="newSub showModal" rel="createSection?parent='.urlencode($key).'">add sub-section</a>
 			<a href="javascript:;" class="'.$sh_class.'" title="'.$sh_title.'">'.$show_hide.'</a> 
-			<a href="javascript:;" class="delete showModal" rel="deleteSection?deleteSection='.urlencode($key).'">[x]delete</a>'.PHP_EOL;
+			<a href="javascript:;" class="delete showModal" rel="deleteSection?deleteSection='.urlencode($key).'">[x]delete</a></span>'.PHP_EOL;
 			
 			if(!empty($var)){ // section contains something
 				
@@ -263,10 +265,10 @@ function site_structure($menu_array = '', $currentItem = ''){
 							}
 							
 							// html output for a sub-section
-							$site_structure .= '<li class="sub'.$status.'" data-name="'.$k.'" data-parent="'.$key.'" data-position="'.$s.'"><input type="text" class="nameInput" name="'.$k.'" value="'.$name.'"> <input type="text" class="position" name="order'.$k.'" value="'.$s.'" data-parent="'.$key.'" data-item="'.$k.'" data-oldposition="'.$s.'"> 
+							$site_structure .= '<li class="sub'.$status.'" data-name="'.$k.'" data-parent="'.$key.'" data-position="'.$s.'"><input type="text" class="nameInput" name="'.$k.'" value="'.$name.'"> <span style="white-space:nowrap;"><input type="text" class="position" name="order'.$k.'" value="'.$s.'" data-parent="'.$key.'" data-item="'.$k.'" data-oldposition="'.$s.'"> 
 							<a href="javascript:;" class="up" title="move up">∧</a> 
-							<a href="javascript:;" class="down" title="move down">∨</a> 
-							<a href="manage_contents.php?item='.$path.$subpath.'">edit content</a> <a href="javascript:;" class="'.$sh_class.'" title="hide this from the public, without deleting it.">'.$show_hide.'</a> <a href="javascript:;" class="delete showModal" rel="deleteSection?parent='.urlencode($key).'&deleteSection='.urlencode($k).'">[x]delete</a></li>'.PHP_EOL;
+							<a href="javascript:;" class="down" title="move down">∨</a></span> 
+							<span style="white-space:nowrap;"><a href="manage_contents.php?item='.$path.$subpath.'">edit</a> <a href="javascript:;" class="'.$sh_class.'" title="hide this from the public, without deleting it.">'.$show_hide.'</a> <a href="javascript:;" class="delete showModal" rel="deleteSection?parent='.urlencode($key).'&deleteSection='.urlencode($k).'">[x]delete</a></span></li>'.PHP_EOL;
 						
 						// files
 						}else{
@@ -298,12 +300,12 @@ function site_structure($menu_array = '', $currentItem = ''){
 								$description = str_replace(array("\'", '\"'), array('&#39;','&quot;'), $description);
 								$description = substr($description, 0, 35);
 							}
-							$site_structure .= '<li data-name="'.$k.'" data-position="'.$s.'"><span class="imgInput" style="background-image:url(/'.$display_file.');">'.$description.'</span>
-							<input type="text" class="position" name="order'.$k.'" value="'.$s.'" data-parent="'.$key.'" data-item="'.$k.'" data-oldposition="'.$s.'">
+							$site_structure .= '<li data-name="'.$k.'" data-position="'.$s.'"><span class="imgInput" style="background-image:url(/'.$display_file.');">'.$description.'</span> 
+							<span style="white-space:nowrap;"><input type="text" class="position" name="order'.$k.'" value="'.$s.'" data-parent="'.$key.'" data-item="'.$k.'" data-oldposition="'.$s.'">
 							<a href="javascript:;" class="up" title="move up">∧</a>
-							<a href="javascript:;" class="down" title="move down">∨</a> 
-							<a href="manage_contents.php?item='.$path.'#'.preg_replace('/[^A-Za-z0-9]/', '', $k).'">edit</a> 
-							<a href="javascript:;" class="delete showModal" rel="deleteFile?parent='.urlencode($key).'&file='.urlencode(ROOT.$file).'">[x]delete</a></li>'.PHP_EOL;
+							<a href="javascript:;" class="down" title="move down">∨</a></span> 
+							<span style="white-space:nowrap;"><a href="manage_contents.php?item='.$path.'#'.preg_replace('/[^A-Za-z0-9]/', '', $k).'">edit</a> 
+							<a href="javascript:;" class="delete showModal" rel="deleteFile?parent='.urlencode($key).'&file='.urlencode(ROOT.$file).'">[x]delete</a></span></li>'.PHP_EOL;
 						}
 						
 						
@@ -421,11 +423,11 @@ function display_content_admin($path = '', $menu_array = ''){
 					<a href="javascript:;" class="down" title="move down">∨</a><!-- '.filename($key, 'decode').'--></p>';
 					$display .= $display_file;
 					$display .= '<p>
-					<!--<a href="/_code/admin/rotate_image.php?image='.$item.'" class="button rotate" data-image="'.$item.'" style="margin-left:0;"><img src="images/img-rotate.png" style="border:none; background:none; display:inline;"> rotate</a>-->
-					<a href="javascript:;" class="button replace showModal" style="margin-left:0;"  rel="newFile?path='.urlencode(ROOT.$_SESSION['item']).'&replace='.urlencode($item).'">replace</a> 
-					<a href="javascript:;" class="button cancel showModal" rel="deleteFile?file='.urlencode($item).'" style="margin-right:0;">delete</a>';
-					if( preg_match($_POST['types']['text_types'], $ext) ){ // txt
-						$display .= '<a class="button submit" href="/_code/admin/editText.php?item='.urlencode($item).'" style="float:right;">Edit Text</a>';
+					<a href="javascript:;" class="button cancel showModal" rel="deleteFile?file='.urlencode($item).'" style="margin-left:0;">delete</a> <a href="javascript:;" class="button replace showModal" rel="newFile?path='.urlencode(ROOT.$_SESSION['item']).'&replace='.urlencode($item).'">replace</a> ';
+					if( preg_match($_POST['types']['text_types'], $ext)){ // txt
+						$display .= '<a class="button edit" href="/_code/admin/editText.php?item='.urlencode($item).'" style="float:right;">edit</a>';
+					}elseif( $ext == '.emb'){
+						$display .= '<a class="button edit showModal" href="javascript:;" rel="embedMedia?path='.urlencode($item).'" style="float:right;">edit</a>';
 					}
 					
 					$display .= '</p>
@@ -436,10 +438,10 @@ function display_content_admin($path = '', $menu_array = ''){
 					<p>description: <span class="tags">allowed tags: &lt;b>&lt;u>&lt;i>&lt;a> <span class="tagTip">&lt;b><b>bold</b>&lt;/b> &lt;u><u>underline</u>&lt;/u> &lt;i><i>italic</i>&lt;/i> &lt;a&nbsp;href="http://yourlink.com">link&lt;/a></span></span></p>';
 					
 					$display .= '↓'.FIRST_LANG.'<br>
-					<input type="hidden" class="enMemory" value="'.$en.'">
+					<input type="hidden" class="enMemory" value="'.str_replace('"', '&quot;', $en).'">
 					<textarea class="en" name="en_txt" maxlength="300">'.$en.'</textarea>
 					↓'.SECOND_LANG.'<br>
-					<input type="hidden" class="deMemory" value="'.$de.'">
+					<input type="hidden" class="deMemory" value="'.str_replace('"', '&quot;', $de).'">
 					<textarea class="de" name="de_txt" maxlength="300">'.$de.'</textarea>
 					<a href="javascript:;" class="button submit saveText disabled" style="float:right; margin-top:10px; margin-right:0;">Save changes</a>';
 					$display .= '</div>
@@ -476,17 +478,16 @@ function display_content_admin($path = '', $menu_array = ''){
 						$ext = file_extension($k);
 						// various ways to display file depending on extension
 						if( preg_match($_POST['types']['resizable_types'], $ext) ){
-							$display_file = '<img src="'.$first_file_link.'" alt="'.$sub_item.'" style="display:block; float:left; width:160px; margin-right:50px;">';
+							$display_file = '<img src="'.$first_file_link.'" alt="'.$sub_item.'" style="display:block; float:left; width:160px; margin-right:50px; margin-top:10px;">';
 						}else{
-							$display_file = '<div style="float:left; width:160px; margin-right:50px; height:80px; padding-top:45px; border:1px solid #ccc; overflow:hidden;">'.basename($first_file_link).'</div>';
+							$display_file = '<div style="float:left; width:160px; margin-right:50px;  margin-top:10px; height:80px; padding-top:55px; border:1px solid #ccc; overflow:hidden;">'.basename($first_file_link).'</div>';
 						}
 						$display .= $display_file;
 						unset($first_file); // make sure first_file doesn't stay set for next sub-section through the foreach loop
 					}
 					
-					$display .= '<div style="float:left; width:400px;">
-					<p>&nbsp;</p>
-					<a href="?item='.urlencode(CONTENT.$item.'/'.$sub_dir).'">edit content</a>
+					$display .= '<div style="float:left; width:400px; padding-top:65px;">
+					<a href="?item='.urlencode(CONTENT.$item.'/'.$sub_dir).'">edit section content</a>
 					</div>';
 					
 					$display .= '<div class="clearBoth">&nbsp;</div>';
@@ -1026,7 +1027,68 @@ function save_text_editor($file, $content){
 	return $result;
 }
 
+// embed media
+function embed_media($path, $embed_media){
+	$error = $result = '';
 
+	// check if we're editing a pre-existing txt file, or creating a new one in this section
+	$ext = file_extension(basename($path));
+	if(!$ext){ // no file extension, we'll create a new txt file
+		// add the _XL directory to file path
+		$path .= '/_XL/';
+		$new_file_name = 'embed-'.rand(1000,9999).'.emb';
+		$new_file = $path.$new_file_name;
+		
+	}else{
+		$new_file = $path;
+		$new_file_name = basename($new_file);
+		$path = preg_replace('/'.$new_file_name.'$/', '', $new_file);
+	}
+
+	$content = $embed_media;
+	
+	// write new content into new file (create it if it does not exist)
+	if($fp = fopen($new_file, 'w')){
+		fwrite($fp, $content);
+		fclose($fp);
+		
+		// update menu
+		$menu = file_get_contents(MENU_FILE);
+		
+		// match $path with menu sections and sub-sections
+		$split = explode('/', $path);
+		$tabs = '';
+		// for each match from path against menu title line, set $match and add a tab 
+		foreach($split as $s){
+			if( !empty($s) ){ // avoid empty lines/matches...
+				if( strstr($menu, filename($s, 'decode').',' ) ){
+					$match = filename($s, 'decode');
+					$tabs .= "\t";
+				}
+			}
+		}
+		
+		$new_content = preg_replace('/('.preg_quote($match).',.*)/', "$1"."\n".$tabs.$new_file_name, $menu);
+		
+		
+		if($fp = fopen(MENU_FILE, 'w') ){
+			fwrite($fp, $new_content);
+			fclose($fp);
+		}else{
+			$error .= '<p class="error">Could not open menu file</p>';
+		}
+		
+	}else{
+		$error .= '<p class="error">Could not open '.$new_file_name.'</p>';
+	}
+	
+	if(!empty($error)){
+		$result .= $error;
+	}else{
+		$result .= '<p class="success">Media file created: '.$new_file_name.'</p>';
+	}
+	return $result;
+}
 
 
 /******************************* UPLOAD / RESIZE FILE *******************************************/

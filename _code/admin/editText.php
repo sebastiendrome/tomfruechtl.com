@@ -126,12 +126,25 @@ require(ROOT.'_code/inc/doctype.php');
 <a data-wysihtml5-command="justifyFull" title="Justify" unselectable="on"><img src="/_code/admin/images/align-justify.gif" style="width:13px; height:12px;vertical-align:middle;">
 </a>
 
+<!-- User can define the image's src: -->
+<!-- <a data-wysihtml5-command="insertImage">insert image</a> -->
+
 <a data-wysihtml5-command="createLink" href="javascript:;" unselectable="on" class="wysihtml5-command-dialog-opened" style="border-radius: 3px 0 0 3px;">link</a><a data-wysihtml5-command="removeLink" href="javascript:;" unselectable="on" class="" style="border-radius: 0 3px 3px 0; margin-left:-1px;"><s>link</s></a>
 
 <div id="workflow">
 <a data-wysihtml5-command="undo" href="javascript:;" unselectable="on" title="Undo">undo</a><a data-wysihtml5-command="redo" href="javascript:;" unselectable="on" title="Redo">redo</a><a data-wysihtml5-action="change_view" title="Show HTML" class="" onclick="if(this.className == ''){this.className = 'wysihtml5-command-active'}else{this.className = ''}">show code</a>
 </div>
 
+<!--
+	<div data-wysihtml5-dialog="insertImage" style="display:none;">
+	<label>
+		Image:
+		<input data-wysihtml5-dialog-field="src" value="http://">
+	</label>
+	<a data-wysihtml5-dialog-action="save">OK</a>
+	<a data-wysihtml5-dialog-action="cancel">Cancel</a>
+	</div>
+-->
 	<div data-wysihtml5-dialog="createLink" style="display:none;">
         <label>
           Link:

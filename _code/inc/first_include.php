@@ -1,8 +1,9 @@
 <?php
 /******** TO DO ********
  * User admin: upload home page backgound-image
+ * add option to embed third-party code (youtube, basecamp, soundcloud etc...)
  * preferences admin (set all vars in user_cutom.php) 
- * audio plays ininterrupted on page change
+ * audio to play ininterrupted on page change
  */
 session_start();
 

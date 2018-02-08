@@ -25,7 +25,7 @@ $split_types = explode('|', $supported_types);
 
 
 ?>
-<div class="modal" id="uploadFileContainer" style="color:#000;">
+<div class="modal" id="uploadFileContainer">
 
 	<!-- upload file start -->
 	<div>
