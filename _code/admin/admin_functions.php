@@ -1033,10 +1033,12 @@ function embed_media($path, $embed_media){
 
 	// check if we're editing a pre-existing txt file, or creating a new one in this section
 	$ext = file_extension(basename($path));
-	if(!$ext){ // no file extension, we'll create a new txt file
+	if(!$ext){ // no file extension, we'll create a new .emb file
 		// add the _XL directory to file path
 		$path .= '/_XL/';
-		$new_file_name = 'embed-'.rand(1000,9999).'.emb';
+		$rand1 = rand(1,9999);
+		$rand2 = rand(1,999);
+		$new_file_name = 'emb-'.$rand1.$rand2.'.emb';
 		$new_file = $path.$new_file_name;
 		
 	}else{
@@ -1052,30 +1054,33 @@ function embed_media($path, $embed_media){
 		fwrite($fp, $content);
 		fclose($fp);
 		
-		// update menu
-		$menu = file_get_contents(MENU_FILE);
+		// update menu if new file
+		if(!$ext){ // no file extension, we'll create a new .emb file
+			$menu = file_get_contents(MENU_FILE);
 		
-		// match $path with menu sections and sub-sections
-		$split = explode('/', $path);
-		$tabs = '';
-		// for each match from path against menu title line, set $match and add a tab 
-		foreach($split as $s){
-			if( !empty($s) ){ // avoid empty lines/matches...
-				if( strstr($menu, filename($s, 'decode').',' ) ){
-					$match = filename($s, 'decode');
-					$tabs .= "\t";
+			// match $path with menu sections and sub-sections
+			$split = explode('/', $path);
+			$tabs = '';
+			// for each match from path against menu title line, set $match and add a tab 
+			foreach($split as $s){
+				if( !empty($s) ){ // avoid empty lines/matches...
+					if( strstr($menu, filename($s, 'decode').',' ) ){
+						$match = filename($s, 'decode');
+						$tabs .= "\t";
+					}
 				}
 			}
-		}
-		
-		$new_content = preg_replace('/('.preg_quote($match).',.*)/', "$1"."\n".$tabs.$new_file_name, $menu);
-		
-		
-		if($fp = fopen(MENU_FILE, 'w') ){
-			fwrite($fp, $new_content);
-			fclose($fp);
-		}else{
-			$error .= '<p class="error">Could not open menu file</p>';
+			//$result .= '$path: '.$path.' match:'.$match;
+			
+			$new_content = preg_replace('/('.preg_quote($match).',.*)/', "$1"."\n".$tabs.$new_file_name, $menu);
+			
+			
+			if($fp = fopen(MENU_FILE, 'w') ){
+				fwrite($fp, $new_content);
+				fclose($fp);
+			}else{
+				$error .= '<p class="error">Could not open menu file</p>';
+			}
 		}
 		
 	}else{

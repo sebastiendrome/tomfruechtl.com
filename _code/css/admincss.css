@@ -46,6 +46,7 @@ a.hide:hover{font-style:italic; color:#999 !important;}
 a.show:hover{font-style:normal !important;}
 a.newSub:hover{color:#25850d !important;}
 a.delete:hover{color:#bb0808 !important;}
+a.button.preferences{float:right; background:#eee url(/_code/admin/images/preferences.gif) no-repeat 50% 50%;}
 
 .tags{color:#bbb; /*display:inline-block;*/ float:right; position:relative;}
 .tags:hover{color:#000;}
@@ -99,8 +100,7 @@ opacity: 0.3;
 }
 .overlayStay{display:block;}
 
-.closeBut{position:absolute; display:inline-block; border:2px solid #fff; top: -13px; right:-15px; -ms-border-radius:15px;
--moz-border-radius:15px; -webkit-border-radius:15px; border-radius:15px; overflow:hidden; line-height:24px;
+.closeBut{position:absolute; display:inline-block; border:2px solid #fff; top: -2px; right:-2px; line-height:24px;
 width:24px; height:24px; background-color:#000; color:#fff; font-size:20px; text-align:center; text-shadow:none; vertical-align:middle;
 z-index:10;
 }

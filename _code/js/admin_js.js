@@ -222,9 +222,6 @@ function saveTextDescription(file, enText, deText){
 
 
 
-
-
-
 /***** behavior functions *****************************************************/
 
 // select text input
@@ -376,3 +373,10 @@ function checkModalHeight(elem){
     //alert(newtop);
     $(elem).animate({top: newtop},100);
 }
+/*
+function is_touch_device() {
+	//return true;
+	return 'ontouchstart' in window        // works on most browsers 
+		|| 'onmsgesturechange' in window;  // works on IE10 with some false positives
+};
+*/

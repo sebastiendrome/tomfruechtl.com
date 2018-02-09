@@ -2,7 +2,6 @@
 * css modifications for small screens (width less than or equal to 720px)
 ****/
 .modal{width:auto;}
-.closeBut{top:-1px; right:-1px; border-radius:0;}
 ul.structure{
     margin-left: -75px;
     margin-right: -19px;

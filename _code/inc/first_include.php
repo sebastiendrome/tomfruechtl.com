@@ -1,9 +1,8 @@
 <?php
 /******** TO DO ********
- * User admin: upload home page backgound-image
- * add option to embed third-party code (youtube, basecamp, soundcloud etc...)
- * preferences admin (set all vars in user_cutom.php) 
- * audio to play ininterrupted on page change
+ * User admin: upload home page backgound-image fix for jpg vs gif vs png
+ * max-length validation on all user inputs 
+ * audio to play ininterrupted on page change?
  */
 session_start();
 

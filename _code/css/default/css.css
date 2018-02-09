@@ -50,7 +50,7 @@ div.txt h1:first-child, div.html h1:first-child{margin-top:-14px;}
 
 
 /* STYLE */
-a{color:#000; text-decoration: none;}
+a{text-decoration: none;}
 a:hover, a.selected{text-decoration: underline;}
 a.imgMore{text-decoration:none;}
 a.imgMore:hover div.txt, a.imgMore:hover div.html{
@@ -58,14 +58,14 @@ a.imgMore:hover div.txt, a.imgMore:hover div.html{
 	padding:15px; padding-top:14px;
 	margin-top:-8px; margin-left:-16px; margin-right:-16px;
 }
-u{color:#000;}
+/*u{color:#000;}*/
 
 .divItem img, img#inOut, #contentContainer img{background:#fff url(/_code/images/progress.gif) 50% 50% no-repeat;}
 
 .zoom{cursor:zoom-in;}
 .clearBoth{clear:both;}
 
-#footer{text-shadow:1px 1px 0 rgba(255, 255, 255, .5);}
+/*#footer{text-shadow:1px 1px 0 rgba(255, 255, 255, .5);}*/
 
 /* wysiwyg txt editor */
 .wysiwyg-text-align-left{text-align:left;}

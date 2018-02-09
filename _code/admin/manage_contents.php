@@ -82,7 +82,7 @@ require(ROOT.'_code/inc/doctype.php');
 <div id="adminContainer">
 	
 	<span class="title"><a href="<?php echo $back_link; ?>">&larr; back</a> | <?php echo $description; ?></span> 
-	<a href="javascript:;" class="button showModal" rel="newFile?path=<?php echo urlencode(ROOT.$item); ?>" title="upload or create a file">new file</a> <a href="javascript:;" class="button showModal" rel="embedMedia?path=<?php echo urlencode(ROOT.$item); ?>" title="insert media content from other sites">&lt;embed media></a> <a href="?logout" class="button" style="float:right;">logout</a>
+	<a href="javascript:;" class="button showModal" rel="newFile?path=<?php echo urlencode(ROOT.$item); ?>" title="upload or create a file">new file</a> <a href="javascript:;" class="button showModal" rel="embedMedia?path=<?php echo urlencode(ROOT.$item); ?>" title="insert media content from other sites">&lt;embed media></a> <a href="?logout" class="button" style="float:right;">logout</a>  <a href="preferences.php" title="preferences" class="button preferences">&nbsp;&nbsp;</a>
 	<div class="clearBoth" id="message" style="margin:20px 0;">
 		<?php if( isset($message) ){
 			echo $message;

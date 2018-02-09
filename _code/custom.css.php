@@ -38,6 +38,9 @@ body, td, th, select, input, button, textarea{
 	line-height:1.4; /* do not add pixels or ems! this is relative to font size */ 
 }
 
+/* links color */
+a{color:#'.$link_color.';} 
+
 /* borders */
 .divItem img, .divItem div.txt, divItem.div.html{border:'.$borders.';}
 ';
