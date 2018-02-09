@@ -1,8 +1,17 @@
 <?php
 require('_code/inc/first_include.php');
 
-$title = $user.' Artist Portfolio';
-$description = $user;
+if(empty($seo_title)){
+    $title = $user.' Artist Portfolio';
+}else{
+    $title = $seo_title;
+}
+if(empty($seo_description)){
+    $description = $user;
+}else{
+    $description = $seo_description;
+}
+
 $page = 'home';
 
 require(ROOT.'_code/inc/doctype.php');

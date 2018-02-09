@@ -29,7 +29,7 @@ echo '
 /***** user defined styles *****/
 
 /* site bg_color */
-body, #nav, .backTitle, div.txt, div.html{background-color: #'.$site_bg_color.';}
+body, #nav, .backTitle, div.txt, div.html, .modal{background-color: #'.$site_bg_color.';}
 
 /* site_font */
 body, td, th, select, input, button, textarea{
