@@ -6,7 +6,7 @@
 ul.structure{margin-left:-50px;}
 ul.structure li{padding:5px; margin-left:50px; color:#fff; background-color:#fff; /*cursor:move;*/}
 ul.structure li a{color:#fff; margin-left:25px; display:inline-block; padding:3px 0; white-space: nowrap;}
-ul.structure li:hover, ul.content li:hover{background-color:rgba(122, 122, 122, .1);}
+ul.structure li:hover, ul.content li:hover{background-color:rgba(240, 240, 240, 0.7);}
 ul.structure li:hover a{color:#333;}
 ul.structure li ul li.sub::before{
 	content: '↳ ';
@@ -46,7 +46,7 @@ a.hide:hover{font-style:italic; color:#999 !important;}
 a.show:hover{font-style:normal !important;}
 a.newSub:hover{color:#25850d !important;}
 a.delete:hover{color:#bb0808 !important;}
-a.button.preferences{float:right; background:#eee url(/_code/admin/images/preferences.gif) no-repeat 50% 50%;}
+a.button.preferences{float:right; padding-left:25px; background:#eee url(/_code/admin/images/preferences.gif) no-repeat 5px 50%;}
 
 .tags{color:#bbb; /*display:inline-block;*/ float:right; position:relative;}
 .tags:hover{color:#000;}
@@ -96,7 +96,7 @@ position: fixed;
 _position:absolute;zoom:1; /* IE */
 filter:alpha(opacity=40); /* IE 5-7  */
 -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=40)";  /* IE8 */
-opacity: 0.3;
+opacity: 0.5;
 }
 .overlayStay{display:block;}
 
@@ -118,7 +118,6 @@ button.disabled, a.button.disabled, button:disabled, input:disabled{opacity:.3;}
 .success{background-color:#25850d; color:#fff;}
 .note{background-color:#ffc; color:#555;}
 .error, .success, .note{padding:2px 10px; border-radius:3px;}
-.preferences{background:#ccc url(/_code/admin/images/preferences.gif) no-repeat 50% 50%;}
 .edit{background-image:url("/_code/admin/images/edit-text.png"); background-repeat:no-repeat; background-position: 5px 5px; padding-left:25px !important;}
 
 #localMessage{color:#25850d;}
@@ -131,17 +130,15 @@ div.tip{
 	margin-bottom:20px; padding:3px 10px; 
 	border-radius:3px;
 	border:1px solid #ccc;
-	background-color: rgba(255, 255, 255, 0.1);
+	background-color: rgba(255, 255, 255, 0.2);
 	font-size:.9em;
 }
 div.tip a.tipTitle{display:block;}
 a.tipTitle::before{
 	content: '► ';
-	color:#000;
 }
 a.tipTitle.open::before{
 	content: '▼ ';
-	color:#000;
 }
 div.tip ol{display:none;}
 

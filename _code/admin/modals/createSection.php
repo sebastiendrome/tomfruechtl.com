@@ -16,7 +16,7 @@ if(isset($_GET['parent']) && !empty($_GET['parent']) ){
 	<form name="createSectionForm" action="" method="post">
 		In both languages, separated with a coma.
 		<input type="hidden" name="parent" value="<?php echo $parent; ?>">
-		<input type="text" name="createSection" maxlength="50" value="" style="width:100%;" placeholder="<?php echo FIRST_LANG; ?>, <?php echo SECOND_LANG; ?>" autofocus>
+		<input type="text" name="createSection" maxlength="100" value="" style="width:100%;" placeholder="<?php echo FIRST_LANG; ?>, <?php echo SECOND_LANG; ?>" autofocus>
 		<p><a class="button hideModal" style="margin-left:0;">Cancel</a> <button type="submit"  name="createSectionSubmit" style="float:right; margin-right:0;">Create</button></p>
 	</form>
 </div>

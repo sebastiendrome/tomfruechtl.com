@@ -166,17 +166,23 @@ if(isset($_GET['message'])){
 require(ROOT.'_code/inc/doctype.php');
 ?>
 <script src="/_code/js/jscolor.min.js"></script>
+
 <link href="/_code/css/admincss.css?v=2" rel="stylesheet" type="text/css">
+
+<!-- load responsive design style sheets -->
+<link rel="stylesheet" media="(max-width: 720px)" href="/_code/css/admin-max-720px.css">
 
 <div id="working">working...</div>
 
 <!-- start adminContainer -->
 <div id="adminContainer">
 	
-	<span class="title"><a href="<?php echo $back_link; ?>">&larr; ADMIN</a> - Preferences</span> <a href="?logout" class="button" style="float:right;">logout</a>
-	<div class="clearBoth" id="message">&nbsp;
+	<span class="title"><a href="<?php echo $back_link; ?>">&larr; ADMIN</a> - Preferences</span> <a href="?logout" class="button" style="float:right;">&times; logout</a>
+	<div class="clearBoth" id="message">
 		<?php if( isset($message) ){
 			echo $message;
+		}else{
+			echo '&nbsp;';
 		}
 		?>
 	</div>
@@ -211,7 +217,7 @@ require(ROOT.'_code/inc/doctype.php');
 		?>
 		</div>
 		<div class="quart"><img src="/content/<?php echo $home_image; ?>?v=<?php echo rand(1,999); ?>" style="width:100%;"><br>
-		<a href="javascript:;" class="button showModal" rel="uploadFile?path=<?php echo urlencode(ROOT.'content/'); ?>&replace=<?php echo urlencode(ROOT.'content/bg.png'); ?>">Change</a>
+		<a href="javascript:;" class="button showModal" rel="uploadFile?path=<?php echo urlencode(ROOT.'content/'); ?>&replace=<?php echo urlencode(ROOT.'content/'.$home_image); ?>">Change</a>
 		</div>
 		
 		<div class="quart" style="text-align:right;">site background color:</div>
@@ -219,7 +225,7 @@ require(ROOT.'_code/inc/doctype.php');
 		
 		<div class="quart" style="text-align:right;">site font: </div>
 		<div class="quart">
-		<select name="site_font">
+		<select name="site_font" onchange="updateFont(this.value);">
 			<?php 
 			foreach($custom_fonts as $k=>$v){
 				if($site_font == $v){
@@ -296,6 +302,13 @@ require(ROOT.'_code/inc/doctype.php');
 <?php require(ROOT.'_code/inc/adminFooter.php'); ?>
 
 <script type="text/javascript">
+// generate javascript array from php $custom_fonts
+var custom_fonts = new Array;
+<?php
+foreach($custom_fonts as $k => $v){
+	echo 'custom_fonts[\''.$k.'\'] = \''.$v.'\';'.PHP_EOL;
+}
+?>
 function updateBgColor(jscolor){
     document.body.style.backgroundColor = '#' + jscolor;
 }
@@ -304,5 +317,19 @@ function updateFontColor(jscolor){
 }
 function updateLinkColor(jscolor){
     $('a').css('color', '#' + jscolor);
+}
+function updateFont(val){
+	valID = val.replace(" ","+");
+	if (!document.getElementById(valID)) {
+		var head = document.getElementsByTagName('head')[0];
+		var link = document.createElement('link');
+		link.id = valID;
+		link.rel = 'stylesheet';
+		link.type = 'text/css';
+		link.href = 'https://fonts.googleapis.com/css?family='+valID+':400,400i,700';
+		link.media = 'all';
+		head.appendChild(link);
+	}
+	$('body, td, th, select, input, button, textarea').css('font', custom_fonts[val]);
 }
 </script>

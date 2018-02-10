@@ -61,7 +61,7 @@ if(empty($replace)){
 	<form name="createTextForm" action="/_code/admin/editText.php" method="post">
 		<input type="hidden" name="path" value="<?php echo $path; ?>">
 		File name:
-		<input type="text" name="fileName" value="" style="width:55%; padding:5px 0;" placeholder="temp-name"> 
+		<input type="text" name="fileName" value="" style="width:55%; padding:5px 0;" placeholder="temp-name" maxlength="50"> 
 		<button type="submit" name="createText">Create</button>
 	</form>
 	<p></p>

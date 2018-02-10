@@ -1,7 +1,5 @@
 <?php
 /******** TO DO ********
- * User admin: upload home page backgound-image fix for jpg vs gif vs png
- * max-length validation on all user inputs 
  * audio to play ininterrupted on page change?
  */
 session_start();
@@ -63,6 +61,7 @@ $languages = array();
 $languages['english'] = array('more'=>'more', 'back'=>'back');
 $languages['français'] = array('more'=>'plus', 'back'=>'retour');
 $languages['Deutsch'] = array('more'=>'mehr', 'back'=>'zurück');
+$languages['español'] = array('more'=>'más', 'back'=>'volver');
 
 // language (en/de) - set by GET query, stored as cookie
 if(isset($_GET['lang']) && ($_GET['lang'] == 'en' || $_GET['lang'] == 'de')){

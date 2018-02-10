@@ -2,7 +2,7 @@
 // import google font if necessary
 if($site_font == '13px "Open Sans", sans-serif'){
 	echo '
-	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700,700i" rel="stylesheet">';
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700" rel="stylesheet">';
 }elseif($site_font == '14px Arvo, serif'){
 	echo '
 	<link href="https://fonts.googleapis.com/css?family=Arvo:400,400i,700" rel="stylesheet">';
@@ -40,6 +40,9 @@ body, td, th, select, input, button, textarea{
 
 /* links color */
 a{color:#'.$link_color.';} 
+
+/* within file linking to sub-section, text should look normal */
+a.imgMore{color:#'.$font_color.';}
 
 /* borders */
 .divItem img, .divItem div.txt, divItem.div.html{border:'.$borders.';}

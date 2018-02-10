@@ -57,4 +57,4 @@ if( isset($social_image) && !empty($social_image) ){ ?>
 
 </head>
 
-<body<?php if(isset($page) && $page == 'home'){echo ' style="background-image: url(/content/'.$home_image.'); background-repeat:no-repeat; background-size:100%;"';}?>>
+<body<?php if(isset($page) && $page == 'home'){echo ' class="bg" style="background-image: url(/content/'.$home_image.'); background-repeat:no-repeat; background-size:100%;"';}?>>

@@ -57,7 +57,7 @@ if(!$logged_in){
 	<div style="background-color:#fff; text-align:center; padding:10px; border:4px solid #000;">
 	'.$message.'
 	<form name="l" id="l" action="'.$form_action.'" method="post" style="margin-top:10px;">
-	username: <input type="text" autocorrect="off" autocapitalize="none" name="userName" autofocus><br><br>
+	username: <input type="text" autocorrect="off" autocapitalize="none" name="userName" maxlength="50" autofocus><br><br>
 	password: <input type="password" name="password"><br><br>
 	<input type="submit" name="login" value=" LOGIN ">
 	</form>

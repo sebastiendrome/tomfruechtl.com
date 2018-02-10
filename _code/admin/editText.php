@@ -94,7 +94,7 @@ require(ROOT.'_code/inc/doctype.php');
 <div id="adminContainer">
 	
 	<span class="title"><a href="<?php echo $back_link; ?>">&larr; back</a> | <?php echo $description; ?></span> 
-	 <a href="?logout" class="button" style="float:right;">-> logout</a>
+	 <a href="?logout" class="button" style="float:right;">&times; logout</a>
 	<div class="clearBoth" id="message" style="margin:20px 0;">
 		<?php echo $message; ?>
 	</div>

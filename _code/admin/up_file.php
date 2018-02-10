@@ -9,7 +9,9 @@ ini_set('memory_limit','160M');
 
 // upload file form process
 if(isset($_POST['uploadFileSubmit'])){
-    $path = urldecode($_POST['path']);
+	$path = urldecode($_POST['path']);
+	$replace = urldecode($_POST['replace']);
+	$replace_ext = file_extension(basename($replace));
     $file_type = $_FILES['file']['type'];
 	
 	// get and format file extension
@@ -31,13 +33,17 @@ if(isset($_POST['uploadFileSubmit'])){
 		$ext = str_replace('jpeg', 'jpg', $ext);
     }
     
-    $file_name = 'bg'.$ext;
+	$file_name = 'bg'.$ext;
     $dest = $path.$file_name;
 	if( up_file($dest) ){
         $upload_result = 'file uploaded';
     }else{
         $upload_result = 'error';
-    }
+	}
+	// if file uploaded successfully and was supposed to replace another file, remove the other file (if it has a different name.extension)
+	if( $upload_result == 'file uploaded' && !empty($replace) && $replace != $dest){
+		unlink($replace);
+	}
 	header("location: ".$_SERVER['HTTP_REFERER']."?upload_result=".urlencode($upload_result));
 	exit;
 }

@@ -226,7 +226,7 @@ function site_structure($menu_array = '', $currentItem = ''){
 			
 			// html output for a section
 			$site_structure .= '<li'.$status.' data-name="'.$key.'" data-position="'.$n.'">
-			<input type="text" class="nameInput" name="'.$key.'" value="'.$name.'"> <span style="white-space:nowrap;"><input type="text" class="position" name="order'.$key.'" value="'.$n.'" data-parent="undefined" data-item="'.$key.'" data-oldposition="'.$n.'">
+			<input type="text" class="nameInput" name="'.$key.'" value="'.$name.'" maxlength="100"> <span style="white-space:nowrap;"><input type="text" class="position" name="order'.$key.'" value="'.$n.'" data-parent="undefined" data-item="'.$key.'" data-oldposition="'.$n.'" maxlength="6">
 			<a href="javascript:;" class="up" title="move up">∧</a>
 			<a href="javascript:;" class="down" title="move down">∨</a></span> 
 			<span style="white-space:nowrap;"><a href="manage_contents.php?item='.$path.'">edit</a> <a href="javascript:;" class="newSub showModal" rel="createSection?parent='.urlencode($key).'">add sub-section</a>
@@ -265,7 +265,7 @@ function site_structure($menu_array = '', $currentItem = ''){
 							}
 							
 							// html output for a sub-section
-							$site_structure .= '<li class="sub'.$status.'" data-name="'.$k.'" data-parent="'.$key.'" data-position="'.$s.'"><input type="text" class="nameInput" name="'.$k.'" value="'.$name.'"> <span style="white-space:nowrap;"><input type="text" class="position" name="order'.$k.'" value="'.$s.'" data-parent="'.$key.'" data-item="'.$k.'" data-oldposition="'.$s.'"> 
+							$site_structure .= '<li class="sub'.$status.'" data-name="'.$k.'" data-parent="'.$key.'" data-position="'.$s.'"><input type="text" class="nameInput" name="'.$k.'" value="'.$name.'" maxlength="100"> <span style="white-space:nowrap;"><input type="text" class="position" name="order'.$k.'" value="'.$s.'" data-parent="'.$key.'" data-item="'.$k.'" data-oldposition="'.$s.'" maxlength="6"> 
 							<a href="javascript:;" class="up" title="move up">∧</a> 
 							<a href="javascript:;" class="down" title="move down">∨</a></span> 
 							<span style="white-space:nowrap;"><a href="manage_contents.php?item='.$path.$subpath.'">edit</a> <a href="javascript:;" class="'.$sh_class.'" title="hide this from the public, without deleting it.">'.$show_hide.'</a> <a href="javascript:;" class="delete showModal" rel="deleteSection?parent='.urlencode($key).'&deleteSection='.urlencode($k).'">[x]delete</a></span></li>'.PHP_EOL;
@@ -301,7 +301,7 @@ function site_structure($menu_array = '', $currentItem = ''){
 								$description = substr($description, 0, 35);
 							}
 							$site_structure .= '<li data-name="'.$k.'" data-position="'.$s.'"><span class="imgInput" style="background-image:url(/'.$display_file.');">'.$description.'</span> 
-							<span style="white-space:nowrap;"><input type="text" class="position" name="order'.$k.'" value="'.$s.'" data-parent="'.$key.'" data-item="'.$k.'" data-oldposition="'.$s.'">
+							<span style="white-space:nowrap;"><input type="text" class="position" name="order'.$k.'" value="'.$s.'" data-parent="'.$key.'" data-item="'.$k.'" data-oldposition="'.$s.'" maxlength="6">
 							<a href="javascript:;" class="up" title="move up">∧</a>
 							<a href="javascript:;" class="down" title="move down">∨</a></span> 
 							<span style="white-space:nowrap;"><a href="manage_contents.php?item='.$path.'#'.preg_replace('/[^A-Za-z0-9]/', '', $k).'">edit</a> 
@@ -418,7 +418,7 @@ function display_content_admin($path = '', $menu_array = ''){
 					
 					// html output for a file
 					$display .= '<div class="imgContainer" data-file_path="'.$item.'"><p>
-					<input type="text" class="position" name="order'.$item.'" value="'.$n.'" data-oldposition="'.$n.'" data-parent="'.$parent.'" data-item="'.$key.'">
+					<input type="text" class="position" name="order'.$item.'" value="'.$n.'" data-oldposition="'.$n.'" data-parent="'.$parent.'" data-item="'.$key.'" maxlength="6">
 					<a href="javascript:;" class="up" title="move up">∧</a>
 					<a href="javascript:;" class="down" title="move down">∨</a><!-- '.filename($key, 'decode').'--></p>';
 					$display .= $display_file;
@@ -464,7 +464,7 @@ function display_content_admin($path = '', $menu_array = ''){
 					<a href="javascript:;" class="up" title="move up">∧</a>
 					<a href="javascript:;" class="down" title="move down">∨</a> 
 					&nbsp;&nbsp;&nbsp;<strong>Sub-section:</strong></p>
-					<input type="text" class="nameInput" name="'.$sub_item.'" value="'.$section_name.'">';
+					<input type="text" class="nameInput" name="'.$sub_item.'" value="'.$section_name.'" maxlength="100">';
 					
 					$display .= '</div>';
 					

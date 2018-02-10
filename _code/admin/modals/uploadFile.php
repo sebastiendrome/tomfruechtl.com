@@ -20,17 +20,15 @@ if(isset($_GET['replace']) && !empty($_GET['replace'])){
 	$replace = '';
 }
 
-$supported_types = str_replace(array("/^\.(", ")$/i", 's?', 'e?', '?'), '', $_POST['types']['supported_types']);
-$split_types = explode('|', $supported_types);
-
 
 ?>
 <div class="modal" id="uploadFileContainer">
 
+<a href="javascript:;" class="closeBut">&times;</a>
+
 	<!-- upload file start -->
 	<div>
 	<h3 class="first">Upload file</h3>
-	Maximum Upload Size: <?php echo $max_upload_size; ?><br>
 	<form enctype="multipart/form-data" name="uploadFileForm" id="uploadFileForm" action="/_code/admin/up_file.php" method="post">
 		<input type="hidden" name="path" value="<?php echo $path; ?>">
 		<input type="hidden" name="replace" value="<?php echo $replace; ?>">
@@ -41,19 +39,10 @@ $split_types = explode('|', $supported_types);
 	</div>
 	<!-- upload file end -->
 
-	<a href="javascript:;" class="closeBut">&times;</a>
-	Supported File Types:<br>
-		<?php echo implode(',', $split_types); ?>
-	<p>Maximum Upload Size: <?php echo $max_upload_size; ?></p>
+	<p>Supported File Types: jpg, gif, png. Maximum Upload Size: <?php echo $max_upload_size; ?></p>
 	
 	<!-- tips start -->
 	<div style="border-top:1px solid #ccc; margin-top:20px;">
-	<p>Tips:</p>
-		<div class="tip">
-			<a href="javascript:;" class="tipTitle">Supported File Types</a>
-			<ol><?php echo implode(', ', $split_types); ?>.<br>
-			These file types will be natively displayed in the site pages, except for pdf, docx, msword and odt.</ol>
-		</div>
 		<div class="tip">
 			<a href="javascript:;" class="tipTitle">How to best optimize Images for the web, using Photoshop</a>
 			<ol>

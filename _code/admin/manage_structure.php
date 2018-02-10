@@ -60,7 +60,7 @@ require(ROOT.'_code/inc/doctype.php');
 <!-- start container -->
 <div id="adminContainer">
 	
-	<span class="title">ADMIN - Site Structure</span> <a href="javascript:;" class="button showModal" rel="createSection">add new section</a> <a href="?logout" class="button" style="float:right;">logout</a> <a href="preferences.php" title="preferences" class="button preferences">&nbsp;&nbsp;</a>
+	<span class="title">ADMIN - Site Structure</span> <a href="javascript:;" class="button showModal" rel="createSection">+ new section</a> <a href="?logout" class="button" style="float:right;">&times; logout</a> <a href="preferences.php" title="preferences" class="button preferences">preferences</a>
 	<div class="clearBoth" id="message" style="margin:20px 0;">
 		<?php if( isset($message) ){
 			echo $message;
